@@ -6,22 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://gromimiss.github.io">
-  <title>记录 hexo + github pages 搭建博客过程 | Gromimiss&#39;s Blog</title>
+  <title>JS 中的基本类型和引用类型 | Gromimiss&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一直想搞个博客，总是被各种事情阻扰，然后继续被搁置着。现在闲了，终于决定自己动手做一个。本文主要记录使用 hexo + github pages 搭建博客的过程及遇到的一些小问题（cu xin）。">
-<meta name="keywords" content="hexo,github pages">
+  <meta name="description" content="JS 中包含看两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。">
+<meta name="keywords" content="js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记录 hexo + github pages 搭建博客过程">
-<meta property="og:url" content="https://gromimiss.github.io/2016/10/11/hexo/index.html">
+<meta property="og:title" content="JS 中的基本类型和引用类型">
+<meta property="og:url" content="https://gromimiss.github.io/2019/03/15/type/index.html">
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
-<meta property="og:description" content="一直想搞个博客，总是被各种事情阻扰，然后继续被搁置着。现在闲了，终于决定自己动手做一个。本文主要记录使用 hexo + github pages 搭建博客的过程及遇到的一些小问题（cu xin）。">
+<meta property="og:description" content="JS 中包含看两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://poed019cr.bkt.clouddn.com/image/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-03-15%20%E4%B8%8B%E5%8D%884.19.24.png">
-<meta property="og:updated_time" content="2019-03-15T10:29:49.220Z">
+<meta property="og:image" content="http://poed019cr.bkt.clouddn.com/type/2.jpg">
+<meta property="og:image" content="http://poed019cr.bkt.clouddn.com/2d0d90f2d9549f5f13ad53be3f75ace8_r.jpg">
+<meta property="og:updated_time" content="2019-03-15T16:32:53.393Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="记录 hexo + github pages 搭建博客过程">
-<meta name="twitter:description" content="一直想搞个博客，总是被各种事情阻扰，然后继续被搁置着。现在闲了，终于决定自己动手做一个。本文主要记录使用 hexo + github pages 搭建博客的过程及遇到的一些小问题（cu xin）。">
-<meta name="twitter:image" content="http://poed019cr.bkt.clouddn.com/image/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-03-15%20%E4%B8%8B%E5%8D%884.19.24.png">
+<meta name="twitter:title" content="JS 中的基本类型和引用类型">
+<meta name="twitter:description" content="JS 中包含看两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。">
+<meta name="twitter:image" content="http://poed019cr.bkt.clouddn.com/type/2.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Gromimiss&#39;s Blog" type="application/atom+xml">
   
@@ -69,7 +70,7 @@ ga('send', 'pageview');
 		  <h1 class="header-author"><a href="/">Gromimiss</a></h1>
 		</hgroup>
 		
-		<p class="header-subtitle">Stay hungry,stay foolish.</p>
+		<p class="header-subtitle">Stay hungry, stay foolish.</p>
 		
 
 		<nav class="header-menu">
@@ -121,7 +122,7 @@ ga('send', 'pageview');
 			  <h1 class="header-author js-header-author">Gromimiss</h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>Stay hungry,stay foolish.<i class="icon icon-quo-right"></i></p>
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>Stay hungry, stay foolish.<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -162,20 +163,20 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hexo" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-type" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      记录 hexo + github pages 搭建博客过程
+      JS 中的基本类型和引用类型
     </h1>
   
 
         
-        <a href="/2016/10/11/hexo/" class="archive-article-date">
-  	<time datetime="2016-10-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-11</time>
+        <a href="/2019/03/15/type/" class="archive-article-date">
+  	<time datetime="2019-03-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-15</time>
 </a>
         
           <div style="margin-top:10px;font-size: 12px; color: #999;">
@@ -183,7 +184,7 @@ ga('send', 'pageview');
     <span class="post-meta-item-icon">
       <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
       <span class="post-meta-item-text">  字数统计: </span>
-      <span class="post-count">2.4k字</span>
+      <span class="post-count">1.4k字</span>
     </span>
   </span>
 
@@ -192,7 +193,7 @@ ga('send', 'pageview');
     <span class="post-meta-item-icon">
       <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
       <span class="post-meta-item-text">  阅读时长: </span>
-      <span class="post-count">10分</span>
+      <span class="post-count">5分</span>
     </span>
   </span>
   <span class="post-time">
@@ -213,121 +214,60 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一直想搞个博客，总是被各种事情阻扰，然后继续被搁置着。现在闲了，终于决定自己动手做一个。本文主要记录使用 hexo + github pages 搭建博客的过程及遇到的一些小问题（cu xin）。</p>
+        <p>JS 中包含看两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。</p>
 <a id="more"></a>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>为什么用 hexo + github pages？<br>hexo: 一个快速、简洁且高效的博客框架，目前拥有 288 个插件以及 246 个主题可供选择。<br>github pages：由 github 提供的一项功能，可以创建一个专属域名来展示自己的一些项目，考虑到域名备案还是比较麻烦，所以还是选择了这个。</p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
-<li><p>确保已经下载安装了 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node</a> 以及 <a href="https://git-scm.com/" target="_blank" rel="noopener">git</a></p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h3><p>基本数据类型：按值访问，可操作保存在变量中实际的值，指的是简单的数据段。<br>它有6种： undefined、 null、 string、 number、 boolean、 symbol( es6 中新增)。</p>
+<h3 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h3><p>引用类型：<strong>当复制保存着对象的某个变量时，操作的是对象的引用，但在为对象添加属性时，操作的是实际的对象。</strong><br>除了基本类型，其他都是引用类型，包括了：Object、 Array、 RegExp、 Date、 Function、 特殊的基本包装类型（String、 Number、Boolean）以及单体内置对象（Global、 Math）。<br>引用类型变量存放的是地址，当创建一个对象类型的时候，计算机会在内存中开辟一个空间来存放值，我们需要通过一个地址来找到这个空间。所以当复制这个变量的时候其实复制的是存放这个对象空间的地址，当修改数据的时候，就导致了两个变量的值都发生了改变。</p>
+<center><br>    <img src="http://poed019cr.bkt.clouddn.com/type/2.jpg" width="80%"><br></center>
+
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>除了上面的按值访问和按址访问的区别，还有以下区别：</p>
+<ol>
+<li><p>基本类型按值访问，引用类型按址访问</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本类型值</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="string">'a'</span>;</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">a = <span class="string">'b'</span>;</span><br><span class="line">alert(b); <span class="comment">// a</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//引用类型值,以数组为例</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 对其中一个变量直接赋值不会影响到另一个变量（并未操作引用的对象）</span></span><br><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]; <span class="comment">// 重新赋值，指向的就不是原来的哪个对象了</span></span><br><span class="line">alert(a); <span class="comment">// 1,2,3,4</span></span><br><span class="line">alert(b); <span class="comment">// 1,2,3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 使用push(操作了引用的对象)</span></span><br><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">a.push(<span class="number">4</span>);</span><br><span class="line">alert(a); <span class="comment">// 1,2,3,4</span></span><br><span class="line">alert(b); <span class="comment">// 1,2,3,4</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>安装 Hexo</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g hexo-cli</span><br></pre></td></tr></table></figure>
+<li><p>引用类型可添加属性和方法，而基本类型不可以</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为引用类型值添加属性</span></span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">p.age = <span class="number">11</span>;</span><br><span class="line">alert(p.age); <span class="comment">// 11</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//为基本类型值添加属性</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">'a'</span>;</span><br><span class="line">name.age = <span class="number">11</span>;</span><br><span class="line">alert(name.age); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>新建一个 github 仓库，利用这个仓库来使用 github pages功能</p>
-<center><br>    <img src="http://poed019cr.bkt.clouddn.com/image/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-03-15%20%E4%B8%8B%E5%8D%884.19.24.png" width="80%"><br></center>
+<li><p>传递参数：当变量为基本类型时，将变量赋值作为函数的参数（局部变量），在里面对局部变量进行操作时，不会影响到函数外部的值，而若参数为引用类型时，除非在内部重写了参数，否则外部的变量和函数内局部变量会引用同一个对象，内部发生改变也会影响到外部的变量</p>
 </li>
-<li><p>建立本地和远程仓库的关联</p>
-<p>创建 ssh，id_rsa 是个人电脑上的私人密钥，id_rsa.pub 是公共密钥，将公共密钥放到 github 上，这样连接 github 账户时，就会根据公钥来匹配电脑上的私钥，相互匹配时，才能顺利通过 git 上传文件到 github 上。</p>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本类型</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    a += <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> num = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">var</span> result = add(num);</span><br><span class="line">alert(num); <span class="comment">//10</span></span><br><span class="line">alert(result); <span class="comment">//20</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 引用类型</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setName</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    obj.name = <span class="string">'a'</span>;</span><br><span class="line">    obj = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">    obj.name = <span class="string">'b'</span>;</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line"><span class="keyword">var</span> p2 = setName(p);</span><br><span class="line">alert(p.name); <span class="comment">// a</span></span><br><span class="line">alert(p2.name); <span class="comment">// b</span></span><br></pre></td></tr></table></figure>
+<h2 id="typeof-vs-instanceof"><a href="#typeof-vs-instanceof" class="headerlink" title="typeof vs instanceof"></a>typeof vs instanceof</h2><h3 id="typeof"><a href="#typeof" class="headerlink" title="typeof"></a>typeof</h3><p>typeof 可用于判断基本类型，除了 null，其他都可以显示正确的类型。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> a = <span class="string">'a'</span>;</span><br><span class="line"><span class="keyword">var</span> b;</span><br><span class="line"><span class="keyword">var</span> flag = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">var</span> o = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">var</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> rg = <span class="regexp">/hello/</span>;</span><br><span class="line">alert(<span class="keyword">typeof</span> num); <span class="comment">// number</span></span><br><span class="line">alert(<span class="keyword">typeof</span> a); <span class="comment">// string</span></span><br><span class="line">alert(<span class="keyword">typeof</span> b); <span class="comment">// undefined</span></span><br><span class="line">alert(<span class="keyword">typeof</span> flag); <span class="comment">// boolean</span></span><br><span class="line">alert(<span class="keyword">typeof</span> o); <span class="comment">// object</span></span><br><span class="line">alert(<span class="keyword">typeof</span> fn); <span class="comment">// function</span></span><br><span class="line">alert(<span class="keyword">typeof</span> rg); <span class="comment">// object(sarari5、chrome7前返回function)</span></span><br></pre></td></tr></table></figure>
+<h3 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h3><p>instanceof 可以判断一个对象的正确类型。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>,<span class="number">3</span> ];</span><br><span class="line">alert(a <span class="keyword">instanceof</span> <span class="built_in">Object</span>); <span class="comment">//true</span></span><br><span class="line">alert(a <span class="keyword">instanceof</span> <span class="built_in">Array</span>); <span class="comment">//true</span></span><br><span class="line">alert(a <span class="keyword">instanceof</span> <span class="built_in">RegExp</span>); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+<p>但它也不是完全可信的，因为通过 Symbol.hasInstance 我们可以自定义 instanceof 的行为。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PrimitiveString</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> [symbol.hasInstance](x) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">typeof</span> x === <span class="string">'string'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><h3 id="JS中的类型转换"><a href="#JS中的类型转换" class="headerlink" title="JS中的类型转换"></a>JS中的类型转换</h3><p>JS 中类型转换只有三种情况：</p>
 <ul>
-<li><p>可以先检查本机是否已经存在 ssh。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/. ssh</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+<li>转为布尔值</li>
+<li>转为字符串</li>
+<li>转为数字</li>
+</ul>
+<p>在转 Boolean 中，除了 null/undefined/0/-0//NaN/false/‘’，其他值都转为 true。</p>
+<p>转换对象时，会调用内置的 [[ToPrimitive]] 函数，先调用 valueOf，若未返回基本类型，再调用 toString。</p>
+<h3 id="四则运算符"><a href="#四则运算符" class="headerlink" title="四则运算符"></a>四则运算符</h3><ol>
+<li>加法运算符</li>
+</ol>
+<ul>
+<li>若运算中其中一方为字符串，则将另一方也转换为字符串；</li>
+<li>若双方都不是字符串并且不是对象，运算中其中一方为数字，则将另一方也转换成数字</li>
+<li>若双方都不是字符串，其中一方是对象，则会将对象先转换为基本类型，再通过以上2点比较</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> + <span class="string">'1'</span> <span class="comment">// '11'</span></span><br><span class="line"><span class="literal">true</span> + <span class="literal">true</span> <span class="comment">// 2</span></span><br><span class="line"><span class="number">4</span> + [<span class="number">1</span>, <span class="number">2</span>] <span class="comment">// '41,2'</span></span><br><span class="line">&#123;&#125; + <span class="number">0</span> <span class="comment">// 0 &#123;&#125; 会被当做一个空代码块，所以结果不是 '[object Object]0'</span></span><br><span class="line">a + + <span class="string">'b'</span> <span class="comment">// 'aNaN' 相当于 a 加上 + 'b'</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>其他运算符，只要其中一方是数字，另一方就会转成数字</li>
+</ol>
+<h3 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h3><p>当使用 == 时的类型转换，会将两值都转成数字，见下图：</p>
+<p><img src="http://poed019cr.bkt.clouddn.com/2d0d90f2d9549f5f13ad53be3f75ace8_r.jpg" alt></p>
+<p>使用上图规则解析 [] == ![], !会将变量转换成 boolean 类型，所以 ![] 会转成 false, [] == false -&gt; [] == 0 -&gt; ‘’ == 0 -&gt; 0 == 0 -&gt; true</p>
+<h2 id="特殊问题"><a href="#特殊问题" class="headerlink" title="特殊问题"></a>特殊问题</h2><ul>
+<li><p>null 不是一个对象类型，虽然 <code>typeof null === &#39;object&#39;</code>，但是这只是 JS 存在的一个悠久 Bug。因为最初 JS 使用的是      32 位系统，为了性能考虑使用低位存储变量的类型信息，000 开头的代表对象，而 null 表示为全零，所以就错误的判断了。</p>
 </li>
-<li><p>若不存在，则创建:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">"youremail"</span></span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key <span class="comment"># 输入用于保存生成的SSH key的文件名，按回车则使用默认的</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将 id_rsa.pub 文件中的密钥复制到 github -&gt; settings -&gt; SSH and GPGkeys -&gt; New SSH key 中</p>
-</li>
-<li><p>验证是否关联成功（注意：这个就是 <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>，不要把 git 换成自己的 username），显示 hi, your username     就说明成功了</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<li><p><code>0.1 + 0.2 !== 0.3</code> 在计算机中数字都是以多位二进制存储的，而除了那些可以表示成x / 2^n的数可以被精确表示，其余小数<br>都是以近似值的方式存在，可以使用以下方式计算浮点数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算浮点数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addFloat</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> aLen,bLen;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        aLen = a.toString().split(<span class="string">'.'</span>)[<span class="number">1</span>].length;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">        aLen = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        bLen = b.toString().split(<span class="string">'.'</span>)[<span class="number">1</span>].length;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">        bLen = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> max = <span class="built_in">Math</span>.max(aLen, bLen);</span><br><span class="line">    <span class="keyword">return</span> (a * max + b * max) / max;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-</li>
-</ol>
-<h2 id="创建博客项目"><a href="#创建博客项目" class="headerlink" title="创建博客项目"></a>创建博客项目</h2><p>这里可以选择先创建一个博客文件夹，再进入到这个文件夹执行命令 hexo init，也可以在指定文件夹中 hexo init blogname，我跟着网上的教程走，也没仔细看，就跟着复制粘贴，就出现了一个问题：我先新建了一个 myblog 文件夹，然后进入到这个文件夹执行了上面的指令后初始化 hexo init myblog，直接打开了外面的myblog，没有注意到刚才的指令其实是在 myblog 里面又创建了一个 myblog，所以在外面的 myblog 文件夹中就只有三个指令 —— init，help，version，到里面的myblog才会有 generate、server 等属性（所以说还是要动动脑子，不要只去复制粘贴）。</p>
-<p>init后会出现一个目录：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml <span class="comment"># 配置文件</span></span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds <span class="comment"># 模板文件夹</span></span><br><span class="line">├── <span class="built_in">source</span> <span class="comment"># 资源文件夹</span></span><br><span class="line">|   ├── _drafts <span class="comment"># 草稿箱</span></span><br><span class="line">|   └── _posts <span class="comment"># 发布</span></span><br><span class="line">└── themes <span class="comment"># 主题文件夹</span></span><br></pre></td></tr></table></figure>
-<p>根据自己的需求去修改配置文件中的信息。</p>
-<h2 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h2><p>主题可以自行去 <a href="https://hexo.io/themes/" target="_blank" rel="noopener">官网</a> 寻找自己喜欢的，本人更喜欢简约一点的，所以选择了 <a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">yilia</a>。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git</span><br></pre></td></tr></table></figure>
-<p>将主题下载下来后放到 themes 目录中，再将站点中 _config.yml 的 theme 属性改成新添加的主题名。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<p>这样就可以看到效果了。<br>在 themes/新添加的主题 目录下也会有个 _config.yml，在里面可以根据个人的需求来调整，具体见 <a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">这里</a>。</p>
-<p>要特别说一下的是，如果要使用首页只显示前几行的话可以在文章中通过 <code>&lt;!-- more --&gt;</code> 来自定义自己想在首页显示的内容，并且需要将主题配置文件中的 <code>excerpt_link: more</code> 注释掉，并且要注意的是文章中 <code>&lt;!-- more --&gt;</code> 上面需要有内容（注释掉的也可以），否则会发现文章又显示全部内容了。</p>
-<h2 id="live2d-动画"><a href="#live2d-动画" class="headerlink" title="live2d 动画"></a>live2d 动画</h2><p>已经记不得是在哪个博客中看到了 live2d，觉得很可爱，就想着也加一个。</p>
-<ol>
-<li><p>先下载 live2d 包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i --save hexo-helper-live2d</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>选择自己喜欢的 <a href="https://huaji8.top/post/live2d-plugin-2.0/" target="_blank" rel="noopener">模型</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i --save live2d-widget-model-模型名</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在站点的 _config.yml 中添加配置信息,将 model 改为你选择的模型包名</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">live2d:</span><br><span class="line"><span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line">scriptFrom: <span class="built_in">local</span></span><br><span class="line">pluginRootPath: live2dw/</span><br><span class="line">pluginJsPath: lib/</span><br><span class="line">pluginModelPath: assets/</span><br><span class="line">tagMode: <span class="literal">false</span></span><br><span class="line">debug: <span class="literal">false</span></span><br><span class="line">model:</span><br><span class="line">    use: live2d-widget-model-tororo</span><br><span class="line">display:</span><br><span class="line">    position: right</span><br><span class="line">    width: 100</span><br><span class="line">    height: 200</span><br><span class="line">    hOffset: 30</span><br><span class="line">    vOffset: -60</span><br><span class="line">mobile:</span><br><span class="line">    show: <span class="literal">true</span></span><br><span class="line">react:</span><br><span class="line">    opacityDefault: 1</span><br><span class="line">    opacityOnHover: 0.7</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>可以根据自己想要的样子去调整一些属性，如位置、透明度等，详细见 <a href="https://github.com/xiazeyu/live2d-widget.js" target="_blank" rel="noopener">这里</a>。</p>
-<h2 id="评论系统"><a href="#评论系统" class="headerlink" title="评论系统"></a>评论系统</h2><p>评论系统我使用了 Valine，为什么选择它 —— 好吧，我完全只是喜欢它的颜值而已。<br>看了我使用的 yilia 主题，发现配置文件中只有多说、网易云跟帖、畅言、Disqus、Gitment这五种评论系统可以配置，就去 github 上看一下，发现在2017年的时候就新增了对 Valine 的支持，使用如下：</p>
-<ol>
-<li><p>注册 <a href="https://leancloud.cn" target="_blank" rel="noopener">Leancloud</a>，创建应用</p>
-</li>
-<li><p>在站点的 _config.yml 中增加配置信息，appId和 appKey 可以在 创建的应用 -&gt; 设置 -&gt; 应用 key 中找到。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#6、Valine https://valine.js.org</span></span><br><span class="line">valine: </span><br><span class="line">appid:  <span class="comment">#Leancloud应用的appId</span></span><br><span class="line">appkey:  <span class="comment">#Leancloud应用的appKey</span></span><br><span class="line">verify: <span class="literal">false</span> <span class="comment">#验证码</span></span><br><span class="line">notify: <span class="literal">false</span> <span class="comment">#评论回复提醒</span></span><br><span class="line">avatar: mm <span class="comment">#评论列表头像样式：''/mm/identicon/monsterid/wavatar/retro/hide</span></span><br><span class="line">placeholder: Just go go <span class="comment">#评论框占位符</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在主题中的 layout/_partial/article.ejs 中添加代码（注意：要加在 <code>&lt;% if (!index &amp;&amp; post.comments){ %&gt;</code> 后       面，否则会出现首页也出现评论框的问题）。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;% <span class="keyword">if</span> (theme.valine &amp;&amp; theme.valine.appid &amp;&amp; theme.valine.appkey)&#123; %&gt;</span><br><span class="line">&lt;section id=<span class="string">"comments"</span> class=<span class="string">"comments"</span>&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">    .comments&#123;margin:30px;padding:10px;background:<span class="comment">#fff&#125;</span></span><br><span class="line">    @media screen and (max-width:800px)&#123;.comments&#123;margin:auto;padding:10px;background:<span class="comment">#fff&#125;&#125;</span></span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;%- partial(<span class="string">'post/valine'</span>, &#123;</span><br><span class="line">    key: post.slug,</span><br><span class="line">    title: post.title,</span><br><span class="line">    url: config.url+url_for(post.path)</span><br><span class="line">    &#125;) %&gt;</span><br><span class="line">&lt;/section&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加 layout/_partial/post/valine.ejs 文件，文件内容如下:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">"vcomment"</span> class=<span class="string">"comment"</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;script src=<span class="string">"//cdn1.lncld.net/static/js/3.0.4/av-min.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">"//unpkg.com/valine/dist/Valine.min.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var notify = <span class="string">'&lt;%= theme.valine.notify %&gt;'</span> == <span class="literal">true</span> ? <span class="literal">true</span> : <span class="literal">false</span>;</span><br><span class="line">    var verify = <span class="string">'&lt;%= theme.valine.verify %&gt;'</span> == <span class="literal">true</span> ? <span class="literal">true</span> : <span class="literal">false</span>;</span><br><span class="line">    window.onload = <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">        new Valine(&#123;</span><br><span class="line">            el: <span class="string">'#vcomment'</span>,</span><br><span class="line">            notify: notify,</span><br><span class="line">            verify: verify,</span><br><span class="line">            app_id: <span class="string">"&lt;%= theme.valine.appid %&gt;"</span>,</span><br><span class="line">            app_key: <span class="string">"&lt;%= theme.valine.appkey %&gt;"</span>,</span><br><span class="line">            placeholder: <span class="string">"&lt;%= theme.valine.placeholder %&gt;"</span>,</span><br><span class="line">            avatar:<span class="string">"&lt;%= theme.valine.avatar %&gt;"</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="开启智能菜单中所有文章及标签的搜索"><a href="#开启智能菜单中所有文章及标签的搜索" class="headerlink" title="开启智能菜单中所有文章及标签的搜索"></a>开启智能菜单中所有文章及标签的搜索</h2><ol>
-<li><p>下载 hexo-generator-json-content 包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i --save hexo-generator-json-content</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在站点的 _config.yml 中添加配置信息</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">jsonContent:</span><br><span class="line">meta: <span class="literal">false</span></span><br><span class="line">pages: <span class="literal">false</span></span><br><span class="line">posts:</span><br><span class="line">title: <span class="literal">true</span></span><br><span class="line">date: <span class="literal">true</span></span><br><span class="line">path: <span class="literal">true</span></span><br><span class="line">text: <span class="literal">true</span></span><br><span class="line">raw: <span class="literal">false</span></span><br><span class="line">content: <span class="literal">false</span></span><br><span class="line">slug: <span class="literal">false</span></span><br><span class="line">updated: <span class="literal">false</span></span><br><span class="line">comments: <span class="literal">true</span></span><br><span class="line">link: <span class="literal">false</span></span><br><span class="line">permalink: <span class="literal">false</span></span><br><span class="line">excerpt: <span class="literal">false</span></span><br><span class="line">categories: <span class="literal">false</span></span><br><span class="line">tags: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="添加归档"><a href="#添加归档" class="headerlink" title="添加归档"></a>添加归档</h2><ol>
-<li>在文件夹中 <code>hexo new page archives</code></li>
-<li>在主题下的 _config.yml 中添加 menu</li>
-</ol>
-<h2 id="字数-阅读时长-阅读量统计"><a href="#字数-阅读时长-阅读量统计" class="headerlink" title="字数/阅读时长/阅读量统计"></a>字数/阅读时长/阅读量统计</h2><p>在文章标题下增加字数/阅读时长/阅读量统计这些内容。</p>
-<h3 id="阅读量统计"><a href="#阅读量统计" class="headerlink" title="阅读量统计"></a>阅读量统计</h3><p>阅读量统计我使用了不蒜子：</p>
-<ol>
-<li><p>在主题下的 layout/_partial/after-footer.ejs 中最后添加代码：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script async src=<span class="string">"//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在 after-footer 后面使用：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">本站总访问量 &lt;span id=<span class="string">"busuanzi_value_site_pv"</span>&gt;&lt;/span&gt; 次&amp;nbsp&amp;nbsp&amp;nbsp</span><br><span class="line">本站访客数&lt;span id=<span class="string">"busuanzi_value_site_uv"</span>&gt;&lt;/span&gt;人次</span><br></pre></td></tr></table></figure>
-<p>不过我只希望在文章中添加阅读量，所以放的位置也不一样，我会把它和字数/阅读时长一起放到头部，所以稍后在字数/阅读时长的内容中一起讲。</p>
-</li>
-</ol>
-<h3 id="字数-阅读时长"><a href="#字数-阅读时长" class="headerlink" title="字数/阅读时长"></a>字数/阅读时长</h3><p>字数和阅读时长的统计我使用了插件 hexo-wordcount。</p>
-<ol>
-<li><p>下载 hexo-wordcount 包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i --save hexo-wordcount</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在主题目录下 layout/_partial/post 中新建 word.ejs 文件，把之前的阅读量统计和字数及阅读时长的内容一起放到这个文件里</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=<span class="string">"margin-top:10px;font-size: 12px; color: #999;"</span>&gt;</span><br><span class="line">    &lt;span class=<span class="string">"post-time"</span>&gt;</span><br><span class="line">        &lt;span class=<span class="string">"post-meta-item-icon"</span>&gt;</span><br><span class="line">        &lt;i class=<span class="string">"fa fa-keyboard-o icon-acfun"</span> style=<span class="string">"font-size: 12px;"</span>&gt;&lt;/i&gt;</span><br><span class="line">        &lt;span class=<span class="string">"post-meta-item-text"</span>&gt;  字数统计: &lt;/span&gt;</span><br><span class="line">        &lt;span class=<span class="string">"post-count"</span>&gt;&lt;%= wordcount(post.content) %&gt;字&lt;/span&gt;</span><br><span class="line">        &lt;/span&gt;</span><br><span class="line">    &lt;/span&gt;</span><br><span class="line"></span><br><span class="line">    &lt;span class=<span class="string">"post-time"</span>&gt;</span><br><span class="line">        &amp;nbsp; | &amp;nbsp;</span><br><span class="line">        &lt;span class=<span class="string">"post-meta-item-icon"</span>&gt;</span><br><span class="line">        &lt;i class=<span class="string">"fa fa-hourglass-half icon-clock"</span> style=<span class="string">"font-size: 12px;"</span>&gt;&lt;/i&gt;</span><br><span class="line">        &lt;span class=<span class="string">"post-meta-item-text"</span>&gt;  阅读时长: &lt;/span&gt;</span><br><span class="line">        &lt;span class=<span class="string">"post-count"</span>&gt;&lt;%= min2read(post.content) %&gt;分&lt;/span&gt;</span><br><span class="line">        &lt;/span&gt;</span><br><span class="line">    &lt;/span&gt;</span><br><span class="line">    &lt;span class=<span class="string">"post-time"</span>&gt;</span><br><span class="line">        &amp;nbsp; | &amp;nbsp;</span><br><span class="line">        &lt;i class=<span class="string">"icon-book"</span> style=<span class="string">"font-size: 12px;"</span>&gt;&lt;/i&gt;</span><br><span class="line">        &lt;span id=<span class="string">"busuanzi_container_site_pv"</span>&gt;</span><br><span class="line">        本文总阅读量</span><br><span class="line">        &lt;span id=<span class="string">"busuanzi_value_site_pv"</span>&gt;&lt;/span&gt;</span><br><span class="line">        次</span><br><span class="line">        &lt;/span&gt;</span><br><span class="line">    &lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="在文章中插入图片"><a href="#在文章中插入图片" class="headerlink" title="在文章中插入图片"></a>在文章中插入图片</h2><p>考虑到性能问题，打算把图片放到 <a href="https://www.qiniu.com/" target="_blank" rel="noopener">七牛云</a> 中，通过外链的形式插入。</p>
-<ol>
-<li><p>注册七牛云，免费领取对象存储，新建存储空间（需要实名认证，包括支付宝、身份证等绑定，并且免费的话只能用测试域名，有效期30     天）</p>
-</li>
-<li><p>复制上传的图片外链，在文章中引入外链，居中设置宽度（默认的太大了）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;center&gt;</span><br><span class="line">    &lt;img </span><br><span class="line">        src=<span class="string">"外链地址"</span></span><br><span class="line">        width=<span class="string">"80%"</span></span><br><span class="line">    /&gt;</span><br><span class="line">&lt;/center&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><ol>
-<li><p>在站点 _config.yml 中配置部署 github 仓库信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">    <span class="built_in">type</span>: git</span><br><span class="line">    repo: https://github.com/xxx/xxx.github.io.git</span><br><span class="line">    branch: master</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>通过指令生成页面后使用指令 <code>hexo d</code> 部署<br>若发生错误：<code>Deployer not found: Git</code>，则说明要下载 hexo-deployer-git</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>到这里，搭建博客就结束了，内容比较简单，就是自己想要的功能可以要自己花时间去找，还有就是 markdown 的语法一定要注意空格、tab，不要有多余的空格（之前代码块一直显示错乱，找了好久才发现 ~~~ 后面多了个空格）！！！</p>
 
       
 
@@ -342,11 +282,7 @@ ga('send', 'pageview');
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">github pages</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
         		</li>
       		
 		</ul>
@@ -402,7 +338,7 @@ ga('send', 'pageview');
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://gromimiss.github.io/2016/10/11/hexo/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://gromimiss.github.io/2019/03/15/type/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -416,6 +352,16 @@ ga('send', 'pageview');
 </article>
 
   
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/14/hexo/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">记录 hexo + github pages 搭建博客过程</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -437,7 +383,7 @@ ga('send', 'pageview');
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-number">2.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建博客项目"><span class="toc-number">3.</span> <span class="toc-text">创建博客项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主题"><span class="toc-number">4.</span> <span class="toc-text">主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#live2d-动画"><span class="toc-number">5.</span> <span class="toc-text">live2d 动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#评论系统"><span class="toc-number">6.</span> <span class="toc-text">评论系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开启智能菜单中所有文章及标签的搜索"><span class="toc-number">7.</span> <span class="toc-text">开启智能菜单中所有文章及标签的搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加归档"><span class="toc-number">8.</span> <span class="toc-text">添加归档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字数-阅读时长-阅读量统计"><span class="toc-number">9.</span> <span class="toc-text">字数/阅读时长/阅读量统计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#阅读量统计"><span class="toc-number">9.1.</span> <span class="toc-text">阅读量统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字数-阅读时长"><span class="toc-number">9.2.</span> <span class="toc-text">字数/阅读时长</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在文章中插入图片"><span class="toc-number">10.</span> <span class="toc-text">在文章中插入图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署"><span class="toc-number">11.</span> <span class="toc-text">部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">12.</span> <span class="toc-text">结束语</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本数据类型"><span class="toc-number">1.1.</span> <span class="toc-text">基本数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引用类型"><span class="toc-number">1.2.</span> <span class="toc-text">引用类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#区别"><span class="toc-number">2.</span> <span class="toc-text">区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#typeof-vs-instanceof"><span class="toc-number">3.</span> <span class="toc-text">typeof vs instanceof</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#typeof"><span class="toc-number">3.1.</span> <span class="toc-text">typeof</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#instanceof"><span class="toc-number">3.2.</span> <span class="toc-text">instanceof</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型转换"><span class="toc-number">4.</span> <span class="toc-text">类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JS中的类型转换"><span class="toc-number">4.1.</span> <span class="toc-text">JS中的类型转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四则运算符"><span class="toc-number">4.2.</span> <span class="toc-text">四则运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#比较运算符"><span class="toc-number">4.3.</span> <span class="toc-text">比较运算符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特殊问题"><span class="toc-number">5.</span> <span class="toc-text">特殊问题</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -571,6 +517,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
