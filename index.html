@@ -161,6 +161,123 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-next-tick" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/16/next-tick/">记对 Vue 中 nextTick 的理解及总结</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/16/next-tick/" class="archive-article-date">
+  	<time datetime="2019-03-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-16</time>
+</a>
+        
+          <div style="margin-top:10px;font-size: 12px; color: #999;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
+      <span class="post-meta-item-text">  字数统计: </span>
+      <span class="post-count">3.1k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
+      <span class="post-meta-item-text">  阅读时长: </span>
+      <span class="post-count">12分</span>
+    </span>
+  </span>
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <i class="icon-book" style="font-size: 12px;"></i>
+    <span id="busuanzi_container_site_pv">
+      本文总阅读量
+      <span id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  </span>
+</div>
+
+          
+        
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前段时间面试被问到对 nextTick 的理解，虽说之前有看过源码，但是一来内容多，看的较浅，二来时间过去挺久了，脑海中只模糊记得用了 setTimeout。说到底，还是理解不够深，所以这次决定整理一下，把它彻底搞明白！</p>
+        
+      
+
+      
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">源码</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/16/next-tick/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+
+    </div>
+  </div>
+
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
     <article id="post-type" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -472,6 +589,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">源码</a>
               </li>
              
               <li class="article-tag-list-item">
