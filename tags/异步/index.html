@@ -6,20 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://gromimiss.github.io">
-  <title>记对 Vue 中 nextTick 的理解及总结 | Gromimiss&#39;s Blog</title>
+  <title>Tag: 异步 | Gromimiss&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前段时间面试被问到对 nextTick 的理解，虽说之前有看过源码，但是一来内容多，看的较浅，二来时间过去挺久了，脑海中只模糊记得用了 setTimeout。说到底，还是理解不够深，所以这次决定整理一下，把它彻底搞明白！">
-<meta name="keywords" content="js,vue,源码">
-<meta property="og:type" content="article">
-<meta property="og:title" content="记对 Vue 中 nextTick 的理解及总结">
-<meta property="og:url" content="https://gromimiss.github.io/2019/03/16/next-tick/index.html">
+  <meta name="description" content="前端学习记录博客">
+<meta name="keywords" content="前端，js，开发者，it，code">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gromimiss&#39;s Blog">
+<meta property="og:url" content="https://gromimiss.github.io/tags/异步/index.html">
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
-<meta property="og:description" content="前段时间面试被问到对 nextTick 的理解，虽说之前有看过源码，但是一来内容多，看的较浅，二来时间过去挺久了，脑海中只模糊记得用了 setTimeout。说到底，还是理解不够深，所以这次决定整理一下，把它彻底搞明白！">
+<meta property="og:description" content="前端学习记录博客">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-16T12:42:21.452Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="记对 Vue 中 nextTick 的理解及总结">
-<meta name="twitter:description" content="前段时间面试被问到对 nextTick 的理解，虽说之前有看过源码，但是一来内容多，看的较浅，二来时间过去挺久了，脑海中只模糊记得用了 setTimeout。说到底，还是理解不够深，所以这次决定整理一下，把它彻底搞明白！">
+<meta name="twitter:title" content="Gromimiss&#39;s Blog">
+<meta name="twitter:description" content="前端学习记录博客">
   
     <link rel="alternative" href="/atom.xml" title="Gromimiss&#39;s Blog" type="application/atom+xml">
   
@@ -164,127 +163,36 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-next-tick" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      记对 Vue 中 nextTick 的理解及总结
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2019/03/23/promise/" class="archive-article-date">
+  	<time datetime="2019-03-22T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-23</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/03/23/promise/">自己手写一个 Promise</a>
     </h1>
   
 
-        
-        <a href="/2019/03/16/next-tick/" class="archive-article-date">
-  	<time datetime="2019-03-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-16</time>
-</a>
-        
-        
+        <div class="article-info info-on-right">
           
-  <div style="margin-top:10px;font-size: 12px; color: #999;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">3.1k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">12分</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <i class="icon-book" style="font-size: 12px;"></i>
-      <span id="busuanzi_container_page_pv">
-        本文总阅读量
-        <span id="busuanzi_value_page_pv"></span>
-        次
-      </span>
-    </span>
-
-  </div>
-
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>前段时间面试被问到对 nextTick 的理解，虽说之前有看过源码，但是一来内容多，看的较浅，二来时间过去挺久了，脑海中只模糊记得用了 setTimeout。说到底，还是理解不够深，所以这次决定整理一下，把它彻底搞明白！</p>
-<a id="more"></a>
-<h2 id="基础介绍"><a href="#基础介绍" class="headerlink" title="基础介绍"></a>基础介绍</h2><p>nextTick: 在下次 DOM 更新循环结束之后执行延迟回调。  </p>
-<p>最近又看了下更新的源码，发现 MutationObserver 又被使用上了，MessageChannel 被移除了(捂脸)。先简单介绍下 nextTick 中用到的一些 api以及事件循环的概念，知道了这些才能更好的理解 nextTick。</p>
-<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><p>Promise：用于表示一个异步操作的最终状态，以及该异步操作的结果值。可以解决回调函数的异步执行和嵌套问题。它接受一个带 resolve函数和 reject 函数两个参数的函数，有三种状态： pending、 fulfilled、 rejected。</p>
-<ul>
-<li>resolve 会将对象的状态从 pending 变为 fulfilled，异步操作成功时调用，并将异步操作的结果，作为参数传递出去。</li>
-<li>reject 会将对象的状态从 pending 变为 rejected，在异步操作失败时调用，并将异步操作报出的错误，作为参数传递出去。</li>
-</ul>
-<p>但它也有一些缺点：</p>
-<ul>
-<li>一旦新建就会立即执行，无法中途取消</li>
-<li>若不设置回调，内部抛出的错误不会反应到外部</li>
-<li>当处于 pending 状态时无法得知目前进展到哪个阶段</li>
-</ul>
-<p>兼容性见<a href="https://www.caniuse.com/#search=Promise" target="_blank" rel="noopener">这里</a>。</p>
-<h3 id="MutationObserver"><a href="#MutationObserver" class="headerlink" title="MutationObserver"></a>MutationObserver</h3><p>MutationObserver：监听页面中 DOM 元素的变化。它和事件很接近，但本质上不同，事件是同步触发，一有变动就立刻触发相应事件，而 MutationObserver 则是异步触发， DOM 的变动会等到当前所有 DOM 操作都结束才触发。</p>
-<p>特点如下：</p>
-<ul>
-<li>等待所有脚本任务完成后，才会运行</li>
-<li>当有多个 DOM 操作时，会把 DOM 变动记录封装成一个数组进行处理（只会触发一次回调，回调中会将变动记录作为参数传进来）</li>
-<li>可以观察 DOM 的所有类型变动</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> outer = <span class="built_in">document</span>.querySelector(<span class="string">'outer'</span>);</span><br><span class="line"><span class="keyword">new</span> MutationObserver(<span class="function"><span class="keyword">function</span>(<span class="params">mutations, observer</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(mutations);</span><br><span class="line">&#125;).observe(outer, &#123;</span><br><span class="line">    attributes: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 只会触发一次</span></span><br><span class="line">outer.setAttribute(<span class="string">'data-random'</span>, <span class="built_in">Math</span>.random());</span><br><span class="line">outer.setAttribute(<span class="string">'data-random'</span>, <span class="built_in">Math</span>.random());</span><br></pre></td></tr></table></figure>
-<p>很强大，但是它也有挺严重的兼容性问题，并且在 ie11 中也存在 bug，兼容性看<a href="https://www.caniuse.com/#search=MutationObserver" target="_blank" rel="noopener">这里</a>。</p>
-<h3 id="setImmediate"><a href="#setImmediate" class="headerlink" title="setImmediate"></a>setImmediate</h3><p>setImmediate：将一些需要长时间运行的操作放在一个回调函数里面，在浏览器完成后面的其他语句后，立刻执行这个回调函数。它只在 IE 上支持，兼容性看<a href="https://www.caniuse.com/#search=setImmediate" target="_blank" rel="noopener">这里</a>。</p>
-<h3 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h3><p>JS 是一种单线程语言，所有任务都在一个线程上完成，这样一旦遇到大量任务或者是一个耗时的任务，网页就会出现“假死”。那为什么js不能实现多线程呢 —— 作为浏览器脚本语言，若多线程的话，一个线程添加 DOM，一个线程删除 DOM，浏览器就不好判断了。而单线程就意味着所有的任务都需要排队，前一个任务执行完，才会执行后一个任务，若前一个任务耗时很长，后面的任务都会一直等着，直到前一个任务完成。并且有时并不是因为计算量大，CPU 忙不过来，而是因为 IO 设备很慢，所以之后就引入了事件循环的机制。</p>
-<p>首先在主线程上排队执行任务，而任务队列由异步任务在有了运行结果后放置的事件组成，一旦主线程中的任务执行完，就会读取任务队列，对应的异步任务在结束等待状态之后进入主线程，开始执行。每次主线程空了就会去读取任务队列。任务队列是一个先进先出的数据结构，排在前面的事件优先读取。</p>
-<p>具体运行机制如下：</p>
-<ol>
-<li>所有同步任务都在主线程上执行，形成一个执行栈</li>
-<li>主线程外存在一个任务队列，只要异步任务有了运行结果，就在任务队列中放置一个事件</li>
-<li>当执行栈中的任务完成，就会读取任务队列中的任务，依次进入执行栈执行</li>
-<li>下一次事件循环开始</li>
-</ol>
-<p>（参考了<a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html" target="_blank" rel="noopener">阮一峰的 eventloop</a>）</p>
-<p>事件队列中有两种任务源：微任务 (microtask) 和宏任务(macrotask)，当执行完同步代码后执行栈为空，会先执行微任务，执行完所有的微任务后，如有必要渲染页面，然后再执行任务队列中的宏任务，也意味着新一轮事件循环的开始。</p>
-<p>(macro)task -&gt; microtask -&gt; 渲染 -&gt; (macro)task</p>
-<p>(macro)task：script setTimeout MessageChannel postMessage setInterval setImmediate I/O UI渲染<br>microtask：process.nextTick promise.then MutationObserver</p>
-<p>小总结：看了<a href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/" target="_blank" rel="noopener">这篇文章</a>，从第二个例子中才发现用户触发 click 和 js 调用 click 事件是不同的，js 调用 click 就导致会等到两次 click 结束，主线程才算是清空，才开始执行任务队列中的事件，这也就让两次 click 中推到任务队列的那些微任务在同一个事件循环中了，因此 MutationObserver 就只会触发一次（一个事件循环中多次 DOM 操作只会增加变动记录，而不会触发多次事件）。</p>
-<h2 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h2><p>了解完涉及到的知识点后，开始进入主题 —— 看 nextTick 的源码。</p>
-<h3 id="flushCallbacks"><a href="#flushCallbacks" class="headerlink" title="flushCallbacks"></a>flushCallbacks</h3><p>从头往下看，先是 flushCallbacks，上代码：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flushCallbacks</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    pending = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">const</span> copies = callbacks.slice(<span class="number">0</span>)</span><br><span class="line">    callbacks.length = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; copies.length; i++) &#123;</span><br><span class="line">        copies[i]()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这段代码是在异步任务被执行的时候触发的回调：将 pending 状态重新设置为 false，执行回调列表，清空回调列表（为下一次异步队列做准备）。</p>
-<h3 id="异步的选择"><a href="#异步的选择" class="headerlink" title="异步的选择"></a>异步的选择</h3><p>重点就是关于异步 api 使用的选择了：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">Promise</span> !== <span class="string">'undefined'</span> &amp;&amp; isNative(<span class="built_in">Promise</span>)) &#123;</span><br><span class="line">    <span class="keyword">const</span> p = <span class="built_in">Promise</span>.resolve()</span><br><span class="line">        timerFunc = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            p.then(flushCallbacks)</span><br><span class="line">            <span class="comment">// In problematic UIWebViews, Promise.then doesn't completely break, but</span></span><br><span class="line">            <span class="comment">// it can get stuck in a weird state where callbacks are pushed into the</span></span><br><span class="line">            <span class="comment">// microtask queue but the queue isn't being flushed, until the browser</span></span><br><span class="line">            <span class="comment">// needs to do some other work, e.g. handle a timer. Therefore we can</span></span><br><span class="line">            <span class="comment">// "force" the microtask queue to be flushed by adding an empty timer.</span></span><br><span class="line">            <span class="keyword">if</span> (isIOS) setTimeout(noop)</span><br><span class="line">        &#125;</span><br><span class="line">        isUsingMicroTask = <span class="literal">true</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!isIE &amp;&amp; <span class="keyword">typeof</span> MutationObserver !== <span class="string">'undefined'</span> &amp;&amp; (</span><br><span class="line">        isNative(MutationObserver) ||</span><br><span class="line">        <span class="comment">// PhantomJS and iOS 7.x</span></span><br><span class="line">        MutationObserver.toString() === <span class="string">'[object MutationObserverConstructor]'</span></span><br><span class="line">    )) &#123;</span><br><span class="line">        <span class="comment">// Use MutationObserver where native Promise is not available,</span></span><br><span class="line">        <span class="comment">// e.g. PhantomJS, iOS7, Android 4.4</span></span><br><span class="line">        <span class="comment">// (#6466 MutationObserver is unreliable in IE11)</span></span><br><span class="line">        <span class="keyword">let</span> counter = <span class="number">1</span></span><br><span class="line">        <span class="keyword">const</span> observer = <span class="keyword">new</span> MutationObserver(flushCallbacks)</span><br><span class="line">        <span class="keyword">const</span> textNode = <span class="built_in">document</span>.createTextNode(<span class="built_in">String</span>(counter))</span><br><span class="line">        observer.observe(textNode, &#123;</span><br><span class="line">            characterData: <span class="literal">true</span></span><br><span class="line">        &#125;)</span><br><span class="line">        timerFunc = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            counter = (counter + <span class="number">1</span>) % <span class="number">2</span></span><br><span class="line">            textNode.data = <span class="built_in">String</span>(counter)</span><br><span class="line">        &#125;</span><br><span class="line">        isUsingMicroTask = <span class="literal">true</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> setImmediate !== <span class="string">'undefined'</span> &amp;&amp; isNative(setImmediate)) &#123;</span><br><span class="line">        <span class="comment">// Fallback to setImmediate.</span></span><br><span class="line">        <span class="comment">// Techinically it leverages the (macro) task queue,</span></span><br><span class="line">        <span class="comment">// but it is still a better choice than setTimeout.</span></span><br><span class="line">        timerFunc = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            setImmediate(flushCallbacks)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Fallback to setTimeout.</span></span><br><span class="line">        timerFunc = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            setTimeout(flushCallbacks, <span class="number">0</span>)</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>为什么要优先使用 microtask 呢？macrotask 中两个不同任务之间可能穿插着 UI 的重渲染，所以需要在 microtask 中把所有 UI 重渲染之前将需要更新的数据全部更新，这样只需要一次重渲染就可以得到最新的 DOM。microtask 中最优的选择是使用 Promise，当浏览器不支持 Promise 再降级为 Mutation Observer，要注意的是 Mutation Observer 在 IE11 中是存在 Bug 的，见 <a href="https://github.com/vuejs/vue/issues/6466" target="_blank" rel="noopener">issue #6466</a>，所以在非 IE 的时候并且支持这个 API 才会使用，若这两个microtask 都不支持，那只能退而求其次，使用 macrotask 了。macrotask 中首选是 setImmediate，它比 setTimeout 拥有更好的性能，不需要不停的做超时检测，但是它只有 IE 兼容，<del>其次是 MessageChannel，一个MessageChannel实例对象拥有两个属性port1和port2，我们只需要将其中一个port监听message事件，另一个port通过postMessage向前一个port发送消息，这样前一个port的message事件就会被注册为macrotask，由于它也不需要做任何检测工作，所以性能也比setTimeout，</del>最后的选择则是setTimeout。</p>
-<p>但是这里我又想到了一个问题，既然 nextTick 是为了在数据更新后解决操作最新 DOM 的问题，那这必然就已经发生了一次重渲染，而从这里看又希望把数据更新尽量放在一起重渲染，这不是相矛盾了吗？于是我又仔细的看了下源码，发现当数据赋新的值时，通知相关依赖响应更新时，除非将 sync 设置为 true了，否则会调用 scheduler.js 中的 queueWathcer 方法，若队列中没有保存这个更新 watcher，则将更新 watcher 给保存到一个队列中，设置 nextTick(flushScheduleQueue)，当执行栈为空时才真正调用 wachter。当真正调用 watcher 时，则会触发视图的重新渲染(run() -&gt; getAndInvoke() -&gt; get() -&gt; getter() -&gt; updateComponent())，用户调用的 nextTick 只是和 flushSchedulerQueue 放在了一个回调列表中，并且 flushSchedulerQueue 会先执行，所以后面的回调能获取到更新后的 DOM。</p>
-<p>来个例子，直观一点。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.name = <span class="string">'Tom'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'1'</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'2'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"><span class="built_in">Promise</span>.resove().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;<span class="built_in">console</span>.log(<span class="string">'3'</span>);&#125;</span><br><span class="line"><span class="keyword">this</span>.$nextTick(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'4'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这段代码的运行结果为：1 -&gt; 4 -&gt; 3 -&gt; 2。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">nextTick</span> (<span class="params">cb?: Function, ctx?: Object</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> _resolve</span><br><span class="line">    callbacks.push(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (cb) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            cb.call(ctx)</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            handleError(e, ctx, <span class="string">'nextTick'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (_resolve) &#123;</span><br><span class="line">        _resolve(ctx)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">if</span> (!pending) &#123;</span><br><span class="line">        pending = <span class="literal">true</span></span><br><span class="line">        timerFunc()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// $flow-disable-line</span></span><br><span class="line">    <span class="keyword">if</span> (!cb &amp;&amp; <span class="keyword">typeof</span> <span class="built_in">Promise</span> !== <span class="string">'undefined'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">        _resolve = resolve</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因为 nextTick 函数一开始 pending 为 false，会执行 timerFunc，也就是说把回调放到了任务队列中，然后将 pending 设置为true，接下来的调用的 this.$nextTick 其实还是在调用 nextTick，此时 timerFunc 已经生成，它只会把传入的 cb 放到 callbacks 中，此时 callbacks 中就会有2个成员，flushSchedulerQueue 和另一个 cb，所以这里的顺序会先打印 1，再打印 4，接着执行 3 和 2。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
-<p>  可能你还没有注意到，Vue 异步执行 DOM 更新。只要观察到数据变化，Vue 将开启一个队列，并缓冲在同一事件循环中发生的所有数据改变。如果同一个 watcher 被多次触发，只会被推入到队列中一次。这种在缓冲时去除重复数据对于避免不必要的计算和 DOM 操作上非常重要。然后，在下一个的事件循环“tick”中，Vue 刷新队列并执行实际 (已去重的) 工作。Vue 在内部尝试对异步队列使用原生的 Promise.then 和 MessageChannel，如果执行环境不支持，会采用 setTimeout(fn, 0) 代替。<br>例如，当你设置 vm.someData = ‘new value’ ，该组件不会立即重新渲染。当刷新队列时，组件会在事件循环队列清空时的下一个“tick”更新。多数情况我们不需要关心这个过程，但是如果你想在 DOM 状态更新后做点什么，这就可能会有些棘手。虽然 Vue.js 通常鼓励开发人员沿着“数据驱动”的方式思考，避免直接接触 DOM，但是有时我们确实要这么做。为了在数据变化之后等待 Vue 完成更新 DOM ，可以在数据变化之后立即使用 Vue.nextTick(callback) 。这样回调函数在 DOM 更新完成后就会调用。</p>
-</blockquote>
-<p>在 beforeMount 生命周期后会创建一个 watcher 观察者实例，这个 watcher 中会把 updateComponent 函数传入，watcher 实例就会对 updateComponent 函数求值，而执行 updateCompontnt 函数会间接触发渲染函数(vm.$options.render)的执行，继而触发数据属性的 get 拦截器函数，从而将依赖收集。当依次有多个属性更改时，比如 this.name 修改值，就会收集渲染函数的观察者，然后又修改了 this.age，就又会收集一次渲染函数的观察者，但是因为队列中已经收集了渲染函数的观察者了，就不会再重复添加，所以最后只会触发一次重渲染。</p>
-<p>后面添加的 this.$nextTick 会和 flushSchedulerQueue(即渲染函数观察者或者还有定义的 watch等)一起被加到回调函数中。</p>
-
-      
-
-      
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -294,169 +202,25 @@ ga('send', 'pageview');
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">源码</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">异步</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
+        <div class="clearfix"></div>
+    </header>
   </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://gromimiss.github.io/2019/03/16/next-tick/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-
-    </div>
-  </div>
-
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2019/03/19/webpack/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Webpack 4 总结
-        
-      </div>
-    </a>
   
   
-    <a href="/2019/03/15/type/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JS 中的基本类型和引用类型</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础介绍"><span class="toc-number">1.</span> <span class="toc-text">基础介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise"><span class="toc-number">1.1.</span> <span class="toc-text">Promise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MutationObserver"><span class="toc-number">1.2.</span> <span class="toc-text">MutationObserver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#setImmediate"><span class="toc-number">1.3.</span> <span class="toc-text">setImmediate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件循环"><span class="toc-number">1.4.</span> <span class="toc-text">事件循环</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源码解析"><span class="toc-number">2.</span> <span class="toc-text">源码解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#flushCallbacks"><span class="toc-number">2.1.</span> <span class="toc-text">flushCallbacks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异步的选择"><span class="toc-number">2.2.</span> <span class="toc-text">异步的选择</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  <section id="comments" class="comments">
-    <style>
-      .comments{margin:30px;padding:10px;background:#fff}
-      @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-    </style>
-    <div id="vcomment" class="comment"></div>
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '#vcomment',
-            notify: notify,
-            verify: verify,
-            app_id: "pOkwQmGy3CKeFHxcTiL55KQr-gzGzoHsz",
-            app_key: "uLQVq8XXSXTsVG8Bpl1b8Sip",
-            placeholder: "要不要唠两句？",
-            avatar:"mm"
-        });
-    }
-</script>
-
-  </section>
+    </div></section>
   
 
-  
-
-  
-
-  
-
-  
-
-  
-
+    
 
 
           </div>
@@ -480,9 +244,9 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
