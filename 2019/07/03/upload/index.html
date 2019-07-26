@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://gromimiss.github.io">
-  <title>Archives | Gromimiss&#39;s Blog</title>
+  <title>文件上传 | Gromimiss&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前端学习记录博客">
-<meta name="keywords" content="前端，js，开发者，it，code">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Gromimiss&#39;s Blog">
-<meta property="og:url" content="https://gromimiss.github.io/archives/index.html">
+  <meta name="description" content="一直对文件相关的 API 不是很了解，这次做到移动端上传图片的需求就想着总结记录一下。">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件上传">
+<meta property="og:url" content="https://gromimiss.github.io/2019/07/03/upload/index.html">
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
-<meta property="og:description" content="前端学习记录博客">
+<meta property="og:description" content="一直对文件相关的 API 不是很了解，这次做到移动端上传图片的需求就想着总结记录一下。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-26T10:16:12.933Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gromimiss&#39;s Blog">
-<meta name="twitter:description" content="前端学习记录博客">
+<meta name="twitter:title" content="文件上传">
+<meta name="twitter:description" content="一直对文件相关的 API 不是很了解，这次做到移动端上传图片的需求就想着总结记录一下。">
   
     <link rel="alternative" href="/atom.xml" title="Gromimiss&#39;s Blog" type="application/atom+xml">
   
@@ -163,82 +164,106 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-upload" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/25/charles/" class="archive-article-date">
-  	<time datetime="2019-07-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-25</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/25/charles/">charles 的常用操作</a>
+    <h1 class="article-title" itemprop="name">
+      文件上传
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">charles</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">工具</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">抓包</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/03/upload/" class="archive-article-date">
+        
+        <a href="/2019/07/03/upload/" class="archive-article-date">
   	<time datetime="2019-07-02T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-03</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/03/upload/">文件上传</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
+        
+        
           
+  <div style="margin-top:10px;font-size: 12px; color: #999;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.2k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">5分</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <i class="icon-book" style="font-size: 12px;"></i>
+      <span id="busuanzi_container_page_pv">
+        本文总阅读量
+        <span id="busuanzi_value_page_pv"></span>
+        次
+      </span>
+    </span>
+
+  </div>
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一直对文件相关的 API 不是很了解，这次做到移动端上传图片的需求就想着总结记录一下。</p>
+<a id="more"></a>
+<h2 id="相关对象"><a href="#相关对象" class="headerlink" title="相关对象"></a>相关对象</h2><h3 id="FileReader"><a href="#FileReader" class="headerlink" title="FileReader"></a>FileReader</h3><p>FileReader 用来异步读取存储在用户计算机上的文件内容，可读取 Blob 或 File 对象。</p>
+<p>常用方法：</p>
+<ul>
+<li>readAsDataUrl(file/blob)：将指定的对象读取为一个 base64 编码的 URL</li>
+<li>readAsText(file/blob, [,encoding])：将指定的对象根据特殊的编码格式转化为响应的字符串，* encoding 默认为 utf-8</li>
+<li>readAsArrayBuffer(file/blob)：将指定的对象读取为一个 ArrayBuffer</li>
+</ul>
+<p>常用事件：</p>
+<ul>
+<li>load：文件成功读取时触发</li>
+<li>error：文件读取失败时触发</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line">reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 读取的结果，ev.target.result === reader.result</span></span><br><span class="line">    <span class="built_in">console</span>.log(ev.target.result)</span><br><span class="line">&#125;;</span><br><span class="line">reader.readAsDataURL(file);</span><br></pre></td></tr></table></figure>
+<h3 id="Blob"><a href="#Blob" class="headerlink" title="Blob"></a>Blob</h3><p>一个不可变、原始数据的类文件对象，可以通过 Blob() 构造函数将一个非 Blob 对象和数据构造为一个 Blob 对象。</p>
+<p>Blob(array, [,options]): 可将由 ArrayBuffer, ArrayBufferView, Blob, DOMString 或者其他类似对象的混合体组成的数组转换为一个 Blob 对象。</p>
+<h3 id="File"><a href="#File" class="headerlink" title="File"></a>File</h3><p>File 基于 Blob，它继承了 Blob 的功能并且支持用户系统上的文件。以下三种情况下都会返回这种对象：</p>
+<ol>
+<li>用户通过 <code>&lt;input&gt;</code> 元素选择文件后返回的 FileList 对象</li>
+<li>拖放操作时生成的 DataTransfer 对象</li>
+<li>HTMLCanvasElement 中的 mozGetAsFile()</li>
+</ol>
+<h3 id="ArrayBuffer"><a href="#ArrayBuffer" class="headerlink" title="ArrayBuffer"></a>ArrayBuffer</h3><p>一个用来表示通用、固定长度的原始二进制数据缓冲区。通过  ArrayBuffer 构造函数分配一段可以存放数据的连续内存区域。详细见[<a href="https://blog.csdn.net/lichwei1983/article/details/43893025]。" target="_blank" rel="noopener">https://blog.csdn.net/lichwei1983/article/details/43893025]。</a></p>
+<h3 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h3><p>URL.createObjectURL()：返回一个 URL，这个URL表示指定的 File 对象 / Blob 对象，一般用来显示图片。<br>URL.revokeObjectURL()：用完释放 URL 以获得最佳性能和内存使用状况。</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>如果需要一次上传多张图片则要设置 multiple 属性，这个属性在 ios 中有效，但是 android 中还是只能上传单张图片。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">type</span>=<span class="string">"file"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">ref</span>=<span class="string">"uploadImg"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">multiple</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">accept</span>=<span class="string">'image/*'</span></span></span><br><span class="line"><span class="tag">    @<span class="attr">change</span>=<span class="string">"change"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>移动端上传图片，由于现在很多手机像素都很高，所以上传的手机中的照片都很大，以至于上传会很慢，所以需要对图片先做一个压缩再进行上传。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">change(event) &#123;</span><br><span class="line">    <span class="keyword">const</span> files = <span class="keyword">this</span>.$refs.uploadImg.files;</span><br><span class="line">    <span class="keyword">const</span> len = <span class="keyword">this</span>.imgList.length;</span><br><span class="line">    <span class="keyword">if</span> (len + files.length &gt; <span class="number">9</span>) &#123;</span><br><span class="line">        note(<span class="string">'图片最多可上传9张'</span>, &#123;</span><br><span class="line">            mask: <span class="literal">false</span>,</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">Array</span>.prototype.forEach.call(files, (file, index) =&gt; &#123;</span><br><span class="line">        <span class="keyword">let</span> url = URL.createObjectURL(file);</span><br><span class="line">        <span class="keyword">this</span>.imgList.push(&#123;</span><br><span class="line">            status: <span class="string">'loading'</span>,</span><br><span class="line">            displayPath: url,</span><br><span class="line">            realPath: <span class="string">''</span>,</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">window</span>.ArrayBuffer &amp;&amp;</span><br><span class="line">            <span class="built_in">window</span>.Uint8Array &amp;&amp;</span><br><span class="line">            <span class="built_in">window</span>.Blob &amp;&amp;</span><br><span class="line">            <span class="built_in">window</span>.File &amp;&amp;</span><br><span class="line">            file.size &gt; <span class="number">1024</span> * <span class="number">1024</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.compress(url, file, index, len);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.uploadImg(file, index, len);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;,</span><br><span class="line">compress(url, file, index, len) &#123;</span><br><span class="line">    <span class="keyword">const</span> img = <span class="keyword">new</span> Image();</span><br><span class="line">    img.src = url;</span><br><span class="line">    img.onload = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> width = img.width;</span><br><span class="line">        <span class="keyword">let</span> height = img.height;</span><br><span class="line">        <span class="keyword">let</span> ratio;</span><br><span class="line">        <span class="keyword">if</span> ((ratio = width * height / <span class="number">1000000</span>) &gt; <span class="number">1</span>) &#123;</span><br><span class="line">            ratio = <span class="built_in">Math</span>.sqrt(ratio);</span><br><span class="line">            width /= ratio;</span><br><span class="line">            height /= ratio;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            ratio = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">let</span> canvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>);</span><br><span class="line">        canvas.width = width;</span><br><span class="line">        canvas.height = height;</span><br><span class="line">        <span class="keyword">let</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line">        ctx.drawImage(img, <span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line">        <span class="comment">// 进行最小压缩</span></span><br><span class="line">        <span class="keyword">let</span> ndata = canvas.toDataURL(<span class="string">'image/jpeg'</span>, <span class="number">0.5</span>);</span><br><span class="line">        canvas = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.transformFile(ndata, file, index, len);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;,</span><br><span class="line">transformFile(url, file, index, len) &#123;</span><br><span class="line">    <span class="comment">// 解码使用 base-64 编码的字符串</span></span><br><span class="line">    <span class="keyword">let</span> bytes = atob(url.split(<span class="string">','</span>)[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">let</span> arrBf = <span class="keyword">new</span> <span class="built_in">ArrayBuffer</span>(bytes.length);</span><br><span class="line">    <span class="keyword">let</span> unitArr = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(arrBf);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; bytes.length; i++) &#123;</span><br><span class="line">        unitArr[i] = bytes.charCodeAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> blob = <span class="keyword">new</span> Blob([arrBf], &#123;</span><br><span class="line">        type: file.type,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">new</span> File([blob], name, &#123;</span><br><span class="line">        type: file.type,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">if</span> (result &amp;&amp; result.size) &#123;</span><br><span class="line">        <span class="keyword">this</span>.uploadImg(result, index, len);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.uploadImg(file, index, len);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">uploadImg(file, index, len) &#123;</span><br><span class="line">    uploadImage([file]).then(<span class="function">(<span class="params">urls</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.imgList[len + index].status = <span class="string">'success'</span>;</span><br><span class="line">        <span class="keyword">this</span>.imgList[len + index].realPath = urls[<span class="number">0</span>];</span><br><span class="line">    &#125;)</span><br><span class="line">        .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.imgList[len + index].status = <span class="string">'failed'</span>;</span><br><span class="line">            note(<span class="string">'服务器异常'</span>, &#123;</span><br><span class="line">                mask: <span class="literal">false</span>,</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;,</span><br><span class="line">removeImg(index) &#123;</span><br><span class="line">    URL.revokeObjectURL(<span class="keyword">this</span>.imgList[index].displayPath);</span><br><span class="line">    <span class="keyword">this</span>.imgList.splice(index, <span class="number">1</span>);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><ol>
+<li>使用相机拍照后上传，上传一次后change事件不再触发（在公司APP内是这样子，在浏览器中正常）</li>
+<li>在安卓手机中直接打开相册上传图片只能选择一张，目前没办法做到选择多张</li>
+<li>在贝赚APP中上传图片只能选择图片不能选择照相</li>
+<li>在 app 上页面请求和其他资源请求协议不一致可能会出问题。页面是 http 请求，但是图片是 https 请求，图片在公司 APP 中就无法正常显示，所以不能写死协议，由浏览器自动补全</li>
+<li>在安卓手机中当上传一次图片之后取消选择也会触发 change 事件，所以要在 change 事件中加一层判断</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>若是承载在 app 上的 h5 页面做上传图片最好还是使用原生提供的方法或者在微信上可以使用 jssdk 提供的上传图片，要不然体验还是不怎么好。</p>
+
+      
+
+      
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -250,376 +275,158 @@ ga('send', 'pageview');
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/24/emojiEditor/" class="archive-article-date">
-  	<time datetime="2019-06-23T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/24/emojiEditor/">表情编辑器组件的简单实现</a>
-    </h1>
-  
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://gromimiss.github.io/2019/07/03/upload/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+    </div>
   </div>
+
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/21/page/" class="archive-article-date">
-  	<time datetime="2019-05-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-21</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/07/25/charles/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          charles 的常用操作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/06/24/emojiEditor/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">表情编辑器组件的简单实现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/21/page/">由于分页组件引发的一些思考</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">组件库</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#相关对象"><span class="toc-number">1.</span> <span class="toc-text">相关对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FileReader"><span class="toc-number">1.1.</span> <span class="toc-text">FileReader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Blob"><span class="toc-number">1.2.</span> <span class="toc-text">Blob</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#File"><span class="toc-number">1.3.</span> <span class="toc-text">File</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ArrayBuffer"><span class="toc-number">1.4.</span> <span class="toc-text">ArrayBuffer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URL"><span class="toc-number">1.5.</span> <span class="toc-text">URL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体实现"><span class="toc-number">2.</span> <span class="toc-text">具体实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的问题"><span class="toc-number">3.</span> <span class="toc-text">遇到的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/04/29/performance/" class="archive-article-date">
-  	<time datetime="2019-04-28T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/29/performance/">浏览器渲染过程及前端页面性能分析优化</a>
-    </h1>
+  <section id="comments" class="comments">
+    <style>
+      .comments{margin:30px;padding:10px;background:#fff}
+      @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+    </style>
+    <div id="vcomment" class="comment"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "pOkwQmGy3CKeFHxcTiL55KQr-gzGzoHsz",
+            app_key: "uLQVq8XXSXTsVG8Bpl1b8Sip",
+            placeholder: "要不要唠两句？",
+            avatar:"mm"
+        });
+    }
+</script>
+
+  </section>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">chrome</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">优化</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/04/11/autofocus/" class="archive-article-date">
-  	<time datetime="2019-04-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/11/autofocus/">移动端的一些小问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">移动端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/29/oauth/" class="archive-article-date">
-  	<time datetime="2019-03-28T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/29/oauth/">记录 OAuth 机制</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">OAuth</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">微信授权</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/23/promise/" class="archive-article-date">
-  	<time datetime="2019-03-22T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/23/promise/">自己手写一个 Promise</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">异步</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/19/webpack/" class="archive-article-date">
-  	<time datetime="2019-03-18T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/19/webpack/">Webpack 4 总结</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">webpack</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">打包</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/16/next-tick/" class="archive-article-date">
-  	<time datetime="2019-03-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/16/next-tick/">记对 Vue 中 nextTick 的理解及总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">源码</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
-  
-
 
 
 
@@ -644,8 +451,8 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

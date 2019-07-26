@@ -17,7 +17,7 @@
 <meta property="og:description" content="在项目中遇到需要用到表情编辑器的需求，看到老后台里面的表情编辑器一堆 Bug，正好这个项目要迁移新后台，就想着重构一版，原本以为挺简单的一玩意，但是真正开发的过程中遇到了很多问题。之前也没有这块的经验，都是直接使用的网上现成的库，所以这次想着记录一下摸索的过程。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://gromimiss.github.io/assets/emojiEditor/1.jpg">
-<meta property="og:updated_time" content="2019-06-25T07:39:25.504Z">
+<meta property="og:updated_time" content="2019-06-26T08:23:51.793Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="表情编辑器组件的简单实现">
 <meta name="twitter:description" content="在项目中遇到需要用到表情编辑器的需求，看到老后台里面的表情编辑器一堆 Bug，正好这个项目要迁移新后台，就想着重构一版，原本以为挺简单的一玩意，但是真正开发的过程中遇到了很多问题。之前也没有这块的经验，都是直接使用的网上现成的库，所以这次想着记录一下摸索的过程。">
@@ -234,14 +234,14 @@ ga('send', 'pageview');
 <p>UI 展示如下：</p>
 <center><br>    <img src="/assets/emojiEditor/1.jpg" width="40%"><br></center>
 
-<h2 id="主要实现"><a href="#主要实现" class="headerlink" title="主要实现"></a>主要实现</h2><h3 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h3><ol>
+<h2 id="主要实现"><a href="#主要实现" class="headerlink" title="主要实现"></a>主要实现</h2><h3 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h3><ul>
 <li>准备表情合成的雪碧图、表情字符和对应类名间的映射文件</li>
 <li>基本 HTML 结构：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;cus-emoji-editor&quot; :style=&quot;styleObj&quot; @click.stop=&quot;&quot;&gt;</span><br><span class="line">    &lt;!-- 工具栏：插入表情的按钮 --&gt;</span><br><span class="line">    &lt;div class=&quot;cus-emoji-editor__toolbar&quot;&gt;</span><br><span class="line">        &lt;span </span><br><span class="line">            id=&quot;emojiBtn&quot; </span><br><span class="line">            class=&quot;cus-emoji-editor__btn-emoji&quot;</span><br><span class="line">            @click=&quot;insertAutoFocus&quot;&gt;&lt;/span&gt;</span><br><span class="line">        &lt;ui-popover </span><br><span class="line">            target=&quot;#emojiBtn&quot;</span><br><span class="line">            ref=&quot;emojiPopover&quot; </span><br><span class="line">            placement=&quot;top&quot;</span><br><span class="line">            trigger=&quot;click&quot;&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;ui-menu </span><br><span class="line">                    :menu=&quot;menu&quot; </span><br><span class="line">                    class=&quot;cus-emoji-editor__emoji-menu line&quot; </span><br><span class="line">                    @emit=&quot;menuChange&quot;</span><br><span class="line">                    current-menu=&quot;emoji&quot;&gt;&lt;/ui-menu&gt;</span><br><span class="line">                &lt;div class=&quot;cus-emoji-editor__emoji-body&quot;&gt;</span><br><span class="line">                    &lt;i </span><br><span class="line">                        v-for=&quot;(item, key) in emojData&quot; </span><br><span class="line">                        :key=&quot;key&quot; </span><br><span class="line">                        :class=&quot;item&quot; </span><br><span class="line">                        :title=&quot;key + &apos;_web&apos;&quot; </span><br><span class="line">                        @click=&quot;insertEmoji(key, item)&quot;&gt;&lt;/i&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/ui-popover&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;!-- 编辑区域--&gt;</span><br><span class="line">    &lt;div class=&quot;cus-emoji-editor__content&quot;&gt;</span><br><span class="line">        &lt;div </span><br><span class="line">            class=&quot;cus-emoji-editor__placeholder&quot; </span><br><span class="line">            v-if=&quot;placeholder &amp;&amp; !hasVal &amp;&amp; !isFocus&quot; </span><br><span class="line">            @click=&quot;focus&quot;&gt;&#123;&#123;placeholder&#125;&#125;&lt;/div&gt;</span><br><span class="line">        &lt;div </span><br><span class="line">            class=&quot;cus-emoji-editor__input&quot;</span><br><span class="line">            v-html=&quot;content&quot;</span><br><span class="line">            contenteditable=&quot;true&quot;</span><br><span class="line">            ref=&quot;input&quot;</span><br><span class="line">            @focus=&quot;isFocus = true&quot;</span><br><span class="line">            @blur=&quot;isFocus = false&quot;</span><br><span class="line">            @input=&quot;handleInput&quot;</span><br><span class="line">            @paste=&quot;handlePaste&quot;&gt;&lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;cus-emoji-editor__len&quot; v-if=&quot;max&quot;&gt;</span><br><span class="line">            &#123;&#123;len&#125;&#125;/&#123;&#123;max&#125;&#125;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-<ol start="3">
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;cus-emoji-editor&quot; :style=&quot;styleObj&quot; @click.stop=&quot;&quot;&gt;</span><br><span class="line">    &lt;!-- 工具栏：插入表情的按钮 --&gt;</span><br><span class="line">    &lt;div class=&quot;cus-emoji-editor__toolbar&quot;&gt;</span><br><span class="line">        &lt;span </span><br><span class="line">            id=&quot;emojiBtn&quot; </span><br><span class="line">            class=&quot;cus-emoji-editor__btn-emoji&quot;</span><br><span class="line">            @click=&quot;insertAutoFocus&quot;&gt;&lt;/span&gt;</span><br><span class="line">        &lt;ui-popover </span><br><span class="line">            target=&quot;#emojiBtn&quot;</span><br><span class="line">            ref=&quot;emojiPopover&quot; </span><br><span class="line">            placement=&quot;top&quot;</span><br><span class="line">            trigger=&quot;click&quot;&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;ui-menu </span><br><span class="line">                    :menu=&quot;menu&quot; </span><br><span class="line">                    class=&quot;cus-emoji-editor__emoji-menu line&quot; </span><br><span class="line">                    @emit=&quot;menuChange&quot;</span><br><span class="line">                    current-menu=&quot;emoji&quot;&gt;&lt;/ui-menu&gt;</span><br><span class="line">                &lt;div class=&quot;cus-emoji-editor__emoji-body&quot;&gt;</span><br><span class="line">                    &lt;i </span><br><span class="line">                        v-for=&quot;(item, key) in emojData&quot; </span><br><span class="line">                        :key=&quot;key&quot; </span><br><span class="line">                        :class=&quot;item&quot; </span><br><span class="line">                        :title=&quot;key + &apos;_web&apos;&quot; </span><br><span class="line">                        @click=&quot;insertEmoji(key, item)&quot;&gt;&lt;/i&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/ui-popover&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;!-- 编辑区域--&gt;</span><br><span class="line">    &lt;div class=&quot;cus-emoji-editor__content&quot;&gt;</span><br><span class="line">        &lt;div </span><br><span class="line">            class=&quot;cus-emoji-editor__placeholder&quot; </span><br><span class="line">            v-if=&quot;placeholder &amp;&amp; !hasVal &amp;&amp; !isFocus&quot; </span><br><span class="line">            @click=&quot;focus&quot;&gt;&#123;&#123;placeholder&#125;&#125;&lt;/div&gt;</span><br><span class="line">        &lt;div </span><br><span class="line">            class=&quot;cus-emoji-editor__input&quot;</span><br><span class="line">            v-html=&quot;content&quot;</span><br><span class="line">            contenteditable=&quot;true&quot;</span><br><span class="line">            ref=&quot;input&quot;</span><br><span class="line">            @focus=&quot;isFocus = true&quot;</span><br><span class="line">            @blur=&quot;isFocus = false&quot;</span><br><span class="line">            @compositionstart=&quot;isComplete = false&quot;</span><br><span class="line">            @compositionend=&quot;isComplete = true&quot;</span><br><span class="line">            @input=&quot;handleInput&quot;</span><br><span class="line">            @paste=&quot;handlePaste&quot;&gt;&lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;cus-emoji-editor__len&quot; v-if=&quot;max&quot;&gt;</span><br><span class="line">            &#123;&#123;len&#125;&#125;/&#123;&#123;max&#125;&#125;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<ul>
 <li>通过背景图位置的设置控制表情图的显示，比如：</li>
-</ol>
+</ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.qqemoji &#123;</span><br><span class="line">    display: inline-block;</span><br><span class="line">    width: 28px;</span><br><span class="line">    height: 28px;</span><br><span class="line">    background: url(xxx.png) 0 0 no-repeat;</span><br><span class="line">    zoom: 1;</span><br><span class="line">    background-size: 1900%;</span><br><span class="line">    cursor: pointer;</span><br><span class="line">    vertical-align: middle;</span><br><span class="line">    box-sizing: content-box;</span><br><span class="line">&#125;</span><br><span class="line">.qqemoji-1 &#123;</span><br><span class="line">    background-position: -4px -4px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="编辑器的主体功能"><a href="#编辑器的主体功能" class="headerlink" title="编辑器的主体功能"></a>编辑器的主体功能</h3><h4 id="相关属性及-api-复习"><a href="#相关属性及-api-复习" class="headerlink" title="相关属性及 api 复习"></a>相关属性及 api 复习</h4><p>想要了解所有 API，可见<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Selection" target="_blank" rel="noopener">文档</a>.</p>
 <ul>
@@ -274,16 +274,16 @@ ga('send', 'pageview');
 </ul>
 <p>下面是细节实现：</p>
 <ul>
-<li>输入文字是上面三个点中最简单的一个，它只需要保证光标是在一个 div 中（用于分行）。</li>
+<li>输入文字是上面三个点中最简单的一个，它只需要保证光标是在一个 div 中（用于分行），并且考虑输入中文时应该到输入完成才触发值的改变。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">handleInput(ev) &#123;</span><br><span class="line">    let firstChild = this.$refs.input.firstChild;</span><br><span class="line">    if (!firstChild || firstChild.nodeName !== &apos;DIV&apos;) &#123;</span><br><span class="line">        this.$refs.input.innerHTML = &apos;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">    // TODO：输入中文时到输入完成才触发值的改变</span><br><span class="line">    if (this.max || this.max === 0) &#123;</span><br><span class="line">        // 设置值</span><br><span class="line">        this.setVal();</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // 防抖设置值</span><br><span class="line">        this.debounceSetVal();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">setVal() &#123;</span><br><span class="line">    this.isInner = true;</span><br><span class="line">    const children = this.$refs.input.children;</span><br><span class="line">    let val = &apos;&apos;;</span><br><span class="line">    // 分行</span><br><span class="line">    for (let i = 0; i &lt; children.length; i++) &#123;</span><br><span class="line">        val = i !== children.length - 1 ?</span><br><span class="line">            `$&#123;val&#125;$&#123;children[i].textContent&#125;\n` : `$&#123;val&#125;$&#123;children[i].textContent&#125;`;</span><br><span class="line">    &#125;</span><br><span class="line">    this.value = val;</span><br><span class="line">    this.$emit(&apos;input&apos;, this.value);</span><br><span class="line">    this.$emit(&apos;change&apos;, this.value);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">handleInput(ev) &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        // 中文是否输完</span><br><span class="line">        if (!this.isComplete) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        let firstChild = this.$refs.input.firstChild;</span><br><span class="line">        if (!firstChild || firstChild.nodeName !== &apos;DIV&apos;) &#123;</span><br><span class="line">            this.$refs.input.innerHTML = &apos;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&apos;;</span><br><span class="line">        &#125;</span><br><span class="line">        if (this.max || this.max === 0) &#123;</span><br><span class="line">            this.setVal();</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            this.debounceSetVal();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, 0);</span><br><span class="line">&#125;,</span><br><span class="line">setVal() &#123;</span><br><span class="line">    this.isInner = true;</span><br><span class="line">    const children = this.$refs.input.children;</span><br><span class="line">    let val = &apos;&apos;;</span><br><span class="line">    // 分行</span><br><span class="line">    for (let i = 0; i &lt; children.length; i++) &#123;</span><br><span class="line">        val = i !== children.length - 1 ?</span><br><span class="line">            `$&#123;val&#125;$&#123;children[i].textContent&#125;\n` : `$&#123;val&#125;$&#123;children[i].textContent&#125;`;</span><br><span class="line">    &#125;</span><br><span class="line">    this.value = val;</span><br><span class="line">    this.$emit(&apos;input&apos;, this.value);</span><br><span class="line">    this.$emit(&apos;change&apos;, this.value);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 <ul>
 <li>插入表情里有很多需要注意的点:</li>
 </ul>
 <ol>
 <li>当没有进入编辑器的焦点时，选择表情也应该可以插入表情，并且要考虑到编辑器是否有值，默认聚焦光标会在编辑器的起始点，所以需要我们手动将光标移动到文本最后。</li>
 <li>当编辑器插入表情或者粘贴时，它会被添加到 <code>&lt;br&gt;</code> 后面，这个 <code>&lt;br&gt;</code> 不会被自动去掉。<code>&lt;br&gt;</code> 的作用是光标定位，在 <code>&lt;div&gt;</code> 里面加一个 <code>&lt;br&gt;</code> 可以让光标定位到 <code>&lt;div&gt;</code> 里面，但是要注意的是输入字符浏览器会自动去掉 <code>&lt;br&gt;</code>，而插入表情和复制粘贴需要我们自己手动去除。</li>
-<li>表情图片的展示必须使用 img 标签，否则光标没法正确的展示，但是 img 标签还是会有一个问题，由于没有设置 src 属性，它会有一个边框，通过设置 border 也没有办法去掉，只能通过在 src 上添加一个空白图片。</li>
+<li>表情图片的展示必须使用 img 标签，否则光标没法正确的展示，但是 img 标签还是会有一个问题，由于没有设置 src 属性，它会有一个边框，通过设置 border 也没有办法去掉，只能通过在 src 上添加一个透明图片。</li>
 <li>表情字符要存在一个标签中，这样之后就可以通过 textContent 属性获取所有文本内容，它包含了子孙元素中的文本。</li>
 <li>每个编辑器的类名必须要区分开来，否则若一个编辑器设置了 this.range，另一个编辑器也会拿到那个 range 的值，导致 range 混乱，插入表情出现问题（我这里是加了一个 manage.js，管理所有编辑器的 uid）。</li>
 <li>选中文本插入表情，选中文本应该被清除。</li>
@@ -304,13 +304,14 @@ ga('send', 'pageview');
 <li><code>&lt;br&gt;</code> 的作用只能是光标定位，换行会新增 <code>&lt;div&gt;&lt;br/&gt;&lt;/div&gt;</code>，但是当换行后又添加文字时 <code>&lt;br&gt;</code> 会被去掉，所以不能通过替换 <code>&lt;br&gt;</code> 为 \n 传到数据库，我们需要确保每一行都在一个 div 中，通过 div 来换行</li>
 <li>列表中显示表情编辑器的内容时，需要将 emoji 字符 替换为表情图。由于 replace 会替换掉所有符合的字符串，所以一定要加匹配到的表情字符去重，以防止二次替换（将 <span> 中的表情字符再次替换掉）。</span></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const parseEmojiMessage = (content) =&gt; &#123;</span><br><span class="line">    if (!content) &#123;</span><br><span class="line">        return &apos;&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">    let regx = /\[[\u2E80-\u9FFF|BQXK|BQTS|BQHL|BQJX|BQBA|BQMS|BQBG|BQBT|BQJR|BQQZ|BQLW]+\]/g; </span><br><span class="line">    // 匹配文本中表情相关信息</span><br><span class="line">    let matchList = content.match(regx);</span><br><span class="line">    let noRepeatMatch = [];</span><br><span class="line">    // 去重，防止替换过的在 span 标签中的表情字符被再次替换</span><br><span class="line">    matchList &amp;&amp; matchList.forEach((item) =&gt; &#123;</span><br><span class="line">        if (noRepeatMatch.indexOf(item) &lt;= -1) &#123;</span><br><span class="line">            noRepeatMatch.push(item);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    noRepeatMatch.forEach((item) =&gt; &#123;</span><br><span class="line">        let className = qqEmoj[item] || wxEmoj[item];</span><br><span class="line">        let str = `\\$&#123;item.substring(0, item.length - 1)&#125;\\]`;</span><br><span class="line">        content = content.replace(new RegExp(str, &apos;g&apos;), `&lt;span style=&quot;display: none;&quot;&gt;$&#123;item&#125;&lt;/span&gt;&lt;img class=&quot;$&#123;className&#125;&quot; /&gt;`);</span><br><span class="line">    &#125;);</span><br><span class="line">    return content;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">    const parseEmojiMessage = (content) =&gt; &#123;</span><br><span class="line">    if (!content) &#123;</span><br><span class="line">        return &apos;&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">    let regx = /\[[\u2E80-\u9FFF|BQXK|BQTS|BQHL|BQJX|BQBA|BQMS|BQBG|BQBT|BQJR|BQQZ|BQLW]+\]/g; // 匹配文本中表情相关信息</span><br><span class="line">    let matchList = content.match(regx);</span><br><span class="line">    let noRepeatMatch = [];</span><br><span class="line">    // 去重，防止替换过的在 span 标签中的表情字符被再次替换</span><br><span class="line">    matchList &amp;&amp; matchList.forEach((item) =&gt; &#123;</span><br><span class="line">        if (noRepeatMatch.indexOf(item) &lt;= -1) &#123;</span><br><span class="line">            noRepeatMatch.push(item);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    noRepeatMatch.forEach((item) =&gt; &#123;</span><br><span class="line">        let className = qqEmoj[item] || wxEmoj[item];</span><br><span class="line">        let str = `\\$&#123;item.substring(0, item.length - 1)&#125;\\]`;</span><br><span class="line">        // 替换的标签不要换行，否则表情中的\n处理会出问题</span><br><span class="line">        content = content</span><br><span class="line">            .replace(new RegExp(str, &apos;g&apos;), `&lt;span style=&quot;display: none;&quot;&gt;$&#123;item&#125;&lt;/span&gt;&lt;img src=&quot;http://h0.hucdn.com/open201926/c94e6ea80e94bba4_10x10.png&quot; class=&quot;$&#123;className&#125;&quot; /&gt;`);</span><br><span class="line">    &#125;);</span><br><span class="line">    return content;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>由于宽度设置的是百分比，当英文单词放不下时，width会自动拉长，想要自动换行可以：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.cus-emoji-editor__input &#123;</span><br><span class="line">    width: xxxpx;</span><br><span class="line">    word-wrap: break-word;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="未实现的优化"><a href="#未实现的优化" class="headerlink" title="未实现的优化"></a>未实现的优化</h4><ul>
-<li>输入中文时到确认输入完成才触发值的改变</li>
-<li>在 img 上添加空白图（解决边框的问题）</li>
 <li>复制 emoji 表情</li>
-<li>由于宽度设置的是百分比，当英文单词放不下时，width会自动拉长</li>
-<li>目前点击表情 tool 时编辑器会失焦，光标消失，最好编辑器还是聚焦的状态</li>
+<li>目前点击表情 tool 时编辑器会失焦，光标消失，最好让编辑器在点击的时候还是聚焦的状态</li>
 <li>每次符合条件的 range 对象都会被记录下来以至于之后失焦时点击插入表情都会插入在失焦时的位置，而首次没有 range 对象时点击插入表情会插入到文本末尾，这里可以考虑统一插入到最后（由于点击表情的时候编辑器就会失焦，所以没办法去区分是聚焦的时候点击的表情，还是失焦的时候点击的表情）</li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>看似简单的表情编辑器在真正开发的过程中遇到的问题还挺多的，并且结合场景还会发现一些平时注意不到的问题。以上只是一个表情编辑器的简单实现，还有很多细节需要去继续优化，后续再补充。</p>
@@ -403,6 +404,15 @@ ga('send', 'pageview');
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/07/03/upload/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          文件上传
+        
+      </div>
+    </a>
   
   
     <a href="/2019/05/21/page/" id="article-nav-older" class="article-nav-link-wrap">
@@ -569,19 +579,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">移动端</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">github pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">移动端</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -593,6 +603,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">OAuth</a>
               </li>
              
@@ -601,11 +615,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
+                <a href="javascript:void(0)" class="js-tag color3">charles</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">抓包</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -614,6 +632,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">打包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">node</a>
               </li>
              
               <li class="article-tag-list-item">
