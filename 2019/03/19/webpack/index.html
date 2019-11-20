@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
 <meta property="og:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-09-12T05:17:33.388Z">
+<meta property="og:updated_time" content="2019-11-20T06:20:17.812Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Webpack 4 总结">
 <meta name="twitter:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
@@ -187,7 +187,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">5.1k字</span>
+        <span class="post-count">5k字</span>
       </span>
     </span>
 
@@ -259,7 +259,7 @@ ga('send', 'pageview');
 <li><p>output: 出口配置<br>filename 中的 name 是 entry 中对象的属性名，若 entry 是字符串或者是数组，则默认会是 main。<br>在这里需要讲一下 hash、chunkhash、contenthash 的区别：</p>
 <ul>
 <li>hash： 根据打包后的文件内容计算出来的 hash 值，它跟整个项目相关，所以所有的文件被打包出来都用的同一个 hash 值，这也就意味着项目中任何一个文件的改动都会导致 hash 值改变，导致缓存失效。</li>
-<li>chunkhash：根据不同的入口进行依赖解析，构建对应的 chunk，生成对应的 hash 值。我们往往会把公共库和业务代码分开，单独打包，这样业务代码的改动就不会影响到公共库的 hash 值受影响。但是要注意的是业务入口文件往往依赖了相应的 css 文件，这就导致css</li>
+<li>chunkhash：根据不同的入口进行依赖解析，构建对应的 chunk，生成对应的 hash 值。我们往往会把公共库和业务代码分开，单独打包，这样业务代码的改动就不会影响到公共库的 hash 值受影响。</li>
 <li>contenthash：由文件内容产生的 hash 值。我们的入口文件中往往依赖了 css 文件，若按 chunkhash 来打包，那么 css 和 js 其实用的是同一个 hash 值，这就导致 css 没有改动的情况下也会跟着受影响，这个时候就可以将 css 抽离出来并使用按 css 文件内容的计算产生的 hash 值。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">    filename: <span class="string">'[name].[hash].js'</span>,</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'build'</span>) <span class="comment">// 打包后的文件的输出目录</span></span><br><span class="line">    publicPath: <span class="string">''</span> <span class="comment">// 当资源托管到 CDN 时可使用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -677,27 +677,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">node</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">移动端</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vue</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -713,6 +697,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">源码</a>
               </li>
              
@@ -725,15 +721,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">chrome</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -745,7 +745,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+                <a href="javascript:void(0)" class="js-tag color5">node</a>
               </li>
             
             <div class="clearfix"></div>
