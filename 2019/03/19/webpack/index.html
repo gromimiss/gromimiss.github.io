@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
 <meta property="og:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-23T01:19:01.856Z">
+<meta property="og:updated_time" content="2019-09-12T05:17:33.388Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Webpack 4 总结">
 <meta name="twitter:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
@@ -187,7 +187,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">4.7k字</span>
+        <span class="post-count">5.1k字</span>
       </span>
     </span>
 
@@ -196,7 +196,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">20分</span>
+        <span class="post-count">21分</span>
       </span>
     </span>
 
@@ -246,7 +246,8 @@ ga('send', 'pageview');
 <li></li>
 </ol>
 <ul>
-<li>mode: 模式，有两种（production development），默认是 production</li>
+<li><p>mode: 模式，有两种（production development），默认是 production，它会告知 webpack 使用什么模式的内置优化</p>
+</li>
 <li><p>entry: 打包的入口文件</p>
 <p>单入口(只打包一个文件)：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">entry: <span class="string">'./src/index.js'</span></span><br></pre></td></tr></table></figure>
@@ -255,13 +256,18 @@ ga('send', 'pageview');
 <p>多入口打包成一个文件：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">entry: [<span class="string">'./src/index.js'</span>, <span class="string">'jquery'</span>] <span class="comment">// 相当于 entry: &#123; main: ['./src/index.js', 'jquery']&#125;</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>output: 出口配置<br>filename中的 name 是 entry 中对象的属性名，若 entry 是字符串或者是数组，则默认会是 main，hash 则是根据打包后的文件内容计算出来的 hash 值。</p>
+<li><p>output: 出口配置<br>filename 中的 name 是 entry 中对象的属性名，若 entry 是字符串或者是数组，则默认会是 main。<br>在这里需要讲一下 hash、chunkhash、contenthash 的区别：</p>
+<ul>
+<li>hash： 根据打包后的文件内容计算出来的 hash 值，它跟整个项目相关，所以所有的文件被打包出来都用的同一个 hash 值，这也就意味着项目中任何一个文件的改动都会导致 hash 值改变，导致缓存失效。</li>
+<li>chunkhash：根据不同的入口进行依赖解析，构建对应的 chunk，生成对应的 hash 值。我们往往会把公共库和业务代码分开，单独打包，这样业务代码的改动就不会影响到公共库的 hash 值受影响。但是要注意的是业务入口文件往往依赖了相应的 css 文件，这就导致css</li>
+<li>contenthash：由文件内容产生的 hash 值。我们的入口文件中往往依赖了 css 文件，若按 chunkhash 来打包，那么 css 和 js 其实用的是同一个 hash 值，这就导致 css 没有改动的情况下也会跟着受影响，这个时候就可以将 css 抽离出来并使用按 css 文件内容的计算产生的 hash 值。</li>
+</ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">    filename: <span class="string">'[name].[hash].js'</span>,</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'build'</span>) <span class="comment">// 打包后的文件的输出目录</span></span><br><span class="line">    publicPath: <span class="string">''</span> <span class="comment">// 当资源托管到 CDN 时可使用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>module: 在 module 中可以配置 loader，loader 的执行顺序是从右向左，从下向上的;也可以配置 noParse，指定的包不用去解析其中的依赖关系（若这个包中没有依赖项）</p>
 </li>
 <li><p>devServer：开发服务器的配置</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">    port: <span class="number">8080</span>, <span class="comment">// 端口号</span></span><br><span class="line">    progress: <span class="literal">true</span>, <span class="comment">// 是否显示进度条</span></span><br><span class="line">    contentBase: <span class="string">'./build'</span>, <span class="comment">//</span></span><br><span class="line">    compress: <span class="literal">true</span>, <span class="comment">// 启动服务器的 gzip 压缩</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">    port: <span class="number">8080</span>, <span class="comment">// 端口号</span></span><br><span class="line">    progress: <span class="literal">true</span>, <span class="comment">// 是否显示进度条</span></span><br><span class="line">    contentBase: <span class="string">'./build'</span>, </span><br><span class="line">    compress: <span class="literal">true</span>, <span class="comment">// 启动服务器的 gzip 压缩</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>externals：指定某些包是外部引入的，不需要打包</p>
 </li>
@@ -320,7 +326,7 @@ ga('send', 'pageview');
 <ul>
 <li><p>eslint-loader: 校验 js 代码</p>
 </li>
-<li><p>vue-loader: 解析 vue 文件，将其中的 script、style、template提取出来，交给对应的 loader 去处理（它会根据 lang 特性以及你 webpack 配置中的规则自动推断出要使用的 loader）</p>
+<li><p>vue-loader: 解析 vue 文件，将其中的 script、style、template 提取出来，交给对应的 loader 去处理（它会根据 lang 特性以及你 webpack 配置中的规则自动推断出要使用的 loader）</p>
 </li>
 </ul>
 <h3 id="常用的-plugin"><a href="#常用的-plugin" class="headerlink" title="常用的 plugin"></a>常用的 plugin</h3><ul>
@@ -364,16 +370,17 @@ ga('send', 'pageview');
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">    hot: <span class="literal">true</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="keyword">new</span> webpack.HotModuleReplacementPlugin()</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="scope-hosting"><a href="#scope-hosting" class="headerlink" title="scope hosting"></a>scope hosting</h3><p>scope hosting: 作用域提升，在 webpack 3 中新增的功能，它会自动省略一些可以简化的代码</p>
+<h3 id="scope-hosting"><a href="#scope-hosting" class="headerlink" title="scope hosting"></a>scope hosting</h3><p>scope hosting: 作用域提升，在 webpack 3 中新增的功能，它会分析出模块之间的依赖关系，尽可能的把打散的模块合并到一个函数中去，并且只有那些被引用了一次的模块才能被合并。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">let</span> c = a + b;</span><br><span class="line"><span class="built_in">console</span>.log(c) <span class="comment">// 会变成 console.log(1 + 2)</span></span><br></pre></td></tr></table></figure>
-<h3 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h3><p>import(): 属于 es6 草案中的语法，通过 jsonp 实现动态加载，会返回一个 Promise 对象</p>
+<h3 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h3><p>vue 异步组件 + webpack 代码分割 + import() 实现 vue 路由懒加载，<a href="https://router.vuejs.org/zh/guide/advanced/lazy-loading.html" target="_blank" rel="noopener">详见官方</a>。</p>
+<p>import(): 属于 es6 草案中的语法，通过 jsonp 实现动态加载，会返回一个 Promise 对象</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(<span class="string">'./src/index.js'</span>).then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data.default); <span class="comment">// ./src/index.js' 中导出的数据</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <h3 id="适用于-vue-项目的优化配置"><a href="#适用于-vue-项目的优化配置" class="headerlink" title="适用于 vue 项目的优化配置"></a>适用于 vue 项目的优化配置</h3><h4 id="将开发环境与生产环境分离："><a href="#将开发环境与生产环境分离：" class="headerlink" title="将开发环境与生产环境分离："></a>将开发环境与生产环境分离：</h4><ul>
-<li>开发时产生的debug或者是测试的代码不应出现在生产环境中</li>
-<li>将页面部署到服务器时，会对代码进行各种优化，破坏代码可读性，不利于debug等工作</li>
-<li>数据源差异，开发时，读取的往往是本地mock的数据</li>
+<li>开发时产生的 debug 或者是测试的代码不应出现在生产环境中</li>
+<li>将页面部署到服务器时，会对代码进行各种优化，破坏代码可读性，不利于 debug 等工作</li>
+<li>数据源差异，开发时，读取的往往是本地 mock 的数据</li>
 </ul>
-<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>DllPlugin + DllReferencePlugin 和 splitChunks 可以一起使用，通过 splitChunks 把公共的部分抽离出来，DllPlugin 则抽离不易变动的第三方库，本来想尝试下在开发环境上加上 DllPlugin ，但是由于起服务使用内存来存储webpack开发环境下的打包文件，找不到另外打包出来的第三方库，并且开发环境上本来也是热更新的，所以就不再加了。</p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>DllPlugin + DllReferencePlugin 和 splitChunks 可以一起使用，通过 splitChunks 把公共的部分抽离出来，DllPlugin 则抽离不易变动的第三方库，本来想尝试下在开发环境上加上 DllPlugin ，但是由于起服务使用内存来存储 webpack 开发环境下的打包文件，找不到另外打包出来的第三方库，并且开发环境上本来也是热更新的，所以就不再加了。</p>
 <ol>
 <li><p>先创建一个基础的配置文件 webpack.base.js</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> resolveCur = <span class="function"><span class="keyword">function</span>(<span class="params">...p</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> path.resolve(__dirname, ...p);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> VueLoaderPlugin = <span class="built_in">require</span>(<span class="string">'vue-loader/lib/plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        resolve: &#123;</span><br><span class="line">            modules: [resolveCur(<span class="string">'../node_modules'</span>)],</span><br><span class="line">            extensions: [<span class="string">'.js'</span>, <span class="string">'.vue'</span>, <span class="string">'.json'</span>],</span><br><span class="line">            alias: &#123; <span class="attr">vue$</span>: <span class="string">'vue/dist/vue.common.js'</span> &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        resolveLoader: &#123; <span class="attr">modules</span>: [resolveCur(<span class="string">'../node_modules'</span>)] &#125;,</span><br><span class="line">        <span class="built_in">module</span>: &#123;</span><br><span class="line">            rules: [</span><br><span class="line">                &#123;</span><br><span class="line">                    test: <span class="regexp">/\.vue$/</span>,</span><br><span class="line">                    use: <span class="string">'vue-loader'</span></span><br><span class="line">                &#125;,</span><br><span class="line">            </span><br><span class="line">                &#123;</span><br><span class="line">                    test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">                    exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">                    use: [</span><br><span class="line">                        &#123; </span><br><span class="line">                            loader: <span class="string">'babel-loader'</span> </span><br><span class="line">                        &#125;,</span><br><span class="line">                        &#123;</span><br><span class="line">                            loader: <span class="string">'eslint-loader'</span>,</span><br><span class="line">                            options: &#123; </span><br><span class="line">                                ignorePattern: eslintIgnore, <span class="comment">// 不需要检验的正则匹配</span></span><br><span class="line">                                formatter: <span class="built_in">require</span>(<span class="string">'eslint-friendly-formatter'</span>),</span><br><span class="line">                                useEslintrc: <span class="literal">false</span>,</span><br><span class="line">                                parser: <span class="string">'babel-eslint'</span>,</span><br><span class="line">                                parserOptions: &#123; <span class="attr">sourceType</span>: <span class="string">'module'</span> &#125;,</span><br><span class="line">                                env: [<span class="string">'browser'</span>],</span><br><span class="line">                                plugins: [</span><br><span class="line">                                    <span class="string">'html'</span></span><br><span class="line">                                ],</span><br><span class="line">                                rules: eslintRules <span class="comment">// rules 配置文件</span></span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    ]</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    test: <span class="regexp">/\.html$/</span>,</span><br><span class="line">                    use: <span class="string">'html-withimg-loader'</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    test: <span class="regexp">/\.(png|jpe?g|gif|bmp|svg)(\?.*)?$/</span>,</span><br><span class="line">                    use: &#123;</span><br><span class="line">                        loader: <span class="string">'url-loader'</span>,</span><br><span class="line">                        options: &#123; </span><br><span class="line">                            limit: <span class="number">9</span> * <span class="number">1024</span>,</span><br><span class="line">                            outputPath: <span class="string">'images/[name].[hash:7].[ext]'</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    test: <span class="regexp">/\.(woff2|eot|ttf|otf)(\?.*)?$/</span>,</span><br><span class="line">                    use: &#123;</span><br><span class="line">                        loader: <span class="string">'url-loader'</span>,</span><br><span class="line">                        options: &#123; </span><br><span class="line">                            limit: <span class="number">9</span> * <span class="number">1024</span>,</span><br><span class="line">                            outputPath: <span class="string">'fonts/[name].[hash:7].[ext]'</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        plugins: [</span><br><span class="line">            <span class="keyword">new</span> VueLoaderPlugin(), <span class="comment">// 会将你定义过的其它规则复制并应用到 .vue 文件里相应语言的块</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -678,6 +685,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
@@ -687,22 +698,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">vue</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">源码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">OAuth</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">微信授权</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -718,6 +713,30 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">源码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">OAuth</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">微信授权</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">chrome</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
@@ -727,18 +746,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">异步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">node</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">chrome</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
               </li>
             
             <div class="clearfix"></div>
