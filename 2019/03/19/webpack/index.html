@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://gromimiss.github.io">
   <title>Webpack 4 总结 | Gromimiss&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
+  <meta name="description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
 <meta name="keywords" content="js,webpack,打包">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Webpack 4 总结">
 <meta property="og:url" content="https://gromimiss.github.io/2019/03/19/webpack/index.html">
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
-<meta property="og:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
+<meta property="og:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-11-20T06:20:17.812Z">
+<meta property="og:updated_time" content="2019-11-27T07:45:04.951Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Webpack 4 总结">
-<meta name="twitter:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
+<meta name="twitter:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
   
     <link rel="alternative" href="/atom.xml" title="Gromimiss&#39;s Blog" type="application/atom+xml">
   
@@ -218,7 +218,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。</p>
+        <p>以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。</p>
 <a id="more"></a>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="为什么要使用-webpack？"><a href="#为什么要使用-webpack？" class="headerlink" title="为什么要使用 webpack？"></a>为什么要使用 webpack？</h3><p>随着功能点的增加，浏览器本身又不提供模块管理的机制，为了简化开发的复杂度，提升开发效率，模块化、CSS 预处理器、各种框架层出不穷，并且还有 JS 的一些还没被浏览器支持的新特性，所以一整个项目里会包含着一大堆的 JS 代码和依赖包，前端项目越来越臃肿，越来越难以维护，而这个时候 webpack 出现了。</p>
 <h3 id="什么是-webpack"><a href="#什么是-webpack" class="headerlink" title="什么是 webpack"></a>什么是 webpack</h3><p>webpack 可以看做是一个模块打包机，它会分析你的项目结构，将一堆文件中的每个文件都作为一个模块，找出他们的依赖关系，将 js 模块以及其他一些浏览器不能直接运行的拓展语言（typescript、sass等）打包为合适的格式供浏览器来使用。</p>
@@ -677,14 +677,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">移动端</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">charles</a>
               </li>
              
@@ -694,6 +686,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">抓包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">移动端</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -721,15 +721,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">chrome</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
               </li>
              
               <li class="article-tag-list-item">
