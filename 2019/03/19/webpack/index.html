@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
 <meta property="og:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-11-27T07:45:04.951Z">
+<meta property="og:updated_time" content="2020-04-22T02:27:08.634Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Webpack 4 总结">
 <meta name="twitter:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
@@ -187,7 +187,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">5k字</span>
+        <span class="post-count">5.1k字</span>
       </span>
     </span>
 
@@ -302,7 +302,7 @@ ga('send', 'pageview');
 <li><p>html-withimg-loader：将 html 中引用的图片地址替换为实际的路径</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: <span class="regexp">/\.html$/</span>,</span><br><span class="line">    use: <span class="string">'html-withimg-loader'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>css-loader：解析 css 中的 @import/require 这种语法</p>
+<li><p>css-loader：webpack 本身只能识别 js 文件，需要另外的 loader 来解析 @import/require 导入 css的代码</p>
 </li>
 <li><p>sass-loader：把 sass 解析为 css</p>
 </li>
@@ -333,7 +333,7 @@ ga('send', 'pageview');
 <li><p>html-webpack-plugin: 自动产出 html 文件，配置了 title，则可以在模板文件的 title 标签中添加 <code>&lt;%= htmlWebpackPlugin.options.title %&gt;</code></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">    template: <span class="string">'./src/index.html'</span>, <span class="comment">// 模板文件</span></span><br><span class="line">    filename: <span class="string">'index.html'</span>, <span class="comment">// 产出 html 的文件名称</span></span><br><span class="line">    title: <span class="string">'hello world'</span>, <span class="comment">// html 中 title 标签存放的标题</span></span><br><span class="line">    hash: <span class="literal">true</span>, <span class="comment">// 资源文件后会加一串 hash 值，若引入的资源文件有更新，则会重新加载，而不是从缓存中取</span></span><br><span class="line">    chunks: [<span class="string">'index'</span>, <span class="string">'vendor'</span>], <span class="comment">// 在产出的 html 中引入的代码块</span></span><br><span class="line">    minify: &#123; <span class="comment">// 对 html 做压缩处理</span></span><br><span class="line">        removeAttributeQuotes: <span class="literal">true</span>, <span class="comment">// 删除属性的双引号</span></span><br><span class="line">        collapseWhitespace: <span class="literal">true</span> <span class="comment">// 一行显示</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>mini-css-extract-plugin: 将 css 抽离出来输出到一个文件中，若要抽离成多个可以多 new 几个（原来都是用 extract-text-webpack-plugin，但如今这个插件和 webpack 4 不太兼容）</p>
+<li><p>mini-css-extract-plugin: 将 css 抽离出来输出到一个文件中，若要抽离成多个可以多 new 几个（原来都是用 extract-text-webpack-plugin，但如今这个插件和 webpack 4 不太兼容，会报错 Error: Chunk.entrypoints: Use Chunks.groupsIterable and filter by instanceof Entrypoint instead）</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;</span><br><span class="line">            test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">            use: [</span><br><span class="line">                MiniCssExtractPlugin.loader,</span><br><span class="line">                <span class="string">'css-loader'</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;,</span><br><span class="line">plugins: [</span><br><span class="line">    <span class="keyword">new</span> MiniCssExtractPlugin(&#123;</span><br><span class="line">        filename: <span class="string">'index.css'</span></span><br><span class="line">    &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>optimize-css-assets-webpack-plugin：压缩 CSS</p>
@@ -599,7 +599,7 @@ ga('send', 'pageview');
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 Gromimiss
+    		&copy; 2020 Gromimiss
     	</div>
       	<!-- <div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -677,18 +677,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">charles</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">抓包</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
@@ -709,7 +697,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">源码</a>
+                <a href="javascript:void(0)" class="js-tag color3">charles</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">抓包</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -718,6 +714,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">微信授权</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">源码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -733,10 +733,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
@@ -745,7 +741,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">koa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">vue-router</a>
               </li>
             
             <div class="clearfix"></div>

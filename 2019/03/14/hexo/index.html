@@ -16,12 +16,10 @@
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
 <meta property="og:description" content="一直想搞个博客，总是被各种事情阻扰，然后继续被搁置着。现在闲了，终于决定自己动手做一个。本文主要记录使用 hexo + github pages 搭建博客的过程及遇到的一些小问题（cu xin）。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://poed019cr.bkt.clouddn.com/image/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-03-15%20%E4%B8%8B%E5%8D%884.19.24.png">
-<meta property="og:updated_time" content="2019-05-27T07:40:05.481Z">
+<meta property="og:updated_time" content="2019-12-25T06:21:43.876Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记录 hexo + github pages 搭建博客过程">
 <meta name="twitter:description" content="一直想搞个博客，总是被各种事情阻扰，然后继续被搁置着。现在闲了，终于决定自己动手做一个。本文主要记录使用 hexo + github pages 搭建博客的过程及遇到的一些小问题（cu xin）。">
-<meta name="twitter:image" content="http://poed019cr.bkt.clouddn.com/image/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-03-15%20%E4%B8%8B%E5%8D%884.19.24.png">
   
     <link rel="alternative" href="/atom.xml" title="Gromimiss&#39;s Blog" type="application/atom+xml">
   
@@ -189,7 +187,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">2.5k字</span>
+        <span class="post-count">2.3k字</span>
       </span>
     </span>
 
@@ -230,7 +228,6 @@ ga('send', 'pageview');
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g hexo-cli</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>新建一个 github 仓库，利用这个仓库来使用 github pages功能</p>
-<center><br>    <img src="http://poed019cr.bkt.clouddn.com/image/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-03-15%20%E4%B8%8B%E5%8D%884.19.24.png" width="80%"><br></center>
 </li>
 <li><p>建立本地和远程仓库的关联</p>
 <p>创建 ssh，id_rsa 是个人电脑上的私人密钥，id_rsa.pub 是公共密钥，将公共密钥放到 github 上，这样连接 github 账户时，就会根据公钥来匹配电脑上的私钥，相互匹配时，才能顺利通过 git 上传文件到 github 上。</p>
@@ -249,7 +246,7 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ol>
-<h2 id="创建博客项目"><a href="#创建博客项目" class="headerlink" title="创建博客项目"></a>创建博客项目</h2><p>这里可以选择先创建一个博客文件夹，再进入到这个文件夹执行命令 hexo init，也可以在指定文件夹中 hexo init blogname，我跟着网上的教程走，也没仔细看，就跟着复制粘贴，就出现了一个问题：我先新建了一个 myblog 文件夹，然后进入到这个文件夹执行了上面的指令后初始化 hexo init myblog，直接打开了外面的myblog，没有注意到刚才的指令其实是在 myblog 里面又创建了一个 myblog，所以在外面的 myblog 文件夹中就只有三个指令 —— init，help，version，到里面的myblog才会有 generate、server 等属性（所以说还是要动动脑子，不要只去复制粘贴）。</p>
+<h2 id="创建博客项目"><a href="#创建博客项目" class="headerlink" title="创建博客项目"></a>创建博客项目</h2><p>这里可以选择先创建一个博客文件夹，再进入到这个文件夹执行命令 hexo init，也可以在指定文件夹中 hexo init blogname。</p>
 <p>init后会出现一个目录：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml <span class="comment"># 配置文件</span></span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds <span class="comment"># 模板文件夹</span></span><br><span class="line">├── <span class="built_in">source</span> <span class="comment"># 资源文件夹</span></span><br><span class="line">|   ├── _drafts <span class="comment"># 草稿箱</span></span><br><span class="line">|   └── _posts <span class="comment"># 发布</span></span><br><span class="line">└── themes <span class="comment"># 主题文件夹</span></span><br></pre></td></tr></table></figure>
 <p>根据自己的需求去修改配置文件中的信息。</p>
@@ -528,7 +525,7 @@ ga('send', 'pageview');
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 Gromimiss
+    		&copy; 2020 Gromimiss
     	</div>
       	<!-- <div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -606,18 +603,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">charles</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">抓包</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
@@ -638,7 +623,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">源码</a>
+                <a href="javascript:void(0)" class="js-tag color3">charles</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">抓包</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -647,6 +640,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">微信授权</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">源码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -662,10 +659,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
@@ -674,7 +667,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">koa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">vue-router</a>
               </li>
             
             <div class="clearfix"></div>

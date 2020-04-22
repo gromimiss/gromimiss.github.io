@@ -8,21 +8,20 @@
   <link rel="dns-prefetch" href="https://gromimiss.github.io">
   <title>JS 中的基本类型和引用类型 | Gromimiss&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="JS 中包含看两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。">
+  <meta name="description" content="JS 中包含了两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。">
 <meta name="keywords" content="js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS 中的基本类型和引用类型">
 <meta property="og:url" content="https://gromimiss.github.io/2019/03/15/type/index.html">
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
-<meta property="og:description" content="JS 中包含看两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。">
+<meta property="og:description" content="JS 中包含了两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://poed019cr.bkt.clouddn.com/type/2.jpg">
-<meta property="og:image" content="http://poed019cr.bkt.clouddn.com/2d0d90f2d9549f5f13ad53be3f75ace8_r.jpg">
-<meta property="og:updated_time" content="2019-03-15T16:32:53.393Z">
+<meta property="og:image" content="https://gromimiss.github.io/assets/type/1.jpg">
+<meta property="og:updated_time" content="2020-04-15T03:15:52.413Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS 中的基本类型和引用类型">
-<meta name="twitter:description" content="JS 中包含看两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。">
-<meta name="twitter:image" content="http://poed019cr.bkt.clouddn.com/type/2.jpg">
+<meta name="twitter:description" content="JS 中包含了两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。">
+<meta name="twitter:image" content="https://gromimiss.github.io/assets/type/1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Gromimiss&#39;s Blog" type="application/atom+xml">
   
@@ -221,12 +220,10 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>JS 中包含看两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。</p>
+        <p>JS 中包含了两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。</p>
 <a id="more"></a>
 <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h3><p>基本数据类型：按值访问，可操作保存在变量中实际的值，指的是简单的数据段。<br>它有6种： undefined、 null、 string、 number、 boolean、 symbol( es6 中新增)。</p>
 <h3 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h3><p>引用类型：<strong>当复制保存着对象的某个变量时，操作的是对象的引用，但在为对象添加属性时，操作的是实际的对象。</strong><br>除了基本类型，其他都是引用类型，包括了：Object、 Array、 RegExp、 Date、 Function、 特殊的基本包装类型（String、 Number、Boolean）以及单体内置对象（Global、 Math）。<br>引用类型变量存放的是地址，当创建一个对象类型的时候，计算机会在内存中开辟一个空间来存放值，我们需要通过一个地址来找到这个空间。所以当复制这个变量的时候其实复制的是存放这个对象空间的地址，当修改数据的时候，就导致了两个变量的值都发生了改变。</p>
-<center><br>    <img src="http://poed019cr.bkt.clouddn.com/type/2.jpg" width="80%"><br></center>
-
 <h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>除了上面的按值访问和按址访问的区别，还有以下区别：</p>
 <ol>
 <li><p>基本类型按值访问，引用类型按址访问</p>
@@ -244,14 +241,14 @@ ga('send', 'pageview');
 <h3 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h3><p>instanceof 可以判断一个对象的正确类型。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>,<span class="number">3</span> ];</span><br><span class="line">alert(a <span class="keyword">instanceof</span> <span class="built_in">Object</span>); <span class="comment">//true</span></span><br><span class="line">alert(a <span class="keyword">instanceof</span> <span class="built_in">Array</span>); <span class="comment">//true</span></span><br><span class="line">alert(a <span class="keyword">instanceof</span> <span class="built_in">RegExp</span>); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
 <p>但它也不是完全可信的，因为通过 Symbol.hasInstance 我们可以自定义 instanceof 的行为。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PrimitiveString</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> [symbol.hasInstance](x) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">typeof</span> x === <span class="string">'string'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PrimitiveString</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> [<span class="built_in">Symbol</span>.hasInstance](x) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">typeof</span> x === <span class="string">'string'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><h3 id="JS中的类型转换"><a href="#JS中的类型转换" class="headerlink" title="JS中的类型转换"></a>JS中的类型转换</h3><p>JS 中类型转换只有三种情况：</p>
 <ul>
 <li>转为布尔值</li>
 <li>转为字符串</li>
 <li>转为数字</li>
 </ul>
-<p>在转 Boolean 中，除了 null/undefined/0/-0//NaN/false/‘’，其他值都转为 true。</p>
+<p>在转 Boolean 中，除了 null/undefined/0/-0/NaN/false/‘’，其他值都转为 true。</p>
 <p>转换对象时，会调用内置的 [[ToPrimitive]] 函数，先调用 valueOf，若未返回基本类型，再调用 toString。</p>
 <h3 id="四则运算符"><a href="#四则运算符" class="headerlink" title="四则运算符"></a>四则运算符</h3><ol>
 <li>加法运算符</li>
@@ -261,18 +258,20 @@ ga('send', 'pageview');
 <li>若双方都不是字符串并且不是对象，运算中其中一方为数字，则将另一方也转换成数字</li>
 <li>若双方都不是字符串，其中一方是对象，则会将对象先转换为基本类型，再通过以上2点比较</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> + <span class="string">'1'</span> <span class="comment">// '11'</span></span><br><span class="line"><span class="literal">true</span> + <span class="literal">true</span> <span class="comment">// 2</span></span><br><span class="line"><span class="number">4</span> + [<span class="number">1</span>, <span class="number">2</span>] <span class="comment">// '41,2'</span></span><br><span class="line">&#123;&#125; + <span class="number">0</span> <span class="comment">// 0 &#123;&#125; 会被当做一个空代码块，所以结果不是 '[object Object]0'</span></span><br><span class="line">a + + <span class="string">'b'</span> <span class="comment">// 'aNaN' 相当于 a 加上 + 'b'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> + <span class="string">'1'</span> <span class="comment">// '11'</span></span><br><span class="line"><span class="literal">true</span> + <span class="literal">true</span> <span class="comment">// 2</span></span><br><span class="line"><span class="number">4</span> + [<span class="number">1</span>, <span class="number">2</span>] <span class="comment">// '41,2'</span></span><br><span class="line"><span class="number">0</span> + &#123;&#125; <span class="comment">// '0[object Object]'</span></span><br><span class="line">&#123;&#125; + <span class="number">0</span> <span class="comment">// 0 &#123;&#125; 会被当做一个空代码块，相当于计算 +0 ,所以结果不是 '[object Object]0' 而是 0</span></span><br><span class="line">a + + <span class="string">'b'</span> <span class="comment">// 'aNaN' 相当于 a 加上 + 'b'</span></span><br></pre></td></tr></table></figure>
 <ol start="2">
 <li>其他运算符，只要其中一方是数字，另一方就会转成数字</li>
 </ol>
-<h3 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h3><p>当使用 == 时的类型转换，会将两值都转成数字，见下图：</p>
-<p><img src="http://poed019cr.bkt.clouddn.com/2d0d90f2d9549f5f13ad53be3f75ace8_r.jpg" alt></p>
+<h3 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h3><p>基本转换规则：</p>
+<p>当使用 == 时的类型转换，会将两值都转成数字，见下图：</p>
+<center><br>    <img src="/assets/type/1.jpg" width="50%"><br></center>
+
 <p>使用上图规则解析 [] == ![], !会将变量转换成 boolean 类型，所以 ![] 会转成 false, [] == false -&gt; [] == 0 -&gt; ‘’ == 0 -&gt; 0 == 0 -&gt; true</p>
 <h2 id="特殊问题"><a href="#特殊问题" class="headerlink" title="特殊问题"></a>特殊问题</h2><ul>
-<li><p>null 不是一个对象类型，虽然 <code>typeof null === &#39;object&#39;</code>，但是这只是 JS 存在的一个悠久 Bug。因为最初 JS 使用的是      32 位系统，为了性能考虑使用低位存储变量的类型信息，000 开头的代表对象，而 null 表示为全零，所以就错误的判断了。</p>
+<li><p>null 不是一个对象类型，虽然 <code>typeof null === &#39;object&#39;</code>，但是这只是 JS 存在的一个悠久 Bug。因为最初 JS 使用的是 32 位系统，为了性能考虑使用低位存储变量的类型信息，000 开头的代表对象，而 null 表示为全零，所以就错误的判断了。</p>
 </li>
 <li><p><code>0.1 + 0.2 !== 0.3</code> 在计算机中数字都是以多位二进制存储的，而除了那些可以表示成x / 2^n的数可以被精确表示，其余小数<br>都是以近似值的方式存在，可以使用以下方式计算浮点数。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算浮点数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addFloat</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> aLen,bLen;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        aLen = a.toString().split(<span class="string">'.'</span>)[<span class="number">1</span>].length;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">        aLen = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        bLen = b.toString().split(<span class="string">'.'</span>)[<span class="number">1</span>].length;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">        bLen = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> max = <span class="built_in">Math</span>.max(aLen, bLen);</span><br><span class="line">    <span class="keyword">return</span> (a * max + b * max) / max;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算浮点数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addFloat</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> aLen,bLen;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        aLen = a.toString().split(<span class="string">'.'</span>)[<span class="number">1</span>].length;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">        aLen = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        bLen = b.toString().split(<span class="string">'.'</span>)[<span class="number">1</span>].length;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">        bLen = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> max = <span class="built_in">Math</span>.pow(<span class="number">10</span>, <span class="built_in">Math</span>.max(aLen, bLen));</span><br><span class="line">    <span class="keyword">return</span> (a * max + b * max) / max;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 
@@ -457,7 +456,7 @@ ga('send', 'pageview');
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 Gromimiss
+    		&copy; 2020 Gromimiss
     	</div>
       	<!-- <div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -535,18 +534,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">charles</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">抓包</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
@@ -567,7 +554,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">源码</a>
+                <a href="javascript:void(0)" class="js-tag color3">charles</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">抓包</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -576,6 +571,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">微信授权</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">源码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -591,10 +590,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
@@ -603,7 +598,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">koa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">vue-router</a>
               </li>
             
             <div class="clearfix"></div>

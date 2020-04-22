@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://gromimiss.github.io/assets/h5Scroll/1.png">
 <meta property="og:image" content="https://gromimiss.github.io/assets/h5Scroll/2.png">
-<meta property="og:updated_time" content="2019-09-10T03:04:15.615Z">
+<meta property="og:updated_time" content="2020-04-15T02:29:24.371Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="移动端——吸顶滚动">
 <meta name="twitter:description" content="最近接到一个需求，要求页面滚动到一定区域时，tab悬浮，换下面的区域滚动，现在记录下当时做的过程中遇到的问题。">
@@ -190,7 +190,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">471字</span>
+        <span class="post-count">470字</span>
       </span>
     </span>
 
@@ -230,7 +230,7 @@ ga('send', 'pageview');
 <ol>
 <li>当滚动到一定位置时，设置内容区滚动</li>
 </ol>
-<p>刚看到这个需求的时候脑子里第一个想法就是来判断 scrollTop，当它大于 banner 的高度时，禁止容器滚动，设置下面的 content 区域滚动，这样子 tab 对应的两个 content 区域都有自己的滚动高度，也不需要存储滚动位置。在浏览器，短屏设备上都没问题，但是测试一下子就发现了一个问题：当滚动正好操作过 banner 高度的时候，因为长屏已经显示了所有的内容，用户就会直接往上拉，这时会发现，没办法滚动了。这其实就是因为刚吸顶的那一下，容器禁止滚动了，下面的内容区也还没有触发scroll事件，就开始往上滑，以至于容器滚动和下面内容区滚动都触发不了。</p>
+<p>刚看到这个需求的时候脑子里第一个想法就是来判断 scrollTop，当它大于 banner 的高度时，禁止容器滚动，设置下面的 content 区域滚动，这样子 tab 对应的两个 content 区域都有自己的滚动高度，也不需要存储滚动位置。在浏览器，短屏设备上都没问题，但是测试一下子就发现了一个问题：当滚动正好超过 banner 高度的时候，因为长屏已经显示了所有的内容，用户就会直接往上拉，这时会发现，没办法滚动了。这其实就是因为刚吸顶的那一下，容器禁止滚动了，下面的内容区也还没有触发scroll事件，就开始往上滑，以至于容器滚动和下面内容区滚动都触发不了。</p>
 <ol start="2">
 <li>当滚动到一定位置时，将 tab 设为 fixed，并增加一个和 tab 相同高度的占位元素，当 tab 固定位置时，此元素显示，滚动回来时再重置。</li>
 </ol>
@@ -422,7 +422,7 @@ ga('send', 'pageview');
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 Gromimiss
+    		&copy; 2020 Gromimiss
     	</div>
       	<!-- <div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -500,18 +500,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">charles</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">抓包</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
@@ -532,7 +520,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">源码</a>
+                <a href="javascript:void(0)" class="js-tag color3">charles</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">抓包</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -541,6 +537,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">微信授权</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">源码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -556,10 +556,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
@@ -568,7 +564,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">koa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">vue-router</a>
               </li>
             
             <div class="clearfix"></div>
