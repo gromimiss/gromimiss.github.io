@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
 <meta property="og:description" content="为了总结执行上下文、this、作用域以及闭包这几个基础知识点，看了很多的文章，但发现大多是对其表现进行总结，为了更好的记忆我就去了解了下 JS 的编译原理。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-04-19T03:14:47.437Z">
+<meta property="og:updated_time" content="2020-04-23T02:32:45.434Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS 中的执行上下文、作用域链、闭包以及this">
 <meta name="twitter:description" content="为了总结执行上下文、this、作用域以及闭包这几个基础知识点，看了很多的文章，但发现大多是对其表现进行总结，为了更好的记忆我就去了解了下 JS 的编译原理。">
@@ -187,7 +187,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">2.5k字</span>
+        <span class="post-count">2.6k字</span>
       </span>
     </span>
 
@@ -196,7 +196,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">8分</span>
+        <span class="post-count">9分</span>
       </span>
     </span>
 
@@ -230,8 +230,8 @@ ga('send', 'pageview');
 <ol>
 <li>JS 首先会进入一个执行上下文（函数），对代码进行词法分析，将这段程序分解成词法单元。</li>
 <li>在对当前作用域分析完成后，引擎会将词法单元解析成 AST。</li>
-<li>引擎遇到声明语句时会询问作用域在当前作用域集合中是否已存在该名称的变量，若已存在则会忽略该声明，否则它会要求作用域在当前作用域集合中声明一个新的变量 a（若是没有 var，则会向上查找，直到全局作用域也没找到，则在全局作用域中声明一个新的变量 a），每次声明都会为变量分配内存，注意，只是分配内存，并不会修改源代码将变量声明语句提升。</li>
-<li>之后引擎再赋值或取值时会询问作用域在当前作用域集合中是否存在该名称的变量，若不存在则往上查找，直到到最外层的作用域，即全局作用域，若找到了则会将 2 赋值给这个变量，若未找到则抛出一个 ReferenceError 异常。</li>
+<li>引擎遇到声明语句时会询问作用域在当前作用域集合中是否已存在该名称的变量，若已存在则会忽略该声明，否则它会要求作用域在当前作用域集合中声明一个新的变量（若是没有 var，则会向上查找，直到全局作用域也没找到，则在全局作用域中声明一个新的变量），每次声明都会为变量分配内存，注意，只是分配内存，并不会修改源代码将变量声明语句提升。</li>
+<li>之后引擎再赋值或取值时会询问作用域在当前作用域集合中是否存在该名称的变量，若不存在则往上查找，直到到最外层的作用域，即全局作用域，若找到了则会赋值给这个变量，若未找到则抛出一个 ReferenceError 异常。</li>
 <li>最后，再由引擎生成 CPU 可以执行的机器码。</li>
 <li>代码执行完毕。</li>
 </ol>
@@ -241,7 +241,7 @@ ga('send', 'pageview');
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo();</span><br><span class="line">bar();</span><br><span class="line"><span class="keyword">var</span> foo = <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 代码内容</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在经过提升后，上面代码会变成：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo;</span><br><span class="line">foo(); <span class="comment">// TypeError</span></span><br><span class="line">bar(); <span class="comment">// ReferenceError</span></span><br><span class="line">foo = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="comment">// 为什么最终打印出来的并不是一个匿名函数呢？</span></span><br><span class="line">    <span class="keyword">var</span> bar = ...self...</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>虽然函数声明和变量声明都会被提升，但是当函数声明和变量声明重复的时候，若函数声明是在后面，则可以覆盖前面的变量，若函数声明在前面，变量并不能覆盖掉前面的函数。</p>
+<p>虽然函数声明和变量声明都会被提升，但是当函数声明和变量声明重复的时候，若函数声明是在后面，则可以覆盖前面的变量，若函数声明在前面，变量并不能覆盖掉前面的函数。（个人理解函数声明可以当成是把声明和赋值都提升到了上面，而后面遇到同变量名的是不会再去重新声明分配内存的）</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(foo); <span class="comment">// function foo() &#123;&#125;</span></span><br><span class="line"><span class="keyword">var</span> foo;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(foo); <span class="comment">// function foo() &#123;&#125;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="keyword">var</span> foo;</span><br></pre></td></tr></table></figure>
 <h3 id="JIT"><a href="#JIT" class="headerlink" title="JIT"></a>JIT</h3><p>JIT 及时编译是为了解决多次重复编译的问题的，比如说下面这段代码在解释型语言中执行时就会将 sum+= i 编译 1000 次，造成非常大的性能损耗。<a href="https://hacks.mozilla.org/2017/02/a-crash-course-in-just-in-time-jit-compilers/" target="_blank" rel="noopener">参考该文章</a></p>
@@ -256,6 +256,7 @@ ga('send', 'pageview');
 <li>检索当前上下文中的函数声明，建立以函数名为属性名，函数所在内存地址引用为属性值的属性</li>
 <li>检索当前上下文中的变量声明，建立以变量名为属性名， undefined 为属性值的属性（若变量名和形参变量名或函数相同，则该变量声明不会影响已存在的这类属性）</li>
 </ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">    <span class="keyword">var</span> a;</span><br><span class="line">&#125;</span><br><span class="line">test(<span class="number">2</span>); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
 <h2 id="词法作用域"><a href="#词法作用域" class="headerlink" title="词法作用域"></a>词法作用域</h2><p>词法作用域由书写代码时函数声明的位置来决定的，词法分析阶段就可以知道全部变量的位置以及是如何声明的，从而预测在执行过程中如何对它们进行查找。<br>但在 JS 中有两个机制可以 “欺骗” 词法作用域：eval() 和 with。</p>
 <ul>
 <li>eval：执行一段包含一个或者多个声明的代码字符串，以至于在运行时修改了已经存在的词法作用域。</li>
@@ -553,10 +554,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vue</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -577,6 +574,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">OAuth</a>
               </li>
              
@@ -593,11 +594,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">chrome</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">vue-router</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -609,14 +622,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">node</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">koa</a>
               </li>
              
@@ -625,7 +630,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">vue-router</a>
+                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
               </li>
             
             <div class="clearfix"></div>

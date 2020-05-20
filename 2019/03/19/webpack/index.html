@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
 <meta property="og:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-04-22T02:27:08.634Z">
+<meta property="og:updated_time" content="2020-05-06T07:39:41.909Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Webpack 4 总结">
 <meta name="twitter:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
@@ -187,7 +187,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">5.1k字</span>
+        <span class="post-count">5.6k字</span>
       </span>
     </span>
 
@@ -196,7 +196,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">21分</span>
+        <span class="post-count">23分</span>
       </span>
     </span>
 
@@ -223,7 +223,7 @@ ga('send', 'pageview');
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="为什么要使用-webpack？"><a href="#为什么要使用-webpack？" class="headerlink" title="为什么要使用 webpack？"></a>为什么要使用 webpack？</h3><p>随着功能点的增加，浏览器本身又不提供模块管理的机制，为了简化开发的复杂度，提升开发效率，模块化、CSS 预处理器、各种框架层出不穷，并且还有 JS 的一些还没被浏览器支持的新特性，所以一整个项目里会包含着一大堆的 JS 代码和依赖包，前端项目越来越臃肿，越来越难以维护，而这个时候 webpack 出现了。</p>
 <h3 id="什么是-webpack"><a href="#什么是-webpack" class="headerlink" title="什么是 webpack"></a>什么是 webpack</h3><p>webpack 可以看做是一个模块打包机，它会分析你的项目结构，将一堆文件中的每个文件都作为一个模块，找出他们的依赖关系，将 js 模块以及其他一些浏览器不能直接运行的拓展语言（typescript、sass等）打包为合适的格式供浏览器来使用。</p>
 <p>它拥有着庞大的社区，可以用来进行代码转换、文件优化、代码分割、模块合并、自动刷新、代码校验、自动发布等。</p>
-<h3 id="与其他工具的对比"><a href="#与其他工具的对比" class="headerlink" title="与其他工具的对比"></a>与其他工具的对比</h3><p>Grunt/Gulp: 都属于 Task Runner，一般用来优化前端工作流程，比如自动刷新页面、压缩 css、压缩 js、编译 sass等。它的工作方式是：在一个配置文件中，指明对某些文件进行类似编译、组合、压缩等任务的具体步骤，之后工具就会自动完成这些任务。</p>
+<h3 id="与其他工具的对比"><a href="#与其他工具的对比" class="headerlink" title="与其他工具的对比"></a>与其他工具的对比</h3><p>Grunt/Gulp: 都属于 Task Runner，一般用来优化前端工作流程，比如自动刷新页面、压缩 css、压缩 js、编译 sass 等。它的工作方式是：在一个配置文件中，指明对某些文件进行类似编译、组合、压缩等任务的具体步骤，之后工具就会自动完成这些任务。</p>
 <p>Webpack: 是一种模块化的解决方案，通过项目中的依赖关系产出最后的静态资源，它能拆分依赖树并按需加载，上面工具完成的工作它都可以胜任。</p>
 <h2 id="webpack-的使用"><a href="#webpack-的使用" class="headerlink" title="webpack 的使用"></a>webpack 的使用</h2><h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><ul>
 <li>Entry：入口，作为 webpack 构建的第一步来找出依次的依赖关系</li>
@@ -264,12 +264,12 @@ ga('send', 'pageview');
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">    filename: <span class="string">'[name].[hash].js'</span>,</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'build'</span>) <span class="comment">// 打包后的文件的输出目录</span></span><br><span class="line">    publicPath: <span class="string">''</span> <span class="comment">// 当资源托管到 CDN 时可使用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>module: 在 module 中可以配置 loader，loader 的执行顺序是从右向左，从下向上的;也可以配置 noParse，指定的包不用去解析其中的依赖关系（若这个包中没有依赖项）</p>
+<li><p>module: 在 module 中可以配置 loader，loader 的执行顺序是从右向左，从下向上的;也可以配置 noParse，让 Webpack 忽略对部分没采用模块化文件的递归解析和处理，比如 jqeury、chartJS 等没有采用模块化标准的库。</p>
 </li>
 <li><p>devServer：开发服务器的配置</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">    port: <span class="number">8080</span>, <span class="comment">// 端口号</span></span><br><span class="line">    progress: <span class="literal">true</span>, <span class="comment">// 是否显示进度条</span></span><br><span class="line">    contentBase: <span class="string">'./build'</span>, </span><br><span class="line">    compress: <span class="literal">true</span>, <span class="comment">// 启动服务器的 gzip 压缩</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>externals：指定某些包是外部引入的，不需要打包</p>
+<li><p>externals：指定某些包是外部引入的，不需要打包。它和 noParse 的区别是：noParse 虽然不会对指定的库进行处理解析，但还是会被打包进最后的输出文件中。</p>
 </li>
 <li><p>devtool：增加映射文件，帮我们调试源代码</p>
 <ul>
@@ -277,10 +277,11 @@ ga('send', 'pageview');
 <li>eval-source-map：不会产生单独的文件（集成到源文件中），但是可以显示行和列</li>
 <li>cheap-module-source-map：不会显示列，会生成一个单独的映射文件，没有调试的功能，产生后可以保留起来以便之后调试</li>
 <li>cheap-module-eval-source-map：不会产生文件，集成在打包文件中，会定位到行，不会定位到列</li>
+<li>inline-source-map：生成一个 DataUrl 形式的 sourcemap 文件</li>
 </ul>
 </li>
 <li><p>resolve：解析第三方包</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">resolve: &#123;</span><br><span class="line">    modules: [path.resolve(__dirname, <span class="string">'node_modules'</span>)], <span class="comment">// 只需要从这个目录中查找第三方包</span></span><br><span class="line">    extensions: [<span class="string">'.js'</span>, <span class="string">'.css'</span>], <span class="comment">// 若导入时没有添加扩展名，会根据这里的配置顺序去查找文件</span></span><br><span class="line">    alias: &#123; <span class="comment">// 别名</span></span><br><span class="line">        bootstrap: <span class="string">'bootstrap/dist/css/bootstrap.css'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    mainFields: [<span class="string">'style'</span>, <span class="string">'main'</span>] <span class="comment">// 先找package.json中的 style，再找 main</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">resolve: &#123;</span><br><span class="line">    modules: [path.resolve(__dirname, <span class="string">'node_modules'</span>)], <span class="comment">// 只需要从这个目录中查找第三方包</span></span><br><span class="line">    extensions: [<span class="string">'.js'</span>, <span class="string">'.css'</span>], <span class="comment">// 若导入时没有添加扩展名，会根据这里的配置顺序去查找文件</span></span><br><span class="line">    alias: &#123; <span class="comment">// 别名</span></span><br><span class="line">        bootstrap: <span class="string">'bootstrap/dist/css/bootstrap.css'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 按数组中的顺序查找 package.json </span></span><br><span class="line">    <span class="comment">// jsnext:main 指采用 ES6 语法的代码入口文件</span></span><br><span class="line">    mainFields: [<span class="string">'jsnext:main'</span>, <span class="string">'browser'</span>, <span class="string">'main'</span>] </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>optimization：优化</p>
 <p>比如：多页应用可以将公共的代码抽离出来</p>
@@ -294,10 +295,10 @@ ga('send', 'pageview');
 <ul>
 <li><p>expose-loader：把一个模块暴露为一个全局变量 <code>expose-loader?$!jquery</code></p>
 </li>
-<li><p>url-loader：可以在文件较小的时候，直接变成 base64 字符串内嵌到页面中（体积会比源文件大1/3，但是可以减少 http请求）</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: <span class="regexp">/\.(png|jpg|gif|bmp|svg)$/</span>,</span><br><span class="line">    use: &#123;</span><br><span class="line">        loader: <span class="string">'url-loader'</span>,</span><br><span class="line">        options: &#123;</span><br><span class="line">            limit: <span class="number">9</span> * <span class="number">1024</span>,</span><br><span class="line">            outputPath: <span class="string">'images/'</span><span class="comment">// 输出目录</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
 <li><p>file-loader：解析图片地址，会将图片从原位置拷贝到目标位置并且修改原引用位置</p>
+</li>
+<li><p>url-loader：可以在文件较小的时候，直接变成 base64 字符串内嵌到页面中（体积会比源文件大1/3，但是可以减少 http请求）。当文件大于阈值时，会使用 file-loader 进行处理。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: <span class="regexp">/\.(png|jpg|gif|bmp|svg)$/</span>,</span><br><span class="line">    use: &#123;</span><br><span class="line">        loader: <span class="string">'url-loader'</span>,</span><br><span class="line">        options: &#123;</span><br><span class="line">            limit: <span class="number">9</span> * <span class="number">1024</span>,</span><br><span class="line">            outputPath: <span class="string">'images/'</span><span class="comment">// 输出目录</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>html-withimg-loader：将 html 中引用的图片地址替换为实际的路径</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: <span class="regexp">/\.html$/</span>,</span><br><span class="line">    use: <span class="string">'html-withimg-loader'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -312,18 +313,27 @@ ga('send', 'pageview');
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">    use: [</span><br><span class="line">        <span class="string">'css-loader'</span>,</span><br><span class="line">        &#123;</span><br><span class="line">            loader: <span class="string">'postcss-loader'</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">                plugins: [</span><br><span class="line">                    <span class="built_in">require</span>(<span class="string">'autoprefixer'</span>)</span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>babel-loader：将 ES6 语法转换成浏览器都支持的 ES5</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">    exclude: <span class="regexp">/node_modules/</span>, <span class="comment">// 排除不需要转译的目录</span></span><br><span class="line">    use: &#123;</span><br><span class="line">        loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">        options: &#123;</span><br><span class="line">            presets: [<span class="string">'@babel/preset-env'</span>],</span><br><span class="line">            plugins: [<span class="string">'@babel/transform-runtime'</span>] <span class="comment">// 引入 babel runtime 作为一个独立模块，来避免重复引入（若不使用，babel 会自动对每个文件 runtime 注入）</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>@babel/core: 核心 api</li>
-<li>@babel/preset-flow: 删除静态类型注释</li>
-<li>@babel/cli: 允许你从终端使用 babel</li>
-<li>@babel/preset-env: 将 ES6+ 转换为 ES5，默认转换语法，不转换新的 API</li>
-<li>@babel/polyfill: 会污染全局环境，在不支持某些 API 的浏览器中添加全局函数，比如像 Array.from 或 Object.assign，它是需要在源代码之前运行的 polyfill，下载时要 –save，可以配合 useBuiltIns 选项，当它设置为 usage 时，Babel 将检查你的所有代码，以查找目标环境中缺少的功能，并仅包含所需的 polyfill</li>
-<li>@babel/runtime: 只包含 helpers，要和 @babel/plugin-transform-runtime 一起用，它不会在每个用到某个特性的文件中都使用指定的函数，而是会引入 helpers 库中的函数</li>
-</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">    exclude: <span class="regexp">/node_modules/</span>, <span class="comment">// 排除不需要转译的目录</span></span><br><span class="line">    use: &#123;</span><br><span class="line">        loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">        options: &#123;</span><br><span class="line">            presets: [<span class="string">'@babel/preset-env'</span>],</span><br><span class="line">            plugins: [<span class="string">'@babel/plugin-transform-runtime'</span>] <span class="comment">// 引入 babel runtime 作为一个独立模块，来避免重复引入（若不使用，babel 会自动对每个文件 runtime 注入）</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<ul>
+<p>plugins：</p>
+<pre><code>-   @babel/core: 核心 api
+-   @babel/preset-flow: 删除静态类型注释
+-   @babel/cli: 允许你从终端使用 babel
+-   @babel/preset-env: 将 ES6+ 转换为 ES5，默认转换语法，不转换新的 API
+-   @babel/polyfill: 会污染全局环境，在不支持某些 API 的浏览器中添加全局函数，比如像 Array.from 或 Object.assign，它是需要在源代码之前运行的 polyfill，下载时要 --save，可以配合 useBuiltIns 选项，当它设置为 usage 时，Babel 将检查你的所有代码，以查找目标环境中缺少的功能，并仅包含所需的 polyfill
+-   @babel/runtime: 只包含 helpers，要和 @babel/plugin-transform-runtime 一起用，使用 babel 转换代码的时候，可能会在多个模块用到新特性，比如多个地方使用了 class，那用到 class 的每个模块都会注入一段 _createClass 的代码，导致代码冗余。使用 @babel/plugin-transform-runtime 会将原本注入模块文件中的辅助函数替换为一条导入语句：`var _createClass = require(&apos;babel-runtime/helpers/_createClass)`，所以需要安装 @babel/runtime 依赖。
+</code></pre><p>presets:</p>
+<pre><code>-   ES2015
+-   ES2016
+-   ES2017
+-   Env: 包含当前所有 ECMAScript 标准里的最新特性，包含了 ES2015, ES2016, ES2017
+-   stage0: 还不确定是否会被定为标准
+-   stage1: 值得被纳入标准的特性
+-   stage2: 已被起草将被纳入标准里的特性
+-   stage3: 已定稿，各大浏览器厂商和 Node.js 社区已开始着手实现
+-   stage4: 在接下来的一年里将会被加入标准里
+</code></pre><ul>
 <li><p>eslint-loader: 校验 js 代码</p>
 </li>
 <li><p>vue-loader: 解析 vue 文件，将其中的 script、style、template 提取出来，交给对应的 loader 去处理（它会根据 lang 特性以及你 webpack 配置中的规则自动推断出要使用的 loader）</p>
@@ -369,9 +379,12 @@ ga('send', 'pageview');
 <li><p>webpack.HotModuleReplacementPlugin: 热更新插件</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">    hot: <span class="literal">true</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="keyword">new</span> webpack.HotModuleReplacementPlugin()</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>webpack.HashedModuleIdsPlugin：将模块 ID 的命名方式改为基于文件内容的 hash 值。为了缓存不经常变动的代码，我们一般会把第三方库另外输出到一个 vendor chunk 中，但如果只是分离 vendor chunk，在 vendor chunk 中会包含 webpack runtime 部分代码，导致即便没有更改第三方库 vendor 的 chunkhash 值依然会改变，这个时候就需要再单独生成一个 manifest chunk，把 webpack runtime 部分代码给单独抽离出来。但是我们发现如果后来在入口文件中又新增了一个模块，这个时候 vendor chunkhash 值又改变了，因为模块 ID 是以顺序来命名的，如果从中插入了一个模块就会导致后面的模块 ID 都发生了变化导致 vendor chunkhash 也因此发生改变，而 webpack.HashedModuleIdsPlugin 就是为了解决这个问题的，它会将模块 ID 以内容 的 hash 值来命名。（看了下 webpack 4 默认会以文件路径作为模块的 id，所以不需要使用此插件）</p>
+</li>
 </ul>
 <h3 id="scope-hosting"><a href="#scope-hosting" class="headerlink" title="scope hosting"></a>scope hosting</h3><p>scope hosting: 作用域提升，在 webpack 3 中新增的功能，它会分析出模块之间的依赖关系，尽可能的把打散的模块合并到一个函数中去，并且只有那些被引用了一次的模块才能被合并。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">let</span> c = a + b;</span><br><span class="line"><span class="built_in">console</span>.log(c) <span class="comment">// 会变成 console.log(1 + 2)</span></span><br></pre></td></tr></table></figure>
+<p>mode 模式使用 production 就可以开启作用域提升。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="string">'hello'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// b.js</span></span><br><span class="line"><span class="keyword">import</span> str <span class="keyword">from</span> <span class="string">'./a.js'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(str);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译后</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'hello'</span>);</span><br></pre></td></tr></table></figure>
 <h3 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h3><p>vue 异步组件 + webpack 代码分割 + import() 实现 vue 路由懒加载，<a href="https://router.vuejs.org/zh/guide/advanced/lazy-loading.html" target="_blank" rel="noopener">详见官方</a>。</p>
 <p>import(): 属于 es6 草案中的语法，通过 jsonp 实现动态加载，会返回一个 Promise 对象</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(<span class="string">'./src/index.js'</span>).then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data.default); <span class="comment">// ./src/index.js' 中导出的数据</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
@@ -685,10 +698,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vue</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -709,6 +718,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">OAuth</a>
               </li>
              
@@ -725,11 +738,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">chrome</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">vue-router</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -741,14 +766,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">node</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">koa</a>
               </li>
              
@@ -757,7 +774,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">vue-router</a>
+                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
               </li>
             
             <div class="clearfix"></div>

@@ -17,7 +17,7 @@
 <meta property="og:description" content="之前在 H5 上使用过微信的网页授权，但只是按着文档中写的流程完成了一下，并没有去注意文档中写的 OAuth 机制，最近面试被提问到，所以就去了解了下，在此记录。（本文是看了阮一峰的 oAuth 2.0 记录的，原文在这里）。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://gromimiss.github.io/assets/oauth/1.png">
-<meta property="og:updated_time" content="2019-03-30T04:45:54.385Z">
+<meta property="og:updated_time" content="2020-04-27T03:23:10.132Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记录 OAuth 机制">
 <meta name="twitter:description" content="之前在 H5 上使用过微信的网页授权，但只是按着文档中写的流程完成了一下，并没有去注意文档中写的 OAuth 机制，最近面试被提问到，所以就去了解了下，在此记录。（本文是看了阮一峰的 oAuth 2.0 记录的，原文在这里）。">
@@ -231,7 +231,7 @@ ga('send', 'pageview');
 <li>服务供应商需要部署密码登录，但是单纯的密码登录并不安全</li>
 <li>第三方应用拥有了获取用户存在服务供应商上所有资料的权利，但是用户并不能限制第三方应用获得授权的范围和有效期</li>
 <li>用户只有修改密码，才能收回权利，但是若这样做，会导致其他获得了用户授权的第三方应用也都全部失效</li>
-<li>只有其中一个第三方应用程序被破解，就会导致用户密码泄露，以及所有的资料被泄露</li>
+<li>只要其中一个第三方应用程序被破解，就会导致用户密码泄露，以及所有的资料被泄露</li>
 </ul>
 </li>
 <li><p>OAuth 方式：它会通过一个授权服务器，让第三方应用安全可控的获取用户的授权，和服务提供商进行互动</p>
@@ -569,10 +569,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">vue</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
@@ -593,6 +589,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">OAuth</a>
               </li>
              
@@ -609,11 +609,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">chrome</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">vue-router</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -625,14 +637,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异步</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">node</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">koa</a>
               </li>
              
@@ -641,7 +645,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">vue-router</a>
+                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
               </li>
             
             <div class="clearfix"></div>
