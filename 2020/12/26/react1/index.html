@@ -6,19 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://gromimiss.github.io">
-  <title>Archives: 2020/4 | Gromimiss&#39;s Blog</title>
+  <title>React 源码解析之任务调度器 Scheduler | Gromimiss&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前端学习记录博客">
-<meta name="keywords" content="前端，js，开发者，it，code">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Gromimiss&#39;s Blog">
-<meta property="og:url" content="https://gromimiss.github.io/archives/2020/04/index.html">
+  <meta name="description" content="Scheduler，用于完成任务调度工作。它以小顶堆的方式存放了两个队列：taskQueue 和 timerQueue。taskQueue 用于存放将被处理的任务，timerQueue 用于存放延期处理的任务。">
+<meta name="keywords" content="react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React 源码解析之任务调度器 Scheduler">
+<meta property="og:url" content="https://gromimiss.github.io/2020/12/26/react1/index.html">
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
-<meta property="og:description" content="前端学习记录博客">
+<meta property="og:description" content="Scheduler，用于完成任务调度工作。它以小顶堆的方式存放了两个队列：taskQueue 和 timerQueue。taskQueue 用于存放将被处理的任务，timerQueue 用于存放延期处理的任务。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2021/03/10/8jsCEYUA5xDRqvS.png">
+<meta property="og:image" content="https://i.loli.net/2021/03/10/lCPWpZAmEDIxyuV.png">
+<meta property="og:updated_time" content="2021-03-10T15:45:32.722Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gromimiss&#39;s Blog">
-<meta name="twitter:description" content="前端学习记录博客">
+<meta name="twitter:title" content="React 源码解析之任务调度器 Scheduler">
+<meta name="twitter:description" content="Scheduler，用于完成任务调度工作。它以小顶堆的方式存放了两个队列：taskQueue 和 timerQueue。taskQueue 用于存放将被处理的任务，timerQueue 用于存放延期处理的任务。">
+<meta name="twitter:image" content="https://i.loli.net/2021/03/10/8jsCEYUA5xDRqvS.png">
   
     <link rel="alternative" href="/atom.xml" title="Gromimiss&#39;s Blog" type="application/atom+xml">
   
@@ -163,267 +167,311 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-react1" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      React 源码解析之任务调度器 Scheduler
+    </h1>
+  
+
+        
+        <a href="/2020/12/26/react1/" class="archive-article-date">
+  	<time datetime="2020-12-25T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-26</time>
+</a>
+        
+        
+          
+  <div style="margin-top:10px;font-size: 12px; color: #999;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">3.5k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">14分</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <i class="icon-book" style="font-size: 12px;"></i>
+      <span id="busuanzi_container_page_pv">
+        本文总阅读量
+        <span id="busuanzi_value_page_pv"></span>
+        次
+      </span>
+    </span>
+
+  </div>
+
+
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Scheduler，用于完成任务调度工作。它以小顶堆的方式存放了两个队列：taskQueue 和 timerQueue。taskQueue 用于存放将被处理的任务，timerQueue 用于存放延期处理的任务。</p>
+<a id="more"></a>
+<h2 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h2><p>在 Scheduler 中主要使用到了一种数据结构：堆。它是顺序存储的一颗完全二叉树，分为大顶堆和小顶堆。</p>
+<p>大顶堆：<code>arr[i] &gt;= arr[i * 2 + 1] &amp;&amp; arr[i] &gt;= arr[i * 2 + 2]</code>，即父节点的值总是会比子节点的值大。<br>小顶堆：<code>arr[i] &lt;= arr[i * 2 + 1] &amp;&amp; arr[i] &lt;= arr[i * 2 + 2]</code>，即父节点的值总是会比子节点的值小。</p>
+<p>Scheduler 中使用堆来实现了优先队列：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th style="text-align:right">入队</th>
+<th style="text-align:center">出队</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>普通数组</td>
+<td style="text-align:right">O(1)</td>
+<td style="text-align:center">O(n)</td>
+</tr>
+<tr>
+<td>顺序数组</td>
+<td style="text-align:right">O(n)</td>
+<td style="text-align:center">O(1)</td>
+</tr>
+<tr>
+<td>堆</td>
+<td style="text-align:right">O(logn)</td>
+<td style="text-align:center">O(logn)</td>
+</tr>
+</tbody>
+</table>
+<p>就源码来看一下。</p>
+<h3 id="compare"><a href="#compare" class="headerlink" title="compare"></a>compare</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compare</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Compare sort index first, then task id.</span></span><br><span class="line">  <span class="keyword">const</span> diff = a.sortIndex - b.sortIndex;</span><br><span class="line">  <span class="keyword">return</span> diff !== <span class="number">0</span> ? diff : a.id - b.id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>compare 方法，用来比较两个元素间的顺序，先通过 sortIndex，若一样则通过元素上的 id。</p>
+<h3 id="siftUp"><a href="#siftUp" class="headerlink" title="siftUp"></a>siftUp</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 向上比较</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">siftUp</span>(<span class="params">heap, node, i</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> index = i;</span><br><span class="line">  <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="comment">// 取父元素</span></span><br><span class="line">    <span class="keyword">const</span> parentIndex = (index - <span class="number">1</span>) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> parent = heap[parentIndex];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (parent !== <span class="literal">undefined</span> &amp;&amp; compare(parent, node) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="comment">// The parent is larger. Swap positions.</span></span><br><span class="line">      heap[parentIndex] = node;</span><br><span class="line">      heap[index] = parent;</span><br><span class="line">      index = parentIndex;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// The parent is smaller. Exit.</span></span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当某节点可能与上一层节点交换就要用 siftUp。他会先取传入节点的父节点，通过 compare 方法来比较父节点和传入节点的优先顺序：</p>
+<ul>
+<li>若传入的值小则将传入的值放置到父节点的位置，而父节点则放到传入的位置，再将 index 更新为父节点的位置，继续向上取父节点比较，直到堆顶</li>
+<li>若传入的值大则位置不变</li>
+</ul>
+<h3 id="siftDown"><a href="#siftDown" class="headerlink" title="siftDown"></a>siftDown</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 向下比较</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">siftDown</span>(<span class="params">heap, node, i</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> index = i;</span><br><span class="line">  <span class="keyword">const</span> length = heap.length;</span><br><span class="line">  <span class="keyword">while</span> (index &lt; length) &#123;</span><br><span class="line">    <span class="keyword">const</span> leftIndex = (index + <span class="number">1</span>) * <span class="number">2</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> left = heap[leftIndex];</span><br><span class="line">    <span class="keyword">const</span> rightIndex = leftIndex + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> right = heap[rightIndex];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If the left or right node is smaller, swap with the smaller of those.</span></span><br><span class="line">    <span class="keyword">if</span> (left !== <span class="literal">undefined</span> &amp;&amp; compare(left, node) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (right !== <span class="literal">undefined</span> &amp;&amp; compare(right, left) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        heap[index] = right;</span><br><span class="line">        heap[rightIndex] = node;</span><br><span class="line">        index = rightIndex;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        heap[index] = left;</span><br><span class="line">        heap[leftIndex] = node;</span><br><span class="line">        index = leftIndex;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (right !== <span class="literal">undefined</span> &amp;&amp; compare(right, node) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      heap[index] = right;</span><br><span class="line">      heap[rightIndex] = node;</span><br><span class="line">      index = rightIndex;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// Neither child is smaller. Exit.</span></span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当某节点可能与下一层节点交换就要用 siftDown。从指定节点开始，取出子树中的左侧节点和右侧节点。</p>
+<ul>
+<li>将左侧节点和传入的值比较：左侧节点小，比较左侧节点和右侧节点。若右侧节点比左侧节点小，将右侧节点放到子树顶部，将传入的值放入到右侧节点的位置，index 更新为改动的节点位置（需要重复进行这个操作，保证右侧节点下的子树是正确的）；反之，将左侧节点放到子树顶部，将传入的值放入到左侧节点的位置</li>
+<li>将右侧节点和传入的值比较：右侧节点小，将右侧节点放到子树顶部，将传入的值放入到右侧节点的位置</li>
+<li>上述都不符合，位置不改动</li>
+</ul>
+<h3 id="peek、push-和-pop"><a href="#peek、push-和-pop" class="headerlink" title="peek、push 和 pop"></a>peek、push 和 pop</h3><p>基础的方法看完来看下基于它们实现的方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">push</span>(<span class="params">heap: Heap, node: Node</span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> index = heap.length;</span><br><span class="line">  heap.push(node);</span><br><span class="line">  <span class="comment">// 向上比较，将 node 放置在合适的位置</span></span><br><span class="line">  siftUp(heap, node, index);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 取堆顶值，即最小值</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">peek</span>(<span class="params">heap: Heap</span>): <span class="title">Node</span> | <span class="title">null</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> first = heap[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">return</span> first === <span class="literal">undefined</span> ? <span class="literal">null</span> : first;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">pop</span>(<span class="params">heap: Heap</span>): <span class="title">Node</span> | <span class="title">null</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> first = heap[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">if</span> (first !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> last = heap.pop();</span><br><span class="line">    <span class="keyword">if</span> (last !== first) &#123;</span><br><span class="line">      heap[<span class="number">0</span>] = last;</span><br><span class="line">      siftDown(heap, last, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> first;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>push：在堆中加入一个元素，并会向上比较，放置在合适的位置</li>
+<li>peek：取堆顶值，即最小值</li>
+<li>pop：去除堆顶节点并将这个堆顶节点返回，将堆中最后一个元素先放置到堆顶，向下比较，将这个元素放到合适的位置</li>
+</ul>
+<h2 id="SchedulerHostConfig"><a href="#SchedulerHostConfig" class="headerlink" title="SchedulerHostConfig"></a>SchedulerHostConfig</h2><p>unstable_scheduleCallback 方法里涉及到了 getCurrentTime、requestHostCallback、requestHostTimeout 等方法，都写在 SchedulerHostConfig.default.js 中。</p>
+<h3 id="getCurrentTime"><a href="#getCurrentTime" class="headerlink" title="getCurrentTime"></a>getCurrentTime</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (</span><br><span class="line">  <span class="keyword">typeof</span> performance === <span class="string">'object'</span> &amp;&amp;</span><br><span class="line">  <span class="keyword">typeof</span> performance.now === <span class="string">'function'</span></span><br><span class="line">) &#123;</span><br><span class="line">  getCurrentTime = <span class="function"><span class="params">()</span> =&gt;</span> performance.now();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> initialTime = <span class="built_in">Date</span>.now();</span><br><span class="line">  getCurrentTime = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">Date</span>.now() - initialTime;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若有 performace，currentTime 会取 <code>performace.now()</code> ，它是当前时间与 <code>performance.timing.navigationStart</code>(即上一个页面被 unload 的时间戳，若没有上一个页面，则与 fetchStart 值相等) 的时间差。它与 <code>Date.now() - performance.timing.navigationStart</code> 的区别是不受系统程序执行阻塞的影响，因此更加精准；若不支持 performance 则取 <code>Date.now() - initialTime</code>，即当前时间和 SchedulerHostConfig.default.js 文件加载的时间差。总之，这里就取的是在执行该方法时到某一个时间节点的间隔差。</p>
+<h3 id="requestHostCallback"><a href="#requestHostCallback" class="headerlink" title="requestHostCallback"></a>requestHostCallback</h3><p>流程图如下：</p>
+<center><br>  <img src="https://i.loli.net/2021/03/10/8jsCEYUA5xDRqvS.png" width="50%"><br></center>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> performWorkUntilDeadline = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (scheduledHostCallback !== <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> currentTime = getCurrentTime();</span><br><span class="line">    deadline = currentTime + yieldInterval;</span><br><span class="line">    <span class="keyword">const</span> hasTimeRemaining = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// 执行传入的回调</span></span><br><span class="line">      <span class="keyword">const</span> hasMoreWork = scheduledHostCallback(</span><br><span class="line">        hasTimeRemaining,</span><br><span class="line">        currentTime,</span><br><span class="line">      );</span><br><span class="line">      <span class="comment">// 是否还有更多的任务，若有则继续传递</span></span><br><span class="line">      <span class="keyword">if</span> (!hasMoreWork) &#123;</span><br><span class="line">        isMessageLoopRunning = <span class="literal">false</span>;</span><br><span class="line">        scheduledHostCallback = <span class="literal">null</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        port.postMessage(<span class="literal">null</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">      port.postMessage(<span class="literal">null</span>);</span><br><span class="line">      <span class="keyword">throw</span> error;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    isMessageLoopRunning = <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  needsPaint = <span class="literal">false</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> channel = <span class="keyword">new</span> MessageChannel();</span><br><span class="line"><span class="keyword">const</span> port = channel.port2;</span><br><span class="line">channel.port1.onmessage = performWorkUntilDeadline;</span><br><span class="line"></span><br><span class="line">requestHostCallback = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">  scheduledHostCallback = callback;</span><br><span class="line">  <span class="keyword">if</span> (!isMessageLoopRunning) &#123;</span><br><span class="line">    <span class="comment">// 标识消息传递中</span></span><br><span class="line">    isMessageLoopRunning = <span class="literal">true</span>;</span><br><span class="line">    port.postMessage(<span class="literal">null</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>当存在 window 对象并且有 MessageChannel，那么 requestHostCallback 会使用 MessageChannel 来建立起一个通道，通过 <code>port.postMessage(null)</code> 来发送消息，channel.port1.onmessage 接受信息，并立即开始执行任务队列中的任务，类似一个发布订阅。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> _flushCallback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (_callback !== <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> currentTime = getCurrentTime();</span><br><span class="line">      <span class="keyword">const</span> hasRemainingTime = <span class="literal">true</span>;</span><br><span class="line">      _callback(hasRemainingTime, currentTime);</span><br><span class="line">      _callback = <span class="literal">null</span>;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">      setTimeout(_flushCallback, <span class="number">0</span>);</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行传入的 callback，执行完后置空</span></span><br><span class="line"><span class="comment">// 若发现之前执行的还存在则递归执行 requestHostCallback，直到 callback 为 null</span></span><br><span class="line">requestHostCallback = <span class="function"><span class="keyword">function</span>(<span class="params">cb</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (_callback !== <span class="literal">null</span>) &#123;</span><br><span class="line">    setTimeout(requestHostCallback, <span class="number">0</span>, cb);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    _callback = cb;</span><br><span class="line">    setTimeout(_flushCallback, <span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>而当不存在上面对象的话，就会使用 setTimeout 来实现。通过判断 _callback 是否存在，若不存在则会将传入的回调赋值给 _callback 并在下一个事件循环执行这个回调，重置 _callback；若 _callback 已经存在了则说明任务还在执行中，它会一直递归的查询 _callback，直到 callback 为空，再执行前面存在的流程。</p>
+<h3 id="requestHostTimeout"><a href="#requestHostTimeout" class="headerlink" title="requestHostTimeout"></a>requestHostTimeout</h3><p>设置一个定时器，在传入的指定 ms 之后触发。</p>
+<h2 id="核心"><a href="#核心" class="headerlink" title="核心"></a>核心</h2><p>回到 Scheduler 的核心代码，先上一张流程图：</p>
+<center><br>  <img src="https://i.loli.net/2021/03/10/lCPWpZAmEDIxyuV.png" width="100%"><br></center>
+
+<p>在这里 scheduler profiling 记录 task event 相关的代码我会先隐藏掉，主要看主流程代码。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unstable_scheduleCallback</span>(<span class="params">priorityLevel, callback, options</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 获取当前执行该方法时到 js 加载的时间</span></span><br><span class="line">  <span class="keyword">var</span> currentTime = getCurrentTime();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> startTime;</span><br><span class="line">  <span class="keyword">var</span> timeout;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> options === <span class="string">'object'</span> &amp;&amp; options !== <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> delay = options.delay;</span><br><span class="line">    <span class="comment">// 延迟开始</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> delay === <span class="string">'number'</span> &amp;&amp; delay &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      startTime = currentTime + delay;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 立刻开始</span></span><br><span class="line">      startTime = currentTime;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// timeoutForPriorityLevel:通过优先等级获取 timeout 时间</span></span><br><span class="line">    timeout =</span><br><span class="line">      <span class="keyword">typeof</span> options.timeout === <span class="string">'number'</span></span><br><span class="line">        ? options.timeout</span><br><span class="line">        : timeoutForPriorityLevel(priorityLevel);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    timeout = timeoutForPriorityLevel(priorityLevel);</span><br><span class="line">    startTime = currentTime;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 算出过期时间</span></span><br><span class="line">  <span class="keyword">var</span> expirationTime = startTime + timeout;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> newTask = &#123;</span><br><span class="line">    id: taskIdCounter++,</span><br><span class="line">    callback,</span><br><span class="line">    priorityLevel,</span><br><span class="line">    startTime,</span><br><span class="line">    expirationTime,</span><br><span class="line">    sortIndex: <span class="number">-1</span>,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 这里其实就是设置一个定时器：从延迟队列里取任务可执行的任务执行</span></span><br><span class="line">  <span class="keyword">if</span> (startTime &gt; currentTime) &#123;</span><br><span class="line">    <span class="comment">// This is a delayed task.</span></span><br><span class="line">    newTask.sortIndex = startTime;</span><br><span class="line">    <span class="comment">// 放到延迟队列里</span></span><br><span class="line">    push(timerQueue, newTask);</span><br><span class="line">    <span class="comment">// 任务队列里面没有任务，并且是延迟队列里的第一个就是当前任务</span></span><br><span class="line">    <span class="keyword">if</span> (peek(taskQueue) === <span class="literal">null</span> &amp;&amp; newTask === peek(timerQueue)) &#123;</span><br><span class="line">      <span class="comment">// 若之前已经在执行延迟任务调度则取消之前的定时器，否则则设置 isHostTimeoutScheduled 标识</span></span><br><span class="line">      <span class="keyword">if</span> (isHostTimeoutScheduled) &#123;</span><br><span class="line">        cancelHostTimeout();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        isHostTimeoutScheduled = <span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 执行一个定时器</span></span><br><span class="line">      requestHostTimeout(handleTimeout, startTime - currentTime);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 这里是执行任务队列里的任务</span></span><br><span class="line">    newTask.sortIndex = expirationTime;</span><br><span class="line">    push(taskQueue, newTask);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!isHostCallbackScheduled &amp;&amp; !isPerformingWork) &#123;</span><br><span class="line">      isHostCallbackScheduled = <span class="literal">true</span>;</span><br><span class="line">      requestHostCallback(flushWork);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> newTask;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>每个任务节点都会有以下几个属性：</p>
+<ul>
+<li>id：任务节点的序号，创建任务时自增 1</li>
+<li>callback：真正要执行的任务</li>
+<li>priorityLevel：任务优先级，按 ImmediatePriority、UserBlockingPriority、NormalPriority、LowPriority、IdlePriority 的顺序依次降低</li>
+<li>startTime：任务预期开始的时间，默认为当前时间，可通过 options.delay 设置为延时任务。只有 startTime 小于或等于 currentTime 的情况下才会被加入到 taskQueue 中</li>
+<li>expirationTime：过期时间，scheduler 基于该值来判断任务是否要开始进行调度。通过 options.timeout 设定或 priorityLevel 计算 timeout 值后将 timeout 与 startTime 相加就得到了 expirationTime</li>
+<li>sortIndex：默认值为 -1。timerQueue 中，该值是 startTime，而 taskQueue 中该值是 expirationTime</li>
+</ul>
+<p>它会先计算出 startTime 和 expirationTime 的值，创建一个具有以上属性的任务节点，通过对比startTime 和 currentTime 来决定要将任务放到哪个队列中，并执行不同的操作。</p>
+<h3 id="advanceTimers"><a href="#advanceTimers" class="headerlink" title="advanceTimers"></a>advanceTimers</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 取出延迟队列中可开始执行的任务放入到任务队列中</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">advanceTimers</span>(<span class="params">currentTime</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 取出堆中最优先的延迟任务</span></span><br><span class="line">  <span class="keyword">let</span> timer = peek(timerQueue);</span><br><span class="line">  <span class="keyword">while</span> (timer !== <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="comment">// 若没有任务回调则直接移除这次任务</span></span><br><span class="line">    <span class="keyword">if</span> (timer.callback === <span class="literal">null</span>) &#123;</span><br><span class="line">      pop(timerQueue);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (timer.startTime &lt;= currentTime) &#123;</span><br><span class="line">      <span class="comment">// 将任务从延迟队列中移除，存到任务队列中，按过期时间排序</span></span><br><span class="line">      pop(timerQueue);</span><br><span class="line">      timer.sortIndex = timer.expirationTime;</span><br><span class="line">      push(taskQueue, timer);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    timer = peek(timerQueue);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先看下 advanceTimers，它会取出堆中最优先的延迟任务，也就是说从堆顶开始，以优先级依次执行，移除没有回调的任务，若任务的 startTime 已经小于或等于当前时间了，则说明可以开始执行了，就会将这个任务推到任务队列里并从延迟队列里移除。总的来说，它做的就是处理延迟队列里的任务，将没有回调的任务过滤掉，把可以开始执行的任务依次推到任务队列中，等待执行。</p>
+<h3 id="handleTimeout"><a href="#handleTimeout" class="headerlink" title="handleTimeout"></a>handleTimeout</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 执行从延迟队列中取出的可开始执行的任务</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleTimeout</span>(<span class="params">currentTime</span>) </span>&#123;</span><br><span class="line">  isHostTimeoutScheduled = <span class="literal">false</span>;</span><br><span class="line">  advanceTimers(currentTime);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 当前没有在执行的任务则执行任务</span></span><br><span class="line">  <span class="keyword">if</span> (!isHostCallbackScheduled) &#123;</span><br><span class="line">    <span class="keyword">if</span> (peek(taskQueue) !== <span class="literal">null</span>) &#123;</span><br><span class="line">      isHostCallbackScheduled = <span class="literal">true</span>;</span><br><span class="line">      requestHostCallback(flushWork);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 若任务队列中没有任务，则取出延迟队列中的最优先任务，以最优先任务的开始时间到执行此方法时的时间为间隔时间</span></span><br><span class="line">      <span class="comment">// 到那个时候再执行 handleTimeout，延迟任务又会被放到任务队列里被执行</span></span><br><span class="line">      <span class="keyword">const</span> firstTimer = peek(timerQueue);</span><br><span class="line">      <span class="keyword">if</span> (firstTimer !== <span class="literal">null</span>) &#123;</span><br><span class="line">        requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当调用 advanceTimers 处理出了可执行的任务之后，若当前没有在执行的任务并且任务队列里有任务那么就执行任务；否则若延迟队列里还有任务则继续递归执行 handleTimeout。</p>
+<h3 id="flushWork"><a href="#flushWork" class="headerlink" title="flushWork"></a>flushWork</h3><p>这里真正在执行的其实就是 workLoop。它会以 workLoop 的方式循环调度 taskQueue 队列或调用 handleTimeout 来递归调度 timerQueue 队列。这两种方式中只会有一个在激活状态。当 taskQueue 队列调度完毕，会调用 requestHostTimeout 处理 timerQueue 队列；timerQueue 队列有任务进入 taskQueue，又会调用 requestHostCallback 处理 taskQueue 队列。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hasTimeRemaining 目前看传入的都是 true</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flushWork</span>(<span class="params">hasTimeRemaining, initialTime</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 重置是否有在执行的任务的标识</span></span><br><span class="line">  isHostCallbackScheduled = <span class="literal">false</span>;</span><br><span class="line">  <span class="comment">// 清除这个定时器</span></span><br><span class="line">  <span class="keyword">if</span> (isHostTimeoutScheduled) &#123;</span><br><span class="line">    isHostTimeoutScheduled = <span class="literal">false</span>;</span><br><span class="line">    cancelHostTimeout();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 执行任务的标识</span></span><br><span class="line">  isPerformingWork = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">const</span> previousPriorityLevel = currentPriorityLevel;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (enableProfiling) &#123;</span><br><span class="line">      <span class="comment">//...</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> workLoop(hasTimeRemaining, initialTime);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="comment">// 重置相关变量</span></span><br><span class="line">    currentTask = <span class="literal">null</span>;</span><br><span class="line">    currentPriorityLevel = previousPriorityLevel;</span><br><span class="line">    isPerformingWork = <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">workLoop</span>(<span class="params">hasTimeRemaining, initialTime</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> currentTime = initialTime;</span><br><span class="line">  advanceTimers(currentTime);</span><br><span class="line">  currentTask = peek(taskQueue);</span><br><span class="line">  <span class="keyword">while</span> (</span><br><span class="line">    currentTask !== <span class="literal">null</span> &amp;&amp;</span><br><span class="line">    !(enableSchedulerDebugging &amp;&amp; isSchedulerPaused)</span><br><span class="line">  ) &#123;</span><br><span class="line">    <span class="comment">// 任务还没有到过期时间，直接跳出循环(取出了最优先的任务，其过期时间还是比当前时间要大，那其他任务肯定更大，所以直接跳出)</span></span><br><span class="line">    <span class="keyword">if</span> (</span><br><span class="line">      currentTask.expirationTime &gt; currentTime &amp;&amp;</span><br><span class="line">      (!hasTimeRemaining || shouldYieldToHost()) <span class="comment">// 达到任务的最大运行时长，让出主线程</span></span><br><span class="line">    ) &#123;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> callback = currentTask.callback;</span><br><span class="line">    <span class="keyword">if</span> (callback !== <span class="literal">null</span>) &#123;</span><br><span class="line">      currentTask.callback = <span class="literal">null</span>;</span><br><span class="line">      currentPriorityLevel = currentTask.priorityLevel;</span><br><span class="line">      <span class="comment">// 相当于 true</span></span><br><span class="line">      <span class="keyword">const</span> didUserCallbackTimeout = currentTask.expirationTime &lt;= currentTime;</span><br><span class="line">      markTaskRun(currentTask, currentTime);</span><br><span class="line">      <span class="comment">// 执行回调</span></span><br><span class="line">      <span class="keyword">const</span> continuationCallback = callback(didUserCallbackTimeout);</span><br><span class="line">      currentTime = getCurrentTime();</span><br><span class="line">      <span class="comment">// 回调如果返回了一个函数则继续给当前任务的 callback 属性，否则从任务队列中移除该任务</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> continuationCallback === <span class="string">'function'</span>) &#123;</span><br><span class="line">        currentTask.callback = continuationCallback;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (currentTask === peek(taskQueue)) &#123;</span><br><span class="line">          pop(taskQueue);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 继续查延迟队列里是否有任务要加入到任务队列里</span></span><br><span class="line">      advanceTimers(currentTime);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 若 callback 没有则直接移除该任务</span></span><br><span class="line">      pop(taskQueue);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 再取堆顶，依次执行任务，直到执行完了所有到了过期时间的任务</span></span><br><span class="line">    currentTask = peek(taskQueue);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 这里代表还有没执行的任务，即过期时间还没到的任务，则返回 true，否则继续创建一个延迟监听，返回 false</span></span><br><span class="line">  <span class="keyword">if</span> (currentTask !== <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> firstTimer = peek(timerQueue);</span><br><span class="line">    <span class="keyword">if</span> (firstTimer !== <span class="literal">null</span>) &#123;</span><br><span class="line">      requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体看下，workLoop 中会先通过 advanceTimer 整理出可执行的任务队列。从堆顶任务开始处理，遇到还没到过期时间的任务会直接跳出循环，因为任务队列的数据结构是以堆的方式，它会先取出最优先的任务，这里优先级就是按 expirationTime 来计算的，expirationTime 小的会被排在前面。当该任务过期时间比当前时间要大，那排在其后面的其他任务的过期时间肯定更大，所以直接跳出循环，等待之后执行。若是到了过期时间的任务则会取出其 callback 执行，若 callback 返回的还是函数，会继续将返回的函数赋值给 currentTask，并且不会移除该任务，当继续通过 peek 取堆顶任务的时候取出的还会是该任务，直到 callback 不再返回一个函数，才会去将该任务移除，继续取剩下的优先任务，重复上面的操作。若剩余还有未执行的任务(过期时间还没到的任务)，则继续通过 handleTimeout 来取出可执行的任务执行或继续进行下一次监听。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Scheduler 里面其实就是将传入的 callback 封装成一个 task，按优先级及传入的 options 来决定任务的执行顺序及执行时间。</p>
+
+      
+
+      
+
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/23/hybrid/" class="archive-article-date">
-  	<time datetime="2020-04-22T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/23/hybrid/">Hybird APP</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">移动端</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hybird</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">react</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/22/user-auth/" class="archive-article-date">
-  	<time datetime="2020-04-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/22/user-auth/">Web 中的用户认证机制</a>
-    </h1>
-  
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://gromimiss.github.io/2020/12/26/react1/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+    </div>
   </div>
+
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/21/bind/" class="archive-article-date">
-  	<time datetime="2020-04-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-21</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/11/05/pay/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">支付</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/21/bind/">手写一个 call/apply/bind</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#堆"><span class="toc-number">1.</span> <span class="toc-text">堆</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#compare"><span class="toc-number">1.1.</span> <span class="toc-text">compare</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#siftUp"><span class="toc-number">1.2.</span> <span class="toc-text">siftUp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#siftDown"><span class="toc-number">1.3.</span> <span class="toc-text">siftDown</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#peek、push-和-pop"><span class="toc-number">1.4.</span> <span class="toc-text">peek、push 和 pop</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SchedulerHostConfig"><span class="toc-number">2.</span> <span class="toc-text">SchedulerHostConfig</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#getCurrentTime"><span class="toc-number">2.1.</span> <span class="toc-text">getCurrentTime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#requestHostCallback"><span class="toc-number">2.2.</span> <span class="toc-text">requestHostCallback</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#requestHostTimeout"><span class="toc-number">2.3.</span> <span class="toc-text">requestHostTimeout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#核心"><span class="toc-number">3.</span> <span class="toc-text">核心</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#advanceTimers"><span class="toc-number">3.1.</span> <span class="toc-text">advanceTimers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#handleTimeout"><span class="toc-number">3.2.</span> <span class="toc-text">handleTimeout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#flushWork"><span class="toc-number">3.3.</span> <span class="toc-text">flushWork</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/16/vue-router/" class="archive-article-date">
-  	<time datetime="2020-04-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/16/vue-router/">Vue-router 中的 hash 模式和 history 模式</a>
-    </h1>
+  <section id="comments" class="comments">
+    <style>
+      .comments{margin:30px;padding:10px;background:#fff}
+      @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+    </style>
+    <div id="vcomment" class="comment"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "pOkwQmGy3CKeFHxcTiL55KQr-gzGzoHsz",
+            app_key: "uLQVq8XXSXTsVG8Bpl1b8Sip",
+            placeholder: "要不要唠两句？",
+            avatar:"mm"
+        });
+    }
+</script>
+
+  </section>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">vue-router</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/11/mvvm1/" class="archive-article-date">
-  	<time datetime="2020-04-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/11/mvvm1/">记对 Vue 中的双向绑定的理解和总结(一)</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">源码</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/03/context/" class="archive-article-date">
-  	<time datetime="2020-04-02T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/03/context/">JS 中的执行上下文、作用域链、闭包以及this</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
+  
 
 
 
@@ -448,8 +496,8 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

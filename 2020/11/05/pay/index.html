@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://gromimiss.github.io">
-  <title>Archives: 2020/4 | Gromimiss&#39;s Blog</title>
+  <title>支付 | Gromimiss&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前端学习记录博客">
-<meta name="keywords" content="前端，js，开发者，it，code">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Gromimiss&#39;s Blog">
-<meta property="og:url" content="https://gromimiss.github.io/archives/2020/04/index.html">
+  <meta name="description" content="在做电商项目中会涉及到很多的支付方式，每个支付方式的对接都有些许不同，这里记录下各大支付方式的对接流程。">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="支付">
+<meta property="og:url" content="https://gromimiss.github.io/2020/11/05/pay/index.html">
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
-<meta property="og:description" content="前端学习记录博客">
+<meta property="og:description" content="在做电商项目中会涉及到很多的支付方式，每个支付方式的对接都有些许不同，这里记录下各大支付方式的对接流程。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2021-03-10T15:57:44.267Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gromimiss&#39;s Blog">
-<meta name="twitter:description" content="前端学习记录博客">
+<meta name="twitter:title" content="支付">
+<meta name="twitter:description" content="在做电商项目中会涉及到很多的支付方式，每个支付方式的对接都有些许不同，这里记录下各大支付方式的对接流程。">
   
     <link rel="alternative" href="/atom.xml" title="Gromimiss&#39;s Blog" type="application/atom+xml">
   
@@ -163,78 +164,122 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-pay" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      支付
+    </h1>
+  
+
+        
+        <a href="/2020/11/05/pay/" class="archive-article-date">
+  	<time datetime="2020-11-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
+</a>
+        
+        
+          
+  <div style="margin-top:10px;font-size: 12px; color: #999;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.5k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">5分</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <i class="icon-book" style="font-size: 12px;"></i>
+      <span id="busuanzi_container_page_pv">
+        本文总阅读量
+        <span id="busuanzi_value_page_pv"></span>
+        次
+      </span>
+    </span>
+
+  </div>
+
+
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在做电商项目中会涉及到很多的支付方式，每个支付方式的对接都有些许不同，这里记录下各大支付方式的对接流程。</p>
+<a id="more"></a>
+<h2 id="支付"><a href="#支付" class="headerlink" title="支付"></a>支付</h2><h3 id="微信支付"><a href="#微信支付" class="headerlink" title="微信支付"></a>微信支付</h3><h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><ol>
+<li>用户 h5 页下单</li>
+<li>创建订单</li>
+<li>调用微信支付接口下单</li>
+<li>下单接口返回支付相关参数 mweb_url</li>
+<li>跳转 mweb_url，并且可在 url 后携带参数 redirect_url</li>
+<li>中间页进行 h5 权限校验</li>
+<li>完成支付及取消支付都会跳转到 redirect_url（未配置则回到支付发起页）</li>
+<li>引导用户主动发起支付结果查询，后端判断是否接收到微信侧的支付结果通知，若没有，后台调用订单查询接口确认状态</li>
+<li>展示订单支付结果</li>
+</ol>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>微信支付需要在微信支付后台配置授权域名。</p>
+<p>调用后端接口，后端向微信发起下单请求后会返回支付相关参数，前端再通过返回的 mweb_url 调起微信支付的中间页，呼起收银台，支付完成后会返回到前端在 mweb_url 后面拼接的 redirect_url 参数。</p>
+<ul>
+<li>安卓: 微信回调地址由前端控制</li>
+<li>ios: 同上，ios 端支付完成一样不会跳回客户端，只是微信会打开 safari。所以需要做处理: 回调页面需要是一个中转页面，判断若是自己的 app 环境，就跳正常链接，若是 safari 则通过 scheme 打开 app（微信打开 safari 的同时，app 里的第三方支付会自己判断支付完成，并已经跳到回调页，所以我们在 safari 中只需要做的是: 返回 app）。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 中间页</span></span><br><span class="line"><span class="keyword">const</span> url = isInApp ? <span class="string">`<span class="subst">$&#123;<span class="built_in">window</span>.location.origin&#125;</span>/orderPaySuccess?orderId=<span class="subst">$&#123;orderId&#125;</span>`</span> : <span class="string">`<span class="subst">$&#123;scheme&#125;</span>://`</span>;</span><br><span class="line">location.href = url;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> getRediectUrl = <span class="keyword">async</span> (selectedPay, params) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;isIOS &#125; = judgeDevice();</span><br><span class="line">    <span class="keyword">const</span> host = <span class="built_in">window</span>.location.origin;</span><br><span class="line">    <span class="keyword">let</span> extra = <span class="string">'?'</span>;</span><br><span class="line">    params &amp;&amp; <span class="built_in">Object</span>.keys(params).forEach(<span class="function">(<span class="params">key</span>) =&gt;</span> extra += <span class="string">`<span class="subst">$&#123;key&#125;</span>=<span class="subst">$&#123;params[key]&#125;</span>&amp;`</span>));</span><br><span class="line">    <span class="keyword">return</span> selectedPay === <span class="string">'wechat_pay'</span> &amp;&amp; isIOS ? <span class="string">`<span class="subst">$&#123;host&#125;</span>/wxIosBack<span class="subst">$&#123;extra&#125;</span>scheme=<span class="subst">$&#123;scheme&#125;</span>`</span> : </span><br><span class="line">        <span class="string">`<span class="subst">$&#123;host&#125;</span>/  orderPaySuccess<span class="subst">$&#123;extra&#125;</span>`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="支付宝支付"><a href="#支付宝支付" class="headerlink" title="支付宝支付"></a>支付宝支付</h3><h4 id="流程-1"><a href="#流程-1" class="headerlink" title="流程"></a>流程</h4><ol>
+<li>用户 h5 下单</li>
+<li>后台通过支付接口生成订单数据</li>
+<li>前端通过 form 表单形式请求到支付宝</li>
+<li>支付宝自动将页面跳转至支付宝 H5 收银页</li>
+<li>用户在支付宝 app 或 H5 收银页完成支付后，会根据在支付 api 中传入的前端会跳地址 return_url 自动跳转回 h5</li>
+</ol>
+<h4 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h4><p>调用后端接口，后端通过支付接口生成订单数据，前端再以 form 表单的形式请求到支付宝，将生成的订单数据除了 bizContent 以外都编码后拼接在返回的 api 地址后，bizContent 通过隐藏域发送，表单提交请求到支付宝，支付宝跳转到支付宝 h5 收银页（若用户安装了支付宝 app 则唤起支付宝），用户在完成支付后会根据支付 api 中传入的 return_url 跳转到我们的页面，并在 url 中带上支付结果参数。</p>
+<ul>
+<li>安卓: 支付宝的回调地址一般配置在服务端，比如: <a href="https://xxx.com/orderPaySuccess?orderId=xxx，支付" target="_blank" rel="noopener">https://xxx.com/orderPaySuccess?orderId=xxx，支付</a> api 带上的支付结果参数则会被拼接在回调地址后</li>
+<li>ios: 同上，只是支付完成后不会自动跳回 app，需要手动切换</li>
+</ul>
+<h3 id="stripe-支付"><a href="#stripe-支付" class="headerlink" title="stripe 支付"></a>stripe 支付</h3><h4 id="流程-2"><a href="#流程-2" class="headerlink" title="流程"></a>流程</h4><ol>
+<li>用户 h5 下单</li>
+<li>跳转 stripe checkout 页</li>
+<li>用户支付成功后跳转至配置的 successUrl</li>
+</ol>
+<h4 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h4><p>点击支付从接口中获取到 publicKey 和 sessionId，重定向到 stripe checkout 页，用户支付成功后跳转到配置的 success_url 页，success_url 和 cancel_url 前后端都可以控制。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; publicKey, sessionId &#125; = res.extendMap; <span class="comment">// 从接口中获取</span></span><br><span class="line"><span class="keyword">const</span> stripe = <span class="built_in">window</span>.Stripe(publicKey);</span><br><span class="line">stripe.redirectToCheckout(&#123;</span><br><span class="line">    sessionId</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="paypal-支付"><a href="#paypal-支付" class="headerlink" title="paypal 支付"></a>paypal 支付</h3><h4 id="流程-3"><a href="#流程-3" class="headerlink" title="流程"></a>流程</h4><ol>
+<li>用户点击 paypal 生成的按钮在 h5 下单</li>
+<li>弹出 paypal 弹窗</li>
+<li>支付成功后由前端这边做一个支付成功的跳转</li>
+</ol>
+<h4 id="实现-3"><a href="#实现-3" class="headerlink" title="实现"></a>实现</h4><p>通过嵌入 paypal 的按钮，点击按钮时会呼起 paypal 支付弹窗进行支付，通过 approve 验证是否成功，并且做一个成功的跳转。</p>
+<ul>
+<li>安卓: 由 approve 验证函数控制（即前端传入）</li>
+<li>ios: 同上</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">paypal.Button.render(&#123;</span><br><span class="line">    env: <span class="string">'production'</span>,</span><br><span class="line">    style: &#123;</span><br><span class="line">        label: <span class="string">'paypal'</span>,</span><br><span class="line">        size: <span class="string">'large'</span>,</span><br><span class="line">        shape: <span class="string">'rect'</span>,</span><br><span class="line">        color: <span class="string">'gold'</span>,</span><br><span class="line">        tagline: <span class="literal">false</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    payment: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; getPaymentId, paymentId &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        <span class="keyword">if</span> (paymentId) &#123;</span><br><span class="line">            <span class="keyword">return</span> paymentId;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> getPaymentId().then(<span class="function">(<span class="params">res</span>) =&gt;</span> res)</span><br><span class="line">    &#125;,</span><br><span class="line">    onAuthorize: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; approve &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        approve(&#123;</span><br><span class="line">            paymentId: res.paymentId,</span><br><span class="line">            payerId: res.payerId</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, <span class="string">'#paypal_button'</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>由于 app 内 h5 支付会打开第三方支付页面，所以会破坏导航历史堆栈，支付完成后跳到的支付结果页直接返回会返回到第三方支付页，再次调起支付，并且支付失败，体验极差，所以要在回调地址页手动控制历史堆栈。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pushHistory = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">window</span>.history.pushState(</span><br><span class="line">        &#123;</span><br><span class="line">            title: <span class="string">'title'</span>,</span><br><span class="line">            url: <span class="string">'#'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">'title'</span>,</span><br><span class="line">        <span class="string">'#'</span></span><br><span class="line">    );</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> fixHistoryBack = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    pushState(); <span class="comment">// 为了触发 popstate 事件</span></span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">'popstate'</span>, () =&gt; &#123;</span><br><span class="line">        <span class="comment">// 首页 -&gt; 详情页 -&gt; 下单页 -&gt; 第三方支付页 -&gt; 支付成功页 -&gt; history push</span></span><br><span class="line">        <span class="keyword">const</span> len = history.length - <span class="number">2</span>;</span><br><span class="line">        len &gt; <span class="number">1</span> ? history.go(-l) : history.back();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>各大支付方式的支付成功消息都是异步的，所以用户虽然支付完了，但是可能有一些特殊情况，并没有真正支付成功，这种情况下若不进行轮询，支付状态就会显示异常。而倘若在回调页执行轮询，微信和支付宝取消订单和支付成功的回调地址都是同一个，导致无法区分，所以统一流程应该使用微信官方提供的那一套：当用户支付完之后，无论是否完成支付，回到 h5 页时都可以弹出一个确认框，让用户选择是否已完成支付，若用户选择完成支付，则进行轮询，否则直接跳转到订单详情页。</p>
+
+      
+
+      
+
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/23/hybrid/" class="archive-article-date">
-  	<time datetime="2020-04-22T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/23/hybrid/">Hybird APP</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">移动端</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hybird</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/22/user-auth/" class="archive-article-date">
-  	<time datetime="2020-04-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/22/user-auth/">Web 中的用户认证机制</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -246,184 +291,158 @@ ga('send', 'pageview');
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/21/bind/" class="archive-article-date">
-  	<time datetime="2020-04-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/21/bind/">手写一个 call/apply/bind</a>
-    </h1>
-  
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://gromimiss.github.io/2020/11/05/pay/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+    </div>
   </div>
+
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/16/vue-router/" class="archive-article-date">
-  	<time datetime="2020-04-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-16</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2020/12/26/react1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          React 源码解析之任务调度器 Scheduler
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/23/vuxAndRedux/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Redux 和 Vuex 的源码解析</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/16/vue-router/">Vue-router 中的 hash 模式和 history 模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">vue-router</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#支付"><span class="toc-number">1.</span> <span class="toc-text">支付</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#微信支付"><span class="toc-number">1.1.</span> <span class="toc-text">微信支付</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#流程"><span class="toc-number">1.1.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现"><span class="toc-number">1.1.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#支付宝支付"><span class="toc-number">1.2.</span> <span class="toc-text">支付宝支付</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#流程-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stripe-支付"><span class="toc-number">1.3.</span> <span class="toc-text">stripe 支付</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#流程-2"><span class="toc-number">1.3.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现-2"><span class="toc-number">1.3.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#paypal-支付"><span class="toc-number">1.4.</span> <span class="toc-text">paypal 支付</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#流程-3"><span class="toc-number">1.4.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现-3"><span class="toc-number">1.4.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注意事项"><span class="toc-number">1.5.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">1.6.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/11/mvvm1/" class="archive-article-date">
-  	<time datetime="2020-04-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/11/mvvm1/">记对 Vue 中的双向绑定的理解和总结(一)</a>
-    </h1>
+  <section id="comments" class="comments">
+    <style>
+      .comments{margin:30px;padding:10px;background:#fff}
+      @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+    </style>
+    <div id="vcomment" class="comment"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "pOkwQmGy3CKeFHxcTiL55KQr-gzGzoHsz",
+            app_key: "uLQVq8XXSXTsVG8Bpl1b8Sip",
+            placeholder: "要不要唠两句？",
+            avatar:"mm"
+        });
+    }
+</script>
+
+  </section>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">源码</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/03/context/" class="archive-article-date">
-  	<time datetime="2020-04-02T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/03/context/">JS 中的执行上下文、作用域链、闭包以及this</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
+  
+
+  
 
 
 
@@ -448,8 +467,8 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
