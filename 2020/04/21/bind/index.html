@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
 <meta property="og:description" content="JS 中的 this 一般取决于函数调用的位置，现在有 3 种方法可以改变 this 的指向，今天来手写实现一下。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-04-21T05:18:56.842Z">
+<meta property="og:updated_time" content="2021-03-14T04:04:41.476Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="手写一个 call&#x2F;apply&#x2F;bind">
 <meta name="twitter:description" content="JS 中的 this 一般取决于函数调用的位置，现在有 3 种方法可以改变 this 的指向，今天来手写实现一下。">
@@ -187,7 +187,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">492字</span>
+        <span class="post-count">552字</span>
       </span>
     </span>
 
@@ -226,7 +226,12 @@ ga('send', 'pageview');
 <li>bind：返回一个新的函数，它会将传入的第一个参数作为原函数的 this，后面的参数加上函数运行时的参数按照顺序作为原函数的参数来调用原函数</li>
 </ul>
 <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>若第一个参数是 string/number/boolean 等这种基本类型的数据的话，就要将 this 指向其包装对象。<br>实现这几个方法核心原理就是将函数放到传入的第一个上下文对象上，再直接调用这个上下文对象上的该函数，调完将该函数从上下文对象上删除。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.customCall = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> context = <span class="built_in">arguments</span>[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">if</span> (context === <span class="literal">null</span> || <span class="keyword">typeof</span> context === <span class="string">'undefined'</span>) &#123;</span><br><span class="line">        context = <span class="built_in">window</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> context === <span class="string">'string'</span>) &#123;</span><br><span class="line">        context = <span class="keyword">new</span> <span class="built_in">String</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> context === <span class="string">'number'</span>) &#123;</span><br><span class="line">        context = <span class="keyword">new</span> <span class="built_in">Number</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> context === <span class="string">'boolean'</span>) &#123;</span><br><span class="line">        context = <span class="keyword">new</span> <span class="built_in">Boolean</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line">    context.fn = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">const</span> args = [...arguments].slice(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">const</span> result = context.fn(...args);</span><br><span class="line">    <span class="keyword">delete</span> context.fn;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Function</span>.prototype.customApply = <span class="function"><span class="keyword">function</span> (<span class="params">context, args = []</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (context === <span class="literal">null</span> || <span class="keyword">typeof</span> context === <span class="string">'undefined'</span>) &#123;</span><br><span class="line">        context = <span class="built_in">window</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> context === <span class="string">'string'</span>) &#123;</span><br><span class="line">        context = <span class="keyword">new</span> <span class="built_in">String</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> context === <span class="string">'number'</span>) &#123;</span><br><span class="line">        context = <span class="keyword">new</span> <span class="built_in">Number</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> context === <span class="string">'boolean'</span>) &#123;</span><br><span class="line">        context = <span class="keyword">new</span> <span class="built_in">Boolean</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line">    context.fn = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">const</span> result = context.fn(...args);</span><br><span class="line">    <span class="keyword">delete</span> context.fn;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Function</span>.prototype.customBind = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> context = <span class="built_in">arguments</span>[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">const</span> outerArgs = [...arguments].slice(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">const</span> _self = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> _self.apply(context, [</span><br><span class="line">            ...outerArgs,</span><br><span class="line">            ...arguments,</span><br><span class="line">        ]);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'==== before ===='</span>, <span class="keyword">this</span>.name);</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'==== after ===='</span>, <span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> obj = &#123;<span class="attr">name</span>: <span class="string">'张三'</span>&#125;;</span><br><span class="line">test.customCall(obj, <span class="string">'李四'</span>);</span><br><span class="line">test.customApply(obj, [<span class="string">'王五'</span>]);</span><br><span class="line"><span class="keyword">const</span> test2 = test.customBind(obj, <span class="string">'马六'</span>);</span><br><span class="line">test2();</span><br></pre></td></tr></table></figure>
+<h3 id="call"><a href="#call" class="headerlink" title="call"></a>call</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.customCall = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 取出上下文对象</span></span><br><span class="line">    <span class="keyword">let</span> context = <span class="built_in">arguments</span>[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">// 判断上下文对象的类型，基本数据类型则指向其包装对象</span></span><br><span class="line">    <span class="keyword">if</span> (context === <span class="literal">null</span> || <span class="keyword">typeof</span> context === <span class="string">'undefined'</span>) &#123;</span><br><span class="line">        context = <span class="built_in">window</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> context === <span class="string">'string'</span>) &#123;</span><br><span class="line">        context = <span class="keyword">new</span> <span class="built_in">String</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> context === <span class="string">'number'</span>) &#123;</span><br><span class="line">        context = <span class="keyword">new</span> <span class="built_in">Number</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> context === <span class="string">'boolean'</span>) &#123;</span><br><span class="line">        context = <span class="keyword">new</span> <span class="built_in">Boolean</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 对对象添加 symbol 属性，避免覆盖别的属性</span></span><br><span class="line">    <span class="keyword">const</span> fn = <span class="built_in">Symbol</span>(<span class="string">'fn'</span>);</span><br><span class="line">    context[fn] = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">const</span> args = [...arguments].slice(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 执行 context 上的该函数，让 this 指向 context</span></span><br><span class="line">    <span class="keyword">const</span> result = context[fn](...args);</span><br><span class="line">    <span class="keyword">delete</span> context[fn];</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.customApply = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.customCall(<span class="built_in">arguments</span>[<span class="number">0</span>], ...arguments[<span class="number">1</span>]);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>apply 实现上基本与 call 一致，只是参数的处理不同。</p>
+<h3 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.customBind = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> context = <span class="built_in">arguments</span>[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">const</span> outerArgs = [...arguments].slice(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">const</span> _self = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> _self.apply(context, [</span><br><span class="line">            ...outerArgs,</span><br><span class="line">            ...arguments,</span><br><span class="line">        ]);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'==== before ===='</span>, <span class="keyword">this</span>.name);</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'==== after ===='</span>, <span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> obj = &#123;<span class="attr">name</span>: <span class="string">'张三'</span>&#125;;</span><br><span class="line">test.customCall(obj, <span class="string">'李四'</span>);</span><br><span class="line">test.customApply(obj, [<span class="string">'王五'</span>]);</span><br><span class="line"><span class="keyword">const</span> test2 = test.customBind(obj, <span class="string">'马六'</span>);</span><br><span class="line">test2();</span><br></pre></td></tr></table></figure>
+<p>基于 apply 方法，返回一个可以改变 this 指向为第一个参数的函数。</p>
+
       
 
       
@@ -350,7 +355,7 @@ ga('send', 'pageview');
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#call-apply-bind-的区别"><span class="toc-number">1.</span> <span class="toc-text">call/apply/bind 的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现"><span class="toc-number">2.</span> <span class="toc-text">实现</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#call-apply-bind-的区别"><span class="toc-number">1.</span> <span class="toc-text">call/apply/bind 的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现"><span class="toc-number">2.</span> <span class="toc-text">实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#call"><span class="toc-number">2.1.</span> <span class="toc-text">call</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#apply"><span class="toc-number">2.2.</span> <span class="toc-text">apply</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bind"><span class="toc-number">2.3.</span> <span class="toc-text">bind</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -486,11 +491,39 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">移动端</a>
+                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">打包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">koa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">小程序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -506,35 +539,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">移动端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">vue</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">源码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">OAuth</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">微信授权</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -546,19 +559,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">异步</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">react</a>
+                <a href="javascript:void(0)" class="js-tag color1">OAuth</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
+                <a href="javascript:void(0)" class="js-tag color5">微信授权</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">打包</a>
+                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -566,15 +583,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">node</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">koa</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
               </li>
             
             <div class="clearfix"></div>

@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
 <meta property="og:description" content="在部分 SPA 项目中我们会使用到状态管理，方便去管理一些在多个组件下都可以使用或操作的数据。 这篇文章主要就来分析一下 Vuex 和 Redux 两个状态管理库。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-10-11T06:15:41.199Z">
+<meta property="og:updated_time" content="2021-03-14T03:32:57.104Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redux 和 Vuex 的源码解析">
 <meta name="twitter:description" content="在部分 SPA 项目中我们会使用到状态管理，方便去管理一些在多个组件下都可以使用或操作的数据。 这篇文章主要就来分析一下 Vuex 和 Redux 两个状态管理库。">
@@ -187,7 +187,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">2.5k字</span>
+        <span class="post-count">2.9k字</span>
       </span>
     </span>
 
@@ -196,7 +196,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">11分</span>
+        <span class="post-count">13分</span>
       </span>
     </span>
 
@@ -220,7 +220,8 @@ ga('send', 'pageview');
       
         <p>在部分 SPA 项目中我们会使用到状态管理，方便去管理一些在多个组件下都可以使用或操作的数据。 这篇文章主要就来分析一下 Vuex 和 Redux 两个状态管理库。</p>
 <a id="more"></a>
-<h2 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h2><h3 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h3><ul>
+<h2 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h2><p>Redux 更灵活可扩展，开发者可以根据自己的需求使用，不仅限于 react 项目。</p>
+<h3 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h3><ul>
 <li>store: 通过 createStore 生成的对象，对象包含 getState、dispatch、subscrible、replaceReducer 等方法</li>
 <li>state: 数据对象，只能通过 getState 去获取</li>
 <li>action: 描述发生了什么的关键词</li>
@@ -241,25 +242,27 @@ ga('send', 'pageview');
 <ul>
 <li>combineReducers.ts</li>
 </ul>
-<p>在开发中我们可能会对 reducer 函数进行拆分，独立负责 state 中的某一部分。这里就会循环遍历拆分的 reducers，处理对应的 state 部分，将它又合并成一个 state。</p>
-<p>通过 hasChanged 来记录前后 state 是否发生改变，若发生了改变则返回新的 nextState，否则返回原来的 state，保证了在不变的情况下仍然返回的是同一个对象。这也是之前要求 reducer 必须是纯函数的原因，combineReducers 只对新旧 state 进行了浅比较，若直接更改旧的 state，实则引用地址没有变，将不会触发 view 层的 render。</p>
+<p>在 redux 中 reducer 负责生成 state，并且在整个应用中只有一个 state 对象，当应用很大的时候， state 也会因此十分庞大，以至于 reducer 也十分庞大，那么 combineReducers 就是为了解决这个问题的。</p>
+<p>在开发中我们可以对 reducer 函数进行拆分，每个小的 reducer 都可以独立负责 state 中的某一部分。combineRecuders 会接收一个 reducers 对象，这个对象的每一个 key 都对应了一个 reducer，并且这个 key 需要和 state 中的 key 保持一致，以标识使用哪个 reducer 来改变 state 的哪一部分。这里会先过滤出是函数的 reducers，得到最终可用的 reducers 对象，然后循环遍历拆分的 reducers，处理对应的 state 部分，将它又合并成一个 nextState。</p>
+<p>通过 hasChanged 来记录前后 state 是否发生改变，若发生了改变则返回新的 nextState，否则返回原来的 state，保证了在不变的情况下仍然返回的是同一个对象。这也是之前要求 reducer 必须是纯函数的原因，combineReducers 只会对新旧 state 进行了浅比较，若直接更改旧的 state，实则引用地址没有变，将不会触发 view 层的 render。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">combineReducers</span>(<span class="params">reducers: ReducersMapObject</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> reducerKeys = <span class="built_in">Object</span>.keys(reducers)</span><br><span class="line">  <span class="keyword">const</span> finalReducers: ReducersMapObject = &#123;&#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; reducerKeys.length; i++) &#123;</span><br><span class="line">    <span class="keyword">const</span> key = reducerKeys[i]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">'production'</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> reducers[key] === <span class="string">'undefined'</span>) &#123;</span><br><span class="line">        warning(<span class="string">`No reducer provided for key "<span class="subst">$&#123;key&#125;</span>"`</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> reducers[key] === <span class="string">'function'</span>) &#123;</span><br><span class="line">      finalReducers[key] = reducers[key]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> finalReducerKeys = <span class="built_in">Object</span>.keys(finalReducers)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">combination</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    state: StateFromReducersMapObject&lt;typeof reducers&gt; = &#123;&#125;,</span></span></span><br><span class="line"><span class="function"><span class="params">    action: AnyAction</span></span></span><br><span class="line"><span class="function"><span class="params">  </span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> hasChanged = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">const</span> nextState: StateFromReducersMapObject&lt;<span class="keyword">typeof</span> reducers&gt; = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; finalReducerKeys.length; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> key = finalReducerKeys[i]</span><br><span class="line">      <span class="keyword">const</span> reducer = finalReducers[key]</span><br><span class="line">      <span class="keyword">const</span> previousStateForKey = state[key]</span><br><span class="line">      <span class="keyword">const</span> nextStateForKey = reducer(previousStateForKey, action)</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> nextStateForKey === <span class="string">'undefined'</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> errorMessage = getUndefinedStateErrorMessage(key, action)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(errorMessage)</span><br><span class="line">      &#125;</span><br><span class="line">      nextState[key] = nextStateForKey</span><br><span class="line">      hasChanged = hasChanged || nextStateForKey !== previousStateForKey</span><br><span class="line">    &#125;</span><br><span class="line">    hasChanged =</span><br><span class="line">      hasChanged || finalReducerKeys.length !== <span class="built_in">Object</span>.keys(state).length</span><br><span class="line">    <span class="keyword">return</span> hasChanged ? nextState : state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>applyMiddleware.ts</li>
 </ul>
-<p>提供给开发者自定义一些扩展的行为，比如说打印日志、错误校验等，它会串联的执行中间件而不影响原有的业务状态。这里面就会使用到上面的 compose 方法，以函数柯里化的方式将多个参数转换成单一的参数，依次的去执行中间件。</p>
+<p>用户可以在 createStore 中传入该方法来自定义一些功能。它提供给开发者自定义一些扩展的行为，比如说打印日志、错误校验等。当传入中间件时，它会串联的执行中间件而不影响原有的业务状态，每个中间件中都可以拿到 getState 和 dispatch 两个方法，执行所有中间件，将中间件返回的函数组成一个数组通过上面的 compose 方法，以函数柯里化的方式将多个参数转换成单一的参数，依次的去执行中间件返回的函数，最终返回一个增强后的 store 对象。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">applyMiddleware</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  ...middlewares: Middleware[]</span></span></span><br><span class="line"><span class="function"><span class="params"></span>): <span class="title">StoreEnhancer</span>&lt;<span class="title">any</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">createStore: StoreEnhancerStoreCreator</span>) =&gt;</span> &lt;S, A extends AnyAction&gt;(</span><br><span class="line">    reducer: Reducer&lt;S, A&gt;,</span><br><span class="line">    preloadedState?: PreloadedState&lt;S&gt;</span><br><span class="line">  ) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> store = createStore(reducer, preloadedState)</span><br><span class="line">    <span class="keyword">let</span> dispatch: Dispatch = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(</span><br><span class="line">        <span class="string">'Dispatching while constructing your middleware is not allowed. '</span> +</span><br><span class="line">          <span class="string">'Other middleware would not be applied to this dispatch.'</span></span><br><span class="line">      )</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> middlewareAPI: MiddlewareAPI = &#123;</span><br><span class="line">      getState: store.getState,</span><br><span class="line">      dispatch: <span class="function">(<span class="params">action, ...args</span>) =&gt;</span> dispatch(action, ...args)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 为什么要将 middlewareAPI 传递给每个中间件？</span></span><br><span class="line"><span class="comment">     * 为了将 getState 和 dispatch 方法缓存在闭包中，并将这两个方法传递到每一个中间件中</span></span><br><span class="line"><span class="comment">     * 当发生扩展更新时，由于它存在于闭包中，所有中间件都可以取到最新的 dispatch 方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> chain = middlewares.map(<span class="function"><span class="params">middleware</span> =&gt;</span> middleware(middlewareAPI))</span><br><span class="line">    dispatch = compose&lt;<span class="keyword">typeof</span> dispatch&gt;(...chain)(store.dispatch)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      ...store,</span><br><span class="line">      dispatch</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>createStore.ts</li>
 </ul>
-<p>createStore 是 redux 中最核心的一部分代码，它会创建一个带有 dispatch、subscribe、getState、replaceReducer 等方法的一个对象。具体看下代码：</p>
+<p>createStore 是 redux 中最核心的一部分代码，它会创建一个带有 dispatch、subscribe、getState、replaceReducer 等方法的一个对象。它可以接收 reducer、初始化 state、以及 applyMiddleware，下面代码中的 enhancer 其实就是 applyMiddleware，它会返回增强后的 store 对象。具体看下代码：</p>
 <p>enhancer 会提供中间件扩展后的 store。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> enhancer !== <span class="string">'undefined'</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> enhancer !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Expected the enhancer to be a function.'</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> enhancer(createStore)(</span><br><span class="line">    reducer,</span><br><span class="line">    preloadedState <span class="keyword">as</span> PreloadedState&lt;S&gt;</span><br><span class="line">  ) <span class="keyword">as</span> Store&lt;ExtendState&lt;S, StateExt&gt;, A, StateExt, Ext&gt; &amp; Ext</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>subscribe: 订阅 state 的更新，调用时会被加入到 nextListeners 队列中，并返回取消订阅的方法。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">subscribe</span>(<span class="params">listener: (</span>) =&gt; <span class="title">void</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> listener !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Expected the listener to be a function.'</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isDispatching) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(</span><br><span class="line">      <span class="string">'You may not call store.subscribe() while the reducer is executing. '</span> +</span><br><span class="line">        <span class="string">'If you would like to be notified after the store has been updated, subscribe from a '</span> +</span><br><span class="line">        <span class="string">'component and invoke store.getState() in the callback to access the latest state. '</span> +</span><br><span class="line">        <span class="string">'See https://redux.js.org/api/store#subscribelistener for more details.'</span></span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> isSubscribed = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 在每次 dispatch 之前都会保存一份 listeners 快照，这样可以保证在每次 dispatch 的时候，循环体是不会混乱的</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  ensureCanMutateNextListeners()</span><br><span class="line">  nextListeners.push(listener)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">unsubscribe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 保证当前 listener 只会被取消注册一次</span></span><br><span class="line">    <span class="keyword">if</span> (!isSubscribed) &#123;</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isDispatching) &#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    isSubscribed = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">    ensureCanMutateNextListeners()</span><br><span class="line">    <span class="keyword">const</span> index = nextListeners.indexOf(listener)</span><br><span class="line">    nextListeners.splice(index, <span class="number">1</span>)</span><br><span class="line">    currentListeners = <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>dispatch: 触发 state 的更新，并且依次触发订阅函数</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dispatch</span>(<span class="params">action: A</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!isPlainObject(action)) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(</span><br><span class="line">      <span class="string">'Actions must be plain objects. '</span> +</span><br><span class="line">        <span class="string">'Use custom middleware for async actions.'</span></span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> action.type === <span class="string">'undefined'</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(</span><br><span class="line">      <span class="string">'Actions may not have an undefined "type" property. '</span> +</span><br><span class="line">        <span class="string">'Have you misspelled a constant?'</span></span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isDispatching) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Reducers may not dispatch actions.'</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    isDispatching = <span class="literal">true</span></span><br><span class="line">    currentState = currentReducer(currentState, action)</span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    isDispatching = <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> listeners = (currentListeners = nextListeners)</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; listeners.length; i++) &#123;</span><br><span class="line">    <span class="keyword">const</span> listener = listeners[i]</span><br><span class="line">    listener()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> action</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h2><h3 id="重要概念-1"><a href="#重要概念-1" class="headerlink" title="重要概念"></a>重要概念</h3><ul>
+<h2 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h2><p>与 Redux 不一样的是 Vuex 一般都是和 vue 搭配使用。</p>
+<h3 id="重要概念-1"><a href="#重要概念-1" class="headerlink" title="重要概念"></a>重要概念</h3><ul>
 <li>state: 单一状态树</li>
 <li>mutation: 进行状态的更改，通过 commit 触发</li>
 <li>action: 类似于 mutation，可以包含异步操作。但是应该在里面提交 mutation，而不是直接修改 state，通过 dispatch 触发</li>
@@ -540,11 +543,39 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">移动端</a>
+                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">打包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">koa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">小程序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -560,35 +591,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">移动端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">vue</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">源码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">OAuth</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">微信授权</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -600,19 +611,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">异步</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">react</a>
+                <a href="javascript:void(0)" class="js-tag color1">OAuth</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
+                <a href="javascript:void(0)" class="js-tag color5">微信授权</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">打包</a>
+                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -620,15 +635,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">node</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">koa</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
               </li>
             
             <div class="clearfix"></div>

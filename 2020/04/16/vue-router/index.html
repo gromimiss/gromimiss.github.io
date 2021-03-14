@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://gromimiss.github.io/assets/vue-router/1.jpg">
 <meta property="og:image" content="https://gromimiss.github.io/assets/vue-router/2.jpg">
-<meta property="og:updated_time" content="2020-04-16T04:23:12.758Z">
+<meta property="og:updated_time" content="2021-03-14T03:08:30.673Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue-router 中的 hash 模式和 history 模式">
 <meta name="twitter:description" content="Vue-router 中的 hash 模式和 history 模式的区别是什么？它们的原理是什么？">
@@ -190,7 +190,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.7k字</span>
+        <span class="post-count">1.8k字</span>
       </span>
     </span>
 
@@ -199,7 +199,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">6分</span>
+        <span class="post-count">7分</span>
       </span>
     </span>
 
@@ -251,21 +251,22 @@ ga('send', 'pageview');
 <center><br>    <img src="/assets/vue-router/2.jpg"><br></center>
 
 <h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>vue-router 默认会使用 hash 模式，即使用 url 的 hash 来模拟一个完整的 url，当 url 的 hash 改变时，页面不会重新加载，兼容到IE8。它不适合推广宣传，有的 app 里面 url 不允许带有 #。</p>
-<p>history 模式兼容到 IE10，当设置 mode 为 history 时，若浏览器不支持 h5 history api 会自动降级为 hash 模式。由于我们的应用是一个单页客户端应用，如果后台没有正确的配置，当用户刷新页面，会返回 404，因为刷新会实实在在地去请求服务器，所以要在服务端增加一个覆盖所有情况的候选资源，若 url 匹配不到任何静态资源，则应该返回同一个 index.html 页面（app 依赖的页面）。当配置了后，服务器就不再返回 404 错误页面了，为了避免这种情况，应该在vue应用里面覆盖所有的路由情况，然后给出一个 404 页面。</p>
+<p>而history 模式兼容到 IE10，当设置 mode 为 history 时，若浏览器不支持 h5 history api 会自动降级为 hash 模式。由于我们的应用是一个单页客户端应用，如果后台没有正确的配置，当用户刷新页面，会返回 404，因为刷新会实实在在地去请求服务器，所以要在服务端增加一个覆盖所有情况的候选资源，若 url 匹配不到任何静态资源，则应该返回同一个 index.html 页面（app 依赖的页面）。当配置了后，服务器就不会再返回 404 错误页面了，为了避免这种情况，就需要在 vue 应用里面覆盖所有的路由情况，然后给出一个 404 页面。</p>
 <p>这两种模式后退都会触发组件的生命周期，但是会保留原来的滚动位置。</p>
-<h2 id="后退不刷新，前进刷新简单的实现"><a href="#后退不刷新，前进刷新简单的实现" class="headerlink" title="后退不刷新，前进刷新简单的实现"></a>后退不刷新，前进刷新简单的实现</h2><ul>
+<h2 id="后退不刷新，前进刷新简单的实现"><a href="#后退不刷新，前进刷新简单的实现" class="headerlink" title="后退不刷新，前进刷新简单的实现"></a>后退不刷新，前进刷新简单的实现</h2><p>在开发过程中，我们 会遇到这样一个场景：当我们点击进入到一个新的页面时，希望页面是重新加载的，但是当我们返回时可以像浏览器中正常的返回一样，缓存当前页面，不需要再进入组件的一系列生命周期，重新请求数据。这次情况下可以使用以下两种方法：</p>
+<ul>
 <li>使用 keep-alive<br>keep-alive组件第一次进入时的生命周期：beforeRouteEnter -&gt; created -&gt; mounted -&gt; activated -&gt; deactived<br>非首次：beforeRouteEnter -&gt; activated -&gt; deactivated</li>
 </ul>
 <p>在路由映射对象中：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">routes: [</span><br><span class="line">    <span class="comment">// 在路由元数据配置是否要缓存，是否是返回</span></span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">'/'</span>, <span class="attr">name</span>: <span class="string">'home'</span>, component： Home, <span class="attr">meta</span>: &#123; <span class="attr">keepAlive</span>: <span class="literal">true</span>, <span class="attr">isBack</span>: <span class="literal">false</span> &#125;, </span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">'/detail'</span>, <span class="attr">name</span>: <span class="string">'detail'</span>, <span class="attr">component</span>: Detail, <span class="attr">meta</span>: &#123; <span class="attr">keepAlive</span>: <span class="literal">true</span>， isBack: <span class="literal">false</span> &#125; </span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
 <p>入口页面：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">keep-alive</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">router-view</span> <span class="attr">v-if</span>=<span class="string">"$route.meta.keepAlive"</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">keep-alive</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-view</span> <span class="attr">v-if</span>=<span class="string">"!$route.meta.keepAlive"</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>在 home 组件中：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">beforeRouteEnter(to, <span class="keyword">from</span>, next) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">from</span>.name = <span class="string">'detail'</span>) &#123;</span><br><span class="line">        <span class="comment">//若是从详情页回来的，则说明是返回</span></span><br><span class="line">        to.meta.isBack = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    next();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 若被缓存 created 只有在第一次进入会执行</span></span><br><span class="line">created() &#123; </span><br><span class="line">    <span class="keyword">this</span>.firstEnter = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line">activated() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.firstEnter || !<span class="keyword">this</span>.$route.meta.isBack) &#123;</span><br><span class="line">        <span class="comment">//重新获取数据</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 恢复默认的isBack</span></span><br><span class="line">    <span class="keyword">this</span>.$route.meta.isBack = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">this</span>.firstEnter = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>若有表单页，表单页的操作会影响到上一页的数据则要刷新上一页，比如淘宝的订单列表，点击订单，操作订单后订单的状态就会改变（比如不在待收货列表了），表单页成功后关闭会返回到订单列表，此时详情页需要刷新下数据。（仔细想还会有很多问题，比如：希望刷新数据后还是停留在当前滚动位置上）</p>
+<p>若有表单页，表单页的操作会影响到上一页的数据则要刷新上一页，比如淘宝的订单列表，点击订单，操作订单后订单的状态就会改变（比如不在待收货列表了），表单页操作成功后关闭会返回到订单列表，此时详情页需要刷新下数据。（仔细想还会有很多问题，比如：希望刷新数据后还是停留在当前滚动位置上）</p>
 <p>并且缓存过多 keep-alive 组件，因常驻内存会导致内存占用过多，需要及时销毁掉内存缓存的组件。</p>
 <p>若直接在离开组件的时候通过 $destory() 销毁组件会出现一个问题：再次进入此组件时，组件不能再被缓存了。</p>
 <p>方法一：设置 include，就只会缓存包含的组件，includes 改变，自动删除不再包含了的已缓存组件。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">keep-alive</span> <span class="attr">:include</span>=<span class="string">"includes"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">component</span> <span class="attr">:is</span>=<span class="string">"compName"</span>&gt;</span><span class="tag">&lt;/<span class="name">component</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">keep-alive</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>方法二：直接操作页面上层 keepAlive 对象中的 cache 列表。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">Vue.mixin(&#123;</span><br><span class="line">    beforeRouteLeave:<span class="function"><span class="keyword">function</span>(<span class="params">to, from, next</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">from</span> &amp;&amp; <span class="keyword">from</span>.meta.rank &amp;&amp; to.meta.rank &amp;&amp; <span class="keyword">from</span>.meta.rank&gt;to.meta.rank)</span><br><span class="line">        &#123;<span class="comment">//如果返回上一层，则摧毁本层缓存。</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.$vnode &amp;&amp; <span class="keyword">this</span>.$vnode.data.keepAlive)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.$vnode.parent &amp;&amp; <span class="keyword">this</span>.$vnode.parent.componentInstance &amp;&amp; <span class="keyword">this</span>.$vnode.parent.componentInstance.cache)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="keyword">this</span>.$vnode.componentOptions)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">var</span> key = <span class="keyword">this</span>.$vnode.key == <span class="literal">null</span></span><br><span class="line">                                    ? <span class="keyword">this</span>.$vnode.componentOptions.Ctor.cid + (<span class="keyword">this</span>.$vnode.componentOptions.tag ? <span class="string">`::<span class="subst">$&#123;<span class="keyword">this</span>.$vnode.componentOptions.tag&#125;</span>`</span> : <span class="string">''</span>)</span><br><span class="line">                                    : <span class="keyword">this</span>.$vnode.key;</span><br><span class="line">                        <span class="keyword">var</span> cache = <span class="keyword">this</span>.$vnode.parent.componentInstance.cache;</span><br><span class="line">                        <span class="keyword">var</span> keys  = <span class="keyword">this</span>.$vnode.parent.componentInstance.keys;</span><br><span class="line">                        <span class="keyword">if</span> (cache[key])</span><br><span class="line">                        &#123;</span><br><span class="line">                            <span class="keyword">if</span> (keys.length) &#123;</span><br><span class="line">                                <span class="keyword">var</span> index = keys.indexOf(key);</span><br><span class="line">                                <span class="keyword">if</span> (index &gt; <span class="number">-1</span>) &#123;</span><br><span class="line">                                    keys.splice(index, <span class="number">1</span>);</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                            <span class="keyword">delete</span> cache[key];</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">this</span>.$destroy();</span><br><span class="line">        &#125;</span><br><span class="line">        next();</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">Vue.mixin(&#123;</span><br><span class="line">    beforeRouteLeave:<span class="function"><span class="keyword">function</span>(<span class="params">to, from, next</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">from</span> &amp;&amp; <span class="keyword">from</span>.meta.rank &amp;&amp; to.meta.rank &amp;&amp; <span class="keyword">from</span>.meta.rank&gt;to.meta.rank)</span><br><span class="line">        &#123;<span class="comment">//如果返回上一层，则摧毁本层缓存。</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.$vnode &amp;&amp; <span class="keyword">this</span>.$vnode.data.keepAlive)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.$vnode.parent &amp;&amp; <span class="keyword">this</span>.$vnode.parent.componentInstance &amp;&amp; <span class="keyword">this</span>.$vnode.parent.componentInstance.cache)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="keyword">this</span>.$vnode.componentOptions)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">var</span> key = <span class="keyword">this</span>.$vnode.key == <span class="literal">null</span></span><br><span class="line">                            ? <span class="keyword">this</span>.$vnode.componentOptions.Ctor.cid + (<span class="keyword">this</span>.$vnode.componentOptions.tag ? <span class="string">`::<span class="subst">$&#123;<span class="keyword">this</span>.$vnode.componentOptions.tag&#125;</span>`</span> : <span class="string">''</span>)</span><br><span class="line">                            : <span class="keyword">this</span>.$vnode.key;</span><br><span class="line">                        <span class="keyword">var</span> cache = <span class="keyword">this</span>.$vnode.parent.componentInstance.cache;</span><br><span class="line">                        <span class="keyword">var</span> keys  = <span class="keyword">this</span>.$vnode.parent.componentInstance.keys;</span><br><span class="line">                        <span class="keyword">if</span> (cache[key]) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (keys.length) &#123;</span><br><span class="line">                                <span class="keyword">var</span> index = keys.indexOf(key);</span><br><span class="line">                                <span class="keyword">if</span> (index &gt; <span class="number">-1</span>) &#123;</span><br><span class="line">                                    keys.splice(index, <span class="number">1</span>);</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                            <span class="keyword">delete</span> cache[key];</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">this</span>.$destroy();</span><br><span class="line">        &#125;</span><br><span class="line">        next();</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>详见<a href="http://github.com/vuejs/vue/issues/6509#issuecomment-403693256" target="_blank" rel="noopener">这里</a>。</p>
 <ul>
 <li>嵌套路由（在父路由组件中还有个 router-view，子路由对应的组件会被渲染到父路由组件中的 router-view），从子路由返回到父路由时是不刷新的，但是子路由强制刷新后，父子路由的组件都会重新渲染，执行各自路由组件的生命周期，并且子路由若被其他页面共用，会导致其父路由都会更新，所以尽量独立使用。这种方法适用于在一个页面上可跳转多个页面，最多二级。</li>
@@ -534,11 +535,39 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">移动端</a>
+                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">打包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">koa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">小程序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -554,35 +583,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">移动端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">vue</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">源码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">OAuth</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">微信授权</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -594,19 +603,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">异步</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">react</a>
+                <a href="javascript:void(0)" class="js-tag color1">OAuth</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
+                <a href="javascript:void(0)" class="js-tag color5">微信授权</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">打包</a>
+                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -614,15 +627,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">node</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">koa</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
               </li>
             
             <div class="clearfix"></div>

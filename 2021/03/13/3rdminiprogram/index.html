@@ -6,19 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://gromimiss.github.io">
-  <title>Archives: 2019/5 | Gromimiss&#39;s Blog</title>
+  <title>微信小程序三方代发 | Gromimiss&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前端学习记录博客">
-<meta name="keywords" content="前端，js，开发者，it，code">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Gromimiss&#39;s Blog">
-<meta property="og:url" content="https://gromimiss.github.io/archives/2019/05/index.html">
+  <meta name="description" content="小程序运营者可以一键授权给第三方平台，由第三方平台来上传代码完成业务。在进行三方代发时，会涉及到很多流程，包括开发调试以及运营发布三方小程序（无需开发介入），本文旨在记录这一整套流程。">
+<meta name="keywords" content="小程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信小程序三方代发">
+<meta property="og:url" content="https://gromimiss.github.io/2021/03/13/3rdminiprogram/index.html">
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
-<meta property="og:description" content="前端学习记录博客">
+<meta property="og:description" content="小程序运营者可以一键授权给第三方平台，由第三方平台来上传代码完成业务。在进行三方代发时，会涉及到很多流程，包括开发调试以及运营发布三方小程序（无需开发介入），本文旨在记录这一整套流程。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2021/03/13/W74iHfyLrAwMToj.png">
+<meta property="og:updated_time" content="2021-03-14T02:52:13.742Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gromimiss&#39;s Blog">
-<meta name="twitter:description" content="前端学习记录博客">
+<meta name="twitter:title" content="微信小程序三方代发">
+<meta name="twitter:description" content="小程序运营者可以一键授权给第三方平台，由第三方平台来上传代码完成业务。在进行三方代发时，会涉及到很多流程，包括开发调试以及运营发布三方小程序（无需开发介入），本文旨在记录这一整套流程。">
+<meta name="twitter:image" content="https://i.loli.net/2021/03/13/W74iHfyLrAwMToj.png">
   
     <link rel="alternative" href="/atom.xml" title="Gromimiss&#39;s Blog" type="application/atom+xml">
   
@@ -163,69 +166,267 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-3rdminiprogram" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/21/page/" class="archive-article-date">
-  	<time datetime="2019-05-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-21</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/21/page/">由于分页组件引发的一些思考</a>
+    <h1 class="article-title" itemprop="name">
+      微信小程序三方代发
     </h1>
   
 
-        <div class="article-info info-on-right">
+        
+        <a href="/2021/03/13/3rdminiprogram/" class="archive-article-date">
+  	<time datetime="2021-03-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-13</time>
+</a>
+        
+        
           
+  <div style="margin-top:10px;font-size: 12px; color: #999;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.2k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">4分</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <i class="icon-book" style="font-size: 12px;"></i>
+      <span id="busuanzi_container_page_pv">
+        本文总阅读量
+        <span id="busuanzi_value_page_pv"></span>
+        次
+      </span>
+    </span>
+
+  </div>
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>小程序运营者可以一键授权给第三方平台，由第三方平台来上传代码完成业务。在进行三方代发时，会涉及到很多流程，包括开发调试以及运营发布三方小程序（无需开发介入），本文旨在记录这一整套流程。</p>
+<a id="more"></a>
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><h3 id="相关申请即设置"><a href="#相关申请即设置" class="headerlink" title="相关申请即设置"></a>相关申请即设置</h3><ul>
+<li>在微信公众平台申请一个小程序，然后在微信开放平台的第三方平台详情中绑定该小程序作为三方开发使用，该小程序就是模板小程序，上传该小程序，代码会被直接上传到开放平台</li>
+<li>在第三方平台账号中配置小程序服务器域名，在三方代发前调用接口为小程序添加第三方平台的域名</li>
+<li>申请一个小程序，用来日常开发测试</li>
+</ul>
+<h3 id="相关名词及字段"><a href="#相关名词及字段" class="headerlink" title="相关名词及字段"></a>相关名词及字段</h3><ul>
+<li>open3rd: 第三方平台，即提供三方服务的对外三方平台，是给其他客户管理小程序的平台</li>
+<li>3rdMiniProgramAppid: 三方代发时需要一个模板小程序来提交代码分发到其他客户的小程序上，这就是模板小程序的 appid</li>
+<li>extAppid: 三方客户小程序的 appid</li>
+<li>extEnable: 是否开启本地的 ext.json，本地调试使用</li>
+<li>ext: 服务端注入额外参数，在提交体验版前，服务端可以给不同小程序注入参数，比如使用 clientId 来区分不同的业务，这些注入的参数在小程序中可以使用 <code>getExtConfig</code> 来获取</li>
+<li>extPages: 可以通过此配置设置对应 page 的配置信息（即 page.json）</li>
+<li>directCommit: 规定当前上传操作是否直接上传到三方小程序的审核列表中，设为 true 时即可支持开发者工具中执行上传操作则直接上传到对应三方小程序的审核列表，当为 false 时则直接上传到对应草稿箱，默认为 false</li>
+</ul>
+<h2 id="业务流程"><a href="#业务流程" class="headerlink" title="业务流程"></a>业务流程</h2><ul>
+<li>客户在增值服务购买小程序服务，调用微信快速创建小程序接口，企业法人扫脸后创建小程序</li>
+<li>云端收到创建成功通知，获取小程序原始 id 和 appid 去云端创建 clientId 映射服务</li>
+<li>三方发布平台获取到新的未发布小程序，点击发布体验版，对小程序进行分发</li>
+<li>客户进入商家运营中心配置小程序所需的审核材料和支付账户相关东西</li>
+<li>确认体验版无误，对小程序正式提审</li>
+</ul>
+<h2 id="发布流程"><a href="#发布流程" class="headerlink" title="发布流程"></a>发布流程</h2><p>为了方便前端开发，在本地开发时可以另外创建小程序作为开发测试使用，在三方发布平台打包时再走三方代发流程。</p>
+<ul>
+<li>当我们在三方发布平台（供运营使用）执行打包时，libra 会收到 mqtt 消息，进行三方打包，此时 appid 是模板小程序的 appid，三方发布平台轮询后端 mqtt 接口</li>
+<li>libra 使用模板小程序打包完成后上传到第三方平台的草稿箱，并通知打包完成</li>
+<li>三方发布平台收到打包完成消息，按钮变为提交体验版，选择要发布的小程序提交，将代码从草稿箱转移到模板库，注入相应的 clientId，提交代码到体验版</li>
+<li>等待提交完成，查看发布到体验版的小程序，调用审核接口，审核通过后进行正式发布</li>
+</ul>
+<h2 id="三方代发整体流程"><a href="#三方代发整体流程" class="headerlink" title="三方代发整体流程"></a>三方代发整体流程</h2><center><br>  <img src="https://i.loli.net/2021/03/13/W74iHfyLrAwMToj.png" width="50%"><br></center>
+
+<ul>
+<li>三方平台创建审核通过后微信服务器会向其授权事件接收 URL 每隔10分钟推送 component_verify_ticket，保存最近可用的 component_verify_ticket</li>
+<li>可以通过上面的 component_verify_ticket  来获取令牌(component_access_token)，有效期 2 小时</li>
+<li>通过 component_access_token 获取预授权码（pre_auth_code），有效期 1800 s</li>
+<li>用户需要在第三方平台授权页中完成授权，授权通过后三方平台即可在回调 URL 中获取到授权码（authorization_code），通过授权码获取到授权方的 appid、authorizer_access_token、authorizer_refresh_token 等授权方相关信息</li>
+<li>发布时先把代码上传到模板库</li>
+<li>通过 authorizer_access_token、模板 id、ext.json（服务端在此注入相关业务参数）上传到体验版</li>
+<li>提交审核，等待微信服务器推送审核结果</li>
+<li>审核通过，使用 authorizer_access_token 发布正式版本</li>
+</ul>
+<h2 id="开发调试"><a href="#开发调试" class="headerlink" title="开发调试"></a>开发调试</h2><p>当我们需要对线上三方小程序进行调试时，可以在本地增加 ext.json，开启 extEnable 并且设置 extAppid 调试指定三方小程序。</p>
+<h2 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h2><p><a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Third_party_platform_appid.html" target="_blank" rel="noopener">第三方平台开发文档</a></p>
+
+      
+
+      
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">组件库</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">小程序</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://gromimiss.github.io/2021/03/13/3rdminiprogram/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+
+    </div>
+  </div>
+
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/12/26/react1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">React 源码解析之任务调度器 Scheduler</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前期准备"><span class="toc-number">1.</span> <span class="toc-text">前期准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相关申请即设置"><span class="toc-number">1.1.</span> <span class="toc-text">相关申请即设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关名词及字段"><span class="toc-number">1.2.</span> <span class="toc-text">相关名词及字段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务流程"><span class="toc-number">2.</span> <span class="toc-text">业务流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布流程"><span class="toc-number">3.</span> <span class="toc-text">发布流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三方代发整体流程"><span class="toc-number">4.</span> <span class="toc-text">三方代发整体流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发调试"><span class="toc-number">5.</span> <span class="toc-text">开发调试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关文档"><span class="toc-number">6.</span> <span class="toc-text">相关文档</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  <section id="comments" class="comments">
+    <style>
+      .comments{margin:30px;padding:10px;background:#fff}
+      @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+    </style>
+    <div id="vcomment" class="comment"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "pOkwQmGy3CKeFHxcTiL55KQr-gzGzoHsz",
+            app_key: "uLQVq8XXSXTsVG8Bpl1b8Sip",
+            placeholder: "要不要唠两句？",
+            avatar:"mm"
+        });
+    }
+</script>
+
+  </section>
   
 
-    
+  
 
+  
+
+  
+
+  
+
+  
 
 
 
@@ -250,8 +451,8 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
