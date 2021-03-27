@@ -17,7 +17,7 @@
 <meta property="og:description" content="JS 中包含了两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://gromimiss.github.io/assets/type/1.jpg">
-<meta property="og:updated_time" content="2020-04-15T03:15:52.413Z">
+<meta property="og:updated_time" content="2021-03-23T14:13:54.552Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS 中的基本类型和引用类型">
 <meta name="twitter:description" content="JS 中包含了两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。">
@@ -189,7 +189,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.4k字</span>
+        <span class="post-count">1.6k字</span>
       </span>
     </span>
 
@@ -198,7 +198,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">5分</span>
+        <span class="post-count">6分</span>
       </span>
     </span>
 
@@ -222,10 +222,9 @@ ga('send', 'pageview');
       
         <p>JS 中包含了两种类型：基本类型（原始类型）和引用类型。本文主要来总结下这两种类型的区别以及类型转换。</p>
 <a id="more"></a>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h3><p>基本数据类型：按值访问，可操作保存在变量中实际的值，指的是简单的数据段。<br>它有6种： undefined、 null、 string、 number、 boolean、 symbol( es6 中新增)。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h3><p>基本数据类型：按值访问，可操作保存在变量中实际的值，指的是简单的数据段。<br>它有6种： undefined、 null、 string、 number、 boolean、 symbol、bigInt。</p>
 <h3 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h3><p>引用类型：<strong>当复制保存着对象的某个变量时，操作的是对象的引用，但在为对象添加属性时，操作的是实际的对象。</strong><br>除了基本类型，其他都是引用类型，包括了：Object、 Array、 RegExp、 Date、 Function、 特殊的基本包装类型（String、 Number、Boolean）以及单体内置对象（Global、 Math）。<br>引用类型变量存放的是地址，当创建一个对象类型的时候，计算机会在内存中开辟一个空间来存放值，我们需要通过一个地址来找到这个空间。所以当复制这个变量的时候其实复制的是存放这个对象空间的地址，当修改数据的时候，就导致了两个变量的值都发生了改变。</p>
-<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>除了上面的按值访问和按址访问的区别，还有以下区别：</p>
-<ol>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><ol>
 <li><p>基本类型按值访问，引用类型按址访问</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本类型值</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="string">'a'</span>;</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">a = <span class="string">'b'</span>;</span><br><span class="line">alert(b); <span class="comment">// a</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//引用类型值,以数组为例</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 对其中一个变量直接赋值不会影响到另一个变量（并未操作引用的对象）</span></span><br><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]; <span class="comment">// 重新赋值，指向的就不是原来的哪个对象了</span></span><br><span class="line">alert(a); <span class="comment">// 1,2,3,4</span></span><br><span class="line">alert(b); <span class="comment">// 1,2,3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 使用push(操作了引用的对象)</span></span><br><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">a.push(<span class="number">4</span>);</span><br><span class="line">alert(a); <span class="comment">// 1,2,3,4</span></span><br><span class="line">alert(b); <span class="comment">// 1,2,3,4</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -242,6 +241,11 @@ ga('send', 'pageview');
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>,<span class="number">3</span> ];</span><br><span class="line">alert(a <span class="keyword">instanceof</span> <span class="built_in">Object</span>); <span class="comment">//true</span></span><br><span class="line">alert(a <span class="keyword">instanceof</span> <span class="built_in">Array</span>); <span class="comment">//true</span></span><br><span class="line">alert(a <span class="keyword">instanceof</span> <span class="built_in">RegExp</span>); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
 <p>但它也不是完全可信的，因为通过 Symbol.hasInstance 我们可以自定义 instanceof 的行为。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PrimitiveString</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> [<span class="built_in">Symbol</span>.hasInstance](x) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">typeof</span> x === <span class="string">'string'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>isPrototypeOf 和 instanceof 的区别：</p>
+<ul>
+<li>A.isPrototypeOf(B)：A 有没有在 B 的原型链上</li>
+<li>A instanceof B：A 对象的原型链上有没有 B.prototype</li>
+</ul>
 <h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><h3 id="JS中的类型转换"><a href="#JS中的类型转换" class="headerlink" title="JS中的类型转换"></a>JS中的类型转换</h3><p>JS 中类型转换只有三种情况：</p>
 <ul>
 <li>转为布尔值</li>
@@ -258,7 +262,7 @@ ga('send', 'pageview');
 <li>若双方都不是字符串并且不是对象，运算中其中一方为数字，则将另一方也转换成数字</li>
 <li>若双方都不是字符串，其中一方是对象，则会将对象先转换为基本类型，再通过以上2点比较</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> + <span class="string">'1'</span> <span class="comment">// '11'</span></span><br><span class="line"><span class="literal">true</span> + <span class="literal">true</span> <span class="comment">// 2</span></span><br><span class="line"><span class="number">4</span> + [<span class="number">1</span>, <span class="number">2</span>] <span class="comment">// '41,2'</span></span><br><span class="line"><span class="number">0</span> + &#123;&#125; <span class="comment">// '0[object Object]'</span></span><br><span class="line">&#123;&#125; + <span class="number">0</span> <span class="comment">// 0 &#123;&#125; 会被当做一个空代码块，相当于计算 +0 ,所以结果不是 '[object Object]0' 而是 0</span></span><br><span class="line">a + + <span class="string">'b'</span> <span class="comment">// 'aNaN' 相当于 a 加上 + 'b'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> + <span class="string">'1'</span> <span class="comment">// '11'</span></span><br><span class="line"><span class="literal">true</span> + <span class="literal">true</span> <span class="comment">// 2</span></span><br><span class="line"><span class="number">4</span> + [<span class="number">1</span>, <span class="number">2</span>] <span class="comment">// '41,2'</span></span><br><span class="line"><span class="number">0</span> + &#123;&#125; <span class="comment">// '0[object Object]'</span></span><br><span class="line">&#123;&#125; + <span class="number">0</span> <span class="comment">// 0 &#123;&#125; 会被当做一个空代码块，相当于计算 +0 ,所以结果不是 '[object Object]0' 而是 0</span></span><br><span class="line">a + + <span class="string">'b'</span> <span class="comment">// 'NaN' 相当于 a 加上 + 'b'</span></span><br></pre></td></tr></table></figure>
 <ol start="2">
 <li>其他运算符，只要其中一方是数字，另一方就会转成数字</li>
 </ol>
@@ -270,8 +274,13 @@ ga('send', 'pageview');
 <h2 id="特殊问题"><a href="#特殊问题" class="headerlink" title="特殊问题"></a>特殊问题</h2><ul>
 <li><p>null 不是一个对象类型，虽然 <code>typeof null === &#39;object&#39;</code>，但是这只是 JS 存在的一个悠久 Bug。因为最初 JS 使用的是 32 位系统，为了性能考虑使用低位存储变量的类型信息，000 开头的代表对象，而 null 表示为全零，所以就错误的判断了。</p>
 </li>
-<li><p><code>0.1 + 0.2 !== 0.3</code> 在计算机中数字都是以多位二进制存储的，而除了那些可以表示成x / 2^n的数可以被精确表示，其余小数<br>都是以近似值的方式存在，可以使用以下方式计算浮点数。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算浮点数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addFloat</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> aLen,bLen;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        aLen = a.toString().split(<span class="string">'.'</span>)[<span class="number">1</span>].length;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">        aLen = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        bLen = b.toString().split(<span class="string">'.'</span>)[<span class="number">1</span>].length;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">        bLen = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> max = <span class="built_in">Math</span>.pow(<span class="number">10</span>, <span class="built_in">Math</span>.max(aLen, bLen));</span><br><span class="line">    <span class="keyword">return</span> (a * max + b * max) / max;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p><code>0.1 + 0.2 !== 0.3</code> 在计算机中数字都是以多位二进制存储的，而除了那些可以表示成x / 2^n的数可以被精确表示，其余小数都是以近似值的方式存在，可以使用以下方式计算浮点数。</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算浮点数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addFloat</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> aLen,bLen;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        aLen = a.toString().split(<span class="string">'.'</span>)[<span class="number">1</span>].length;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">        aLen = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        bLen = b.toString().split(<span class="string">'.'</span>)[<span class="number">1</span>].length;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">        bLen = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> max = <span class="built_in">Math</span>.pow(<span class="number">10</span>, <span class="built_in">Math</span>.max(aLen, bLen));</span><br><span class="line">    <span class="keyword">return</span> (a * max + b * max) / max;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为什么需要包装对象？<br>当我们调用基本数据上的属性或者是方法时其实都隐式的调用了其包装对象。由于 null 和 undefined 不需要属性和方法，所以并不需要包装对象。</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'foo'</span>.length <span class="comment">// 3</span></span><br><span class="line"><span class="string">'foo'</span>.toLocaleUpperCase() <span class="comment">// 'FOO'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新加入的 symbol、bigInt 虽然也都有包装对象，但是在 ES6 中背设计为不能再通过 new Symbol 或 new BigInt 来创建了，使用 new 将会抛出异常。若要转换为包装对象可以通过 Object()，保留这种方式是因为目前已经有代码用 <code>Object(value) === value</code> 来判断一个值是否是对象值了。不过虽然 <code>Object(value) === value</code> 不相等，但是当 symbol 包装对象被误作为属性来使用时，会有自动解包装的逻辑，所以可以直接使用。</p>
 </li>
 </ul>
 
@@ -534,35 +543,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">node</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">打包</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">koa</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -582,7 +563,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">移动端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -594,19 +587,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">chrome</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -618,7 +599,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
+                <a href="javascript:void(0)" class="js-tag color2">chrome</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -627,6 +616,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">打包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">koa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
               </li>
             
             <div class="clearfix"></div>

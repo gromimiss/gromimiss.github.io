@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://gromimiss.github.io">
-  <title>Archives | Gromimiss&#39;s Blog</title>
+  <title>Webpack 的打包原理 | Gromimiss&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前端学习记录博客">
-<meta name="keywords" content="前端，js，开发者，it，code">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Gromimiss&#39;s Blog">
-<meta property="og:url" content="https://gromimiss.github.io/archives/index.html">
+  <meta name="description" content="在之前一篇 webpack 的文章中我曾记录过 Webpack 的打包配置。这篇文章则用来记录 Webpack 大概做了什么。">
+<meta name="keywords" content="js,webpack,打包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Webpack 的打包原理">
+<meta property="og:url" content="https://gromimiss.github.io/2020/05/06/webpack2/index.html">
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
-<meta property="og:description" content="前端学习记录博客">
+<meta property="og:description" content="在之前一篇 webpack 的文章中我曾记录过 Webpack 的打包配置。这篇文章则用来记录 Webpack 大概做了什么。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2021-03-21T03:04:19.283Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gromimiss&#39;s Blog">
-<meta name="twitter:description" content="前端学习记录博客">
+<meta name="twitter:title" content="Webpack 的打包原理">
+<meta name="twitter:description" content="在之前一篇 webpack 的文章中我曾记录过 Webpack 的打包配置。这篇文章则用来记录 Webpack 大概做了什么。">
   
     <link rel="alternative" href="/atom.xml" title="Gromimiss&#39;s Blog" type="application/atom+xml">
   
@@ -163,206 +164,113 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-webpack2" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/03/13/3rdminiprogram/" class="archive-article-date">
-  	<time datetime="2021-03-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-13</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/03/13/3rdminiprogram/">微信小程序三方代发</a>
+    <h1 class="article-title" itemprop="name">
+      Webpack 的打包原理
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">小程序</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/26/react1/" class="archive-article-date">
-  	<time datetime="2020-12-25T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/26/react1/">React 源码解析之任务调度器 Scheduler</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">源码</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">react</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/05/pay/" class="archive-article-date">
-  	<time datetime="2020-11-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/05/pay/">支付</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/09/23/vuxAndRedux/" class="archive-article-date">
-  	<time datetime="2020-09-22T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/23/vuxAndRedux/">Redux 和 Vuex 的源码解析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/06/webpack2/" class="archive-article-date">
+        
+        <a href="/2020/05/06/webpack2/" class="archive-article-date">
   	<time datetime="2020-05-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-06</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/06/webpack2/">Webpack 的打包原理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
+        
+        
           
+  <div style="margin-top:10px;font-size: 12px; color: #999;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">2k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">9分</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <i class="icon-book" style="font-size: 12px;"></i>
+      <span id="busuanzi_container_page_pv">
+        本文总阅读量
+        <span id="busuanzi_value_page_pv"></span>
+        次
+      </span>
+    </span>
+
+  </div>
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在之前一篇 webpack 的文章中我曾记录过 Webpack 的打包配置。这篇文章则用来记录 Webpack 大概做了什么。</p>
+<a id="more"></a>
+<h2 id="构建流程"><a href="#构建流程" class="headerlink" title="构建流程"></a>构建流程</h2><ol>
+<li>从配置文件和 shell 语句中读取合并参数，得到最终的参数</li>
+<li>创建 Compiler 对象，传入上述参数，执行 <code>compiler.run()</code> 开始编译</li>
+<li>根据配置中的 entry 找到所有的入口文件</li>
+<li>从入口文件出发，调用所有配置的 loader 对相应模块进行递归处理，得到每个模块被处理后的内容以及依赖的关系</li>
+<li>根据入口和模块之间的依赖关系，组装成一个个包含多个模块的 Chunk</li>
+<li>确定输出内容后，根据 output 配置确定输出的路径和文件名，把文件内容写入文件系统</li>
+</ol>
+<p>在以上过程中，webpack 会在特定时间广播出特定的事件，插件在监听到感兴趣的事件后执行相应的逻辑，使用 webpack 提供的 api 改变 webpack 的运行结果。</p>
+<h2 id="webpack-做了什么？"><a href="#webpack-做了什么？" class="headerlink" title="webpack 做了什么？"></a>webpack 做了什么？</h2><p>通过 webpack 编译后的代码来看下，webpack 究竟做了什么。</p>
+<ul>
+<li>编译前的代码：</li>
+</ul>
+<p>show.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">show</span>(<span class="params">content</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'app'</span>).innerText = <span class="string">`hello, <span class="subst">$&#123;content&#125;</span>`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>main.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; show &#125; = <span class="built_in">require</span>(<span class="string">'./show'</span>);</span><br><span class="line">show(<span class="string">'webpack'</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>编译后:</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/******/</span> (<span class="function"><span class="keyword">function</span>(<span class="params">modules</span>) </span>&#123; <span class="comment">// 这里传入所有的模块文件，模块以路径作为键名，一个函数做为键值，函数内会 eval 模块的 code</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// 缓存注册的模块</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="keyword">var</span> installedModules = &#123;&#125;;</span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// 浏览器是不支持 commonjs 的，所以需要定义一个 require 方法</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="function"><span class="keyword">function</span> <span class="title">__webpack_require__</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// 检查被引入的模块是否已经被注册，若已被注册则直接导出</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">if</span>(installedModules[moduleId]) &#123;</span><br><span class="line"><span class="comment">/******/</span> 			<span class="keyword">return</span> installedModules[moduleId].exports;</span><br><span class="line"><span class="comment">/******/</span> 		&#125;</span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// 否则创建一个新的模块</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">var</span> <span class="built_in">module</span> = installedModules[moduleId] = &#123;</span><br><span class="line"><span class="comment">/******/</span> 			i: moduleId, <span class="comment">// 模块 id，即模块路径</span></span><br><span class="line"><span class="comment">/******/</span> 			l: <span class="literal">false</span>, <span class="comment">// 模块是否已经加载完</span></span><br><span class="line"><span class="comment">/******/</span> 			exports: &#123;&#125; <span class="comment">// 导出</span></span><br><span class="line"><span class="comment">/******/</span> 		&#125;;</span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// 执行指定模块的代码，this 指向一个空对象</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// 调用的函数接受3个参数: </span></span><br><span class="line">            <span class="comment">// module: 当前模块</span></span><br><span class="line">            <span class="comment">// module.exports: 当前模块导出内容，在模块中导出自己，让别的模块可以使用</span></span><br><span class="line">            <span class="comment">// __webpack_require__: require 方法（供模块代码中使用，可以在模块中继续导入子模块）</span></span><br><span class="line"><span class="comment">/******/</span> 		modules[moduleId].call(<span class="built_in">module</span>.exports, <span class="built_in">module</span>, <span class="built_in">module</span>.exports, __webpack_require__);</span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// 标识模块已被加载</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="built_in">module</span>.l = <span class="literal">true</span>;</span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="comment">// 返回模块的导出</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line"><span class="comment">/******/</span> 	&#125;</span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// 暴露传入的模块</span></span><br><span class="line"><span class="comment">/******/</span> 	__webpack_require__.m = modules;</span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// 暴露所有被注册的模块</span></span><br><span class="line"><span class="comment">/******/</span> 	__webpack_require__.c = installedModules;</span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// 为导出的某个属性定义 getter 函数</span></span><br><span class="line"><span class="comment">/******/</span> 	__webpack_require__.d = <span class="function"><span class="keyword">function</span>(<span class="params">exports, name, getter</span>) </span>&#123;</span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">if</span>(!__webpack_require__.o(exports, name)) &#123;</span><br><span class="line"><span class="comment">/******/</span> 			<span class="built_in">Object</span>.defineProperty(exports, name, &#123; <span class="attr">enumerable</span>: <span class="literal">true</span>, <span class="attr">get</span>: getter &#125;);</span><br><span class="line"><span class="comment">/******/</span> 		&#125;</span><br><span class="line"><span class="comment">/******/</span> 	&#125;;</span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// 在 exports 上定义 __esModule 属性，并且为 exports 设置 Module 类型</span></span><br><span class="line"><span class="comment">/******/</span> 	__webpack_require__.r = <span class="function"><span class="keyword">function</span>(<span class="params">exports</span>) </span>&#123;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">            * Symbol.toStringTag 用来表示自定义对象的类型标签</span></span><br><span class="line"><span class="comment">            * class CustomClass &#123;</span></span><br><span class="line"><span class="comment">            *   get [Symbol.toStringTag]() &#123;</span></span><br><span class="line"><span class="comment">            *      return "CustomClass";</span></span><br><span class="line"><span class="comment">            *   &#125;</span></span><br><span class="line"><span class="comment">            * &#125;</span></span><br><span class="line"><span class="comment">            * Object.prototype.toString.call(CustomClass) // [object CustomClass]</span></span><br><span class="line"><span class="comment">            **/</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="built_in">Symbol</span> !== <span class="string">'undefined'</span> &amp;&amp; <span class="built_in">Symbol</span>.toStringTag) &#123;</span><br><span class="line"><span class="comment">/******/</span> 			<span class="built_in">Object</span>.defineProperty(exports, <span class="built_in">Symbol</span>.toStringTag, &#123; <span class="attr">value</span>: <span class="string">'Module'</span> &#125;);</span><br><span class="line"><span class="comment">/******/</span> 		&#125;</span><br><span class="line"><span class="comment">/******/</span> 		<span class="built_in">Object</span>.defineProperty(exports, <span class="string">'__esModule'</span>, &#123; <span class="attr">value</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"><span class="comment">/******/</span> 	&#125;;</span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// create a fake namespace object</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// mode &amp; 1: 值是模块 id 则引入它</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// mode &amp; 2: 将传入 value 的属性都合并入 ns 中</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// mode &amp; 4: 若传入的 value 就是一个自定义的模块则直接返回</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// mode &amp; 8|1: behave like require</span></span><br><span class="line"><span class="comment">/******/</span> 	__webpack_require__.t = <span class="function"><span class="keyword">function</span>(<span class="params">value, mode</span>) </span>&#123;</span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">if</span>(mode &amp; <span class="number">1</span>) value = __webpack_require__(value);</span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">if</span>(mode &amp; <span class="number">8</span>) <span class="keyword">return</span> value;</span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">if</span>((mode &amp; <span class="number">4</span>) &amp;&amp; <span class="keyword">typeof</span> value === <span class="string">'object'</span> &amp;&amp; value &amp;&amp; value.__esModule) <span class="keyword">return</span> value;</span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">var</span> ns = <span class="built_in">Object</span>.create(<span class="literal">null</span>);</span><br><span class="line"><span class="comment">/******/</span> 		__webpack_require__.r(ns);</span><br><span class="line">            <span class="comment">// 在 ns 上定义 default 属性为传入的 value </span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="built_in">Object</span>.defineProperty(ns, <span class="string">'default'</span>, &#123; <span class="attr">enumerable</span>: <span class="literal">true</span>, <span class="attr">value</span>: value &#125;);</span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">if</span>(mode &amp; <span class="number">2</span> &amp;&amp; <span class="keyword">typeof</span> value != <span class="string">'string'</span>) <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> value) __webpack_require__.d(ns, key, <span class="function"><span class="keyword">function</span>(<span class="params">key</span>) </span>&#123; <span class="keyword">return</span> value[key]; &#125;.bind(<span class="literal">null</span>, key));</span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">return</span> ns;</span><br><span class="line"><span class="comment">/******/</span> 	&#125;;</span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span> 	</span><br><span class="line"><span class="comment">/******/</span> 	__webpack_require__.n = <span class="function"><span class="keyword">function</span>(<span class="params">module</span>) </span>&#123;</span><br><span class="line">            <span class="comment">// 若是自定义的模块则直接返回模块中的 default 属性，否则返回传入的模块</span></span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">var</span> getter = <span class="built_in">module</span> &amp;&amp; <span class="built_in">module</span>.__esModule ?</span><br><span class="line"><span class="comment">/******/</span> 			<span class="function"><span class="keyword">function</span> <span class="title">getDefault</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">module</span>[<span class="string">'default'</span>]; &#125; :</span><br><span class="line"><span class="comment">/******/</span> 			<span class="function"><span class="keyword">function</span> <span class="title">getModuleExports</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">module</span>; &#125;;</span><br><span class="line">            <span class="comment">// 在 getter 上定义 a 属性</span></span><br><span class="line"><span class="comment">/******/</span> 		__webpack_require__.d(getter, <span class="string">'a'</span>, getter);</span><br><span class="line"><span class="comment">/******/</span> 		<span class="keyword">return</span> getter;</span><br><span class="line"><span class="comment">/******/</span> 	&#125;;</span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// Object.prototype.hasOwnProperty.call</span></span><br><span class="line"><span class="comment">/******/</span> 	__webpack_require__.o = <span class="function"><span class="keyword">function</span>(<span class="params">object, property</span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.hasOwnProperty.call(object, property); &#125;;</span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// __webpack_public_path__</span></span><br><span class="line"><span class="comment">/******/</span> 	__webpack_require__.p = <span class="string">""</span>;</span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="comment">// 加载入口模块，并且返回对应的 exports</span></span><br><span class="line"><span class="comment">/******/</span> 	<span class="keyword">return</span> __webpack_require__(__webpack_require__.s = <span class="string">"./main.js"</span>);</span><br><span class="line"><span class="comment">/******/</span> &#125;)</span><br><span class="line"><span class="comment">/******/</span> (&#123;</span><br><span class="line"><span class="string">"./src/main.js"</span>:</span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">module, __webpack_exports__, __webpack_require__</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="meta">"use strict"</span>;</span><br><span class="line"><span class="built_in">eval</span>(<span class="string">"__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _show_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./show.js */ \"./src/show.js\");\n\nObject(_show_js__WEBPACK_IMPORTED_MODULE_0__[\"showContent\"])('webpack');\n\n//# sourceURL=webpack:///./src/main.js?"</span>);</span><br><span class="line"></span><br><span class="line">&#125;),</span><br><span class="line"></span><br><span class="line"><span class="string">"./src/show.js"</span>:</span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">module, __webpack_exports__, __webpack_require__</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="meta">"use strict"</span>;</span><br><span class="line"><span class="built_in">eval</span>(<span class="string">"__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"showContent\", function() &#123; return showContent; &#125;);\nfunction showContent(content) &#123;\n    document.body.innerText = `hello111, $&#123;content&#125;`;\n&#125;\n\n//# sourceURL=webpack:///./src/show.js?"</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">/******/</span> &#125;);</span><br></pre></td></tr></table></figure>
+<p>webpack 打包出来的立即执行函数中会包含一个 <strong>webpack_require</strong> 函数，用来注册模块，执行模块代码，并返回相应的模块。</p>
+<ul>
+<li><strong>webpack_require</strong>.m: 所有依赖模块文件</li>
+<li><strong>webpack_require</strong>.c: 已被注册的模块</li>
+<li><strong>webpack_require</strong>.d: 在导出的模块上定义一个属性并为其设置 getter 函数</li>
+<li><strong>webpack_require</strong>.r: 将导出的模块定义为 Module 类型，并设置 __esModule 为 true</li>
+<li><strong>webpack_require</strong>.t: 定义 default 属性？</li>
+<li><strong>webpack_require</strong>.n: ？</li>
+<li><strong>webpack_require</strong>.o: 传入对象上是否有某个属性</li>
+</ul>
+<p>将所需模块集合作为参数传入到一个立即执行函数中，所有的模块会以路径为键名，以一个函数为键值（这个函数会直接通过 eval 来执行解析后的文件中的代码，并且会拥有三个参数，module： 当前模块对象，exports：当前模块导出的代码，<strong>webpack</strong>require__：注册模块的方法（会带上 sourceURL 指向文件路径））组成一个对象。立即执行函数中定义了一个 <strong>webpack</strong>require__ 方法来注册模块，并且执行模块代码，返回模块内容。将模块的路径作为 moduleId, l 来标识模块是否加载完了， exports 为模块导出的代码，入口文件会在立即执行函数中<br>使用 <strong>webpack_require</strong> 导入，入口文件的代码中会继续使用 <strong>webpack</strong>require__ 导入依赖文件，直到不再有相关的依赖文件。</p>
+<h2 id="手写一个简易版-webpack"><a href="#手写一个简易版-webpack" class="headerlink" title="手写一个简易版 webpack"></a>手写一个简易版 webpack</h2><ul>
+<li>Parser.js</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> parser = <span class="built_in">require</span>(<span class="string">'@babel/parser'</span>);</span><br><span class="line"><span class="keyword">const</span> traverse = <span class="built_in">require</span>(<span class="string">'@babel/traverse'</span>).default;</span><br><span class="line"><span class="keyword">const</span> &#123; transformFromAst &#125; = <span class="built_in">require</span>(<span class="string">'@babel/core'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Parser = &#123;</span><br><span class="line">  <span class="comment">// 通过 @babel/parser 将代码解析成 ast 对象</span></span><br><span class="line">  getAst(filePath) &#123;</span><br><span class="line">    <span class="keyword">const</span> content = fs.readFileSync(filePath, <span class="string">'utf-8'</span>);</span><br><span class="line">    <span class="keyword">return</span> parser.parse(content, &#123;</span><br><span class="line">      sourceType: <span class="string">'module'</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 通过 @babel/traverse 将 ast 中依赖的对象递归抽取出来</span></span><br><span class="line">  <span class="comment">// dependencies 是保存了依赖引入的相对路径和文件真实路径的键值对</span></span><br><span class="line">  getDependencies(ast, filePath) &#123;</span><br><span class="line">    <span class="keyword">const</span> dependencies = &#123;&#125;;</span><br><span class="line">    traverse(ast, &#123;</span><br><span class="line">      ImportDeclaration(&#123;node&#125;) &#123;</span><br><span class="line">        dependencies[node.source.value] = <span class="string">`./<span class="subst">$&#123;path.join(path.dirname(filePath), node.source.value)&#125;</span>`</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> dependencies;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 通过 @babel/core 将 ast 转换为编译后的代码</span></span><br><span class="line">  getCode(ast) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; code&#125; = transformFromAst(ast, <span class="literal">null</span>, &#123;</span><br><span class="line">      presets: [<span class="string">'@babel/preset-env'</span>]</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> code;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = Parser;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Compiler.js</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Parser = <span class="built_in">require</span>(<span class="string">'./Parser'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Compiler</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(options) &#123;</span><br><span class="line">    <span class="keyword">this</span>.entry = options.entry;</span><br><span class="line">    <span class="keyword">this</span>.output = options.output;</span><br><span class="line">    <span class="keyword">this</span>.modules = [];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  build(path) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; getAst, getDependencies, getCode &#125; = Parser;</span><br><span class="line">    <span class="keyword">const</span> ast = getAst(path);</span><br><span class="line">    <span class="keyword">const</span> dependencies = getDependencies(ast, path);</span><br><span class="line">    <span class="keyword">const</span> code = getCode(ast);</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      path,</span><br><span class="line">      dependencies,</span><br><span class="line">      code</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  generate(graph) &#123;</span><br><span class="line">    <span class="keyword">const</span> outputFile = path.join(<span class="keyword">this</span>.output.path, <span class="keyword">this</span>.output.filename);</span><br><span class="line">    <span class="comment">// 生成编译后的代码</span></span><br><span class="line">    <span class="keyword">const</span> bundle = <span class="string">`</span></span><br><span class="line"><span class="string">    (function (graph) &#123;</span></span><br><span class="line"><span class="string">      function require(moduleId) &#123;</span></span><br><span class="line"><span class="string">        function localeRequire(path) &#123;</span></span><br><span class="line"><span class="string">          return require(graph[moduleId].dependencies[path]);</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        var exports = &#123;&#125;;</span></span><br><span class="line"><span class="string">        (function (require, exports, code) &#123;</span></span><br><span class="line"><span class="string">          eval(code);</span></span><br><span class="line"><span class="string">        &#125;)(localeRequire, exports, graph[moduleId].code);</span></span><br><span class="line"><span class="string">        return exports;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">      require('<span class="subst">$&#123;<span class="keyword">this</span>.entry&#125;</span>');</span></span><br><span class="line"><span class="string">    &#125;)(<span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(graph)&#125;</span>);</span></span><br><span class="line"><span class="string">    `</span>;</span><br><span class="line">    <span class="comment">//写入文件</span></span><br><span class="line">    <span class="keyword">if</span> (!fs.existsSync(outputFile)) &#123;</span><br><span class="line">      fs.mkdirSync(<span class="keyword">this</span>.output.path);</span><br><span class="line">    &#125;</span><br><span class="line">    fs.writeFileSync(outputFile, bundle, <span class="string">'utf-8'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getDependenciesGraph(dependenciesGraph = &#123;&#125;, <span class="built_in">module</span>) &#123;</span><br><span class="line">    dependenciesGraph[<span class="built_in">module</span>.path] = &#123;</span><br><span class="line">      dependencies: <span class="built_in">module</span>.dependencies,</span><br><span class="line">      code: <span class="built_in">module</span>.code</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> dependenciesGraph;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  run() &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">module</span> = <span class="keyword">this</span>.build(<span class="keyword">this</span>.entry);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">module</span>)</span><br><span class="line">    <span class="keyword">this</span>.modules.push(<span class="built_in">module</span>);</span><br><span class="line">    <span class="keyword">const</span> dependenciesGraph = &#123;&#125;;</span><br><span class="line">    <span class="keyword">this</span>.modules.forEach(<span class="function">(<span class="params"><span class="built_in">module</span></span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; dependencies &#125; = <span class="built_in">module</span>;</span><br><span class="line">      <span class="keyword">this</span>.getDependenciesGraph(dependenciesGraph, <span class="built_in">module</span>);</span><br><span class="line">      <span class="keyword">if</span> (dependencies) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> dependency <span class="keyword">in</span> dependencies) &#123;</span><br><span class="line">          <span class="keyword">const</span> dependencyModule = <span class="keyword">this</span>.build(dependencies[dependency])</span><br><span class="line">          <span class="keyword">this</span>.modules.push(dependencyModule);</span><br><span class="line">          <span class="keyword">this</span>.getDependenciesGraph(dependenciesGraph, dependencyModule);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">this</span>.generate(dependenciesGraph);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = Compiler;</span><br></pre></td></tr></table></figure>
+<p>这里要生成的代码中也有我们提供的 require 方法，require 方法里会自执行当前传入模块的代码，并且把 localeRequire 传入该立即执行函数中。localeRequire 中是对模块提供 require 方法，让模块可以通过这个方法引入其他模块。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="https://github.com/webfansplz/article/issues/38" target="_blank" rel="noopener">webpack打包原理 ? 看完这篇你就懂了 !</a></p>
+
+      
+
+      
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -382,230 +290,158 @@ ga('send', 'pageview');
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/23/hybrid/" class="archive-article-date">
-  	<time datetime="2020-04-22T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/23/hybrid/">Hybird APP</a>
-    </h1>
-  
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">移动端</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">hybird</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://gromimiss.github.io/2020/05/06/webpack2/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+    </div>
   </div>
+
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/22/user-auth/" class="archive-article-date">
-  	<time datetime="2020-04-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-22</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2020/09/23/vuxAndRedux/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Redux 和 Vuex 的源码解析
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/04/23/hybrid/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hybird APP</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/22/user-auth/">Web 中的用户认证机制</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#构建流程"><span class="toc-number">1.</span> <span class="toc-text">构建流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack-做了什么？"><span class="toc-number">2.</span> <span class="toc-text">webpack 做了什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手写一个简易版-webpack"><span class="toc-number">3.</span> <span class="toc-text">手写一个简易版 webpack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文章"><span class="toc-number">4.</span> <span class="toc-text">参考文章</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/21/bind/" class="archive-article-date">
-  	<time datetime="2020-04-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/21/bind/">手写一个 call/apply/bind</a>
-    </h1>
+  <section id="comments" class="comments">
+    <style>
+      .comments{margin:30px;padding:10px;background:#fff}
+      @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+    </style>
+    <div id="vcomment" class="comment"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "pOkwQmGy3CKeFHxcTiL55KQr-gzGzoHsz",
+            app_key: "uLQVq8XXSXTsVG8Bpl1b8Sip",
+            placeholder: "要不要唠两句？",
+            avatar:"mm"
+        });
+    }
+</script>
+
+  </section>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/16/vue-router/" class="archive-article-date">
-  	<time datetime="2020-04-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/16/vue-router/">Vue-router 中的 hash 模式和 history 模式</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">vue-router</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/11/mvvm1/" class="archive-article-date">
-  	<time datetime="2020-04-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/11/mvvm1/">记对 Vue 中的双向绑定的理解和总结（一）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">源码</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
   
 
+  
 
 
 
@@ -630,8 +466,8 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

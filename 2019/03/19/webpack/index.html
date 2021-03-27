@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://gromimiss.github.io">
   <title>Webpack 4 总结 | Gromimiss&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
+  <meta name="description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，其中改变还是挺大的，就此作出一个总结。">
 <meta name="keywords" content="js,webpack,打包">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Webpack 4 总结">
 <meta property="og:url" content="https://gromimiss.github.io/2019/03/19/webpack/index.html">
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
-<meta property="og:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
+<meta property="og:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，其中改变还是挺大的，就此作出一个总结。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-05-06T07:39:41.909Z">
+<meta property="og:updated_time" content="2021-03-22T15:51:52.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Webpack 4 总结">
-<meta name="twitter:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。">
+<meta name="twitter:description" content="以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，其中改变还是挺大的，就此作出一个总结。">
   
     <link rel="alternative" href="/atom.xml" title="Gromimiss&#39;s Blog" type="application/atom+xml">
   
@@ -187,7 +187,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">5.6k字</span>
+        <span class="post-count">5.7k字</span>
       </span>
     </span>
 
@@ -218,7 +218,7 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，感觉其中改变还蛮大的，就此作出一个总结。</p>
+        <p>以前用的 webpack 版本还是 2.6.1，现在 webpack 都更新到 4.29.6 了。所以最近学习了下 webpack 4，并且动手使用了下，其中改变还是挺大的，就此作出一个总结。</p>
 <a id="more"></a>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="为什么要使用-webpack？"><a href="#为什么要使用-webpack？" class="headerlink" title="为什么要使用 webpack？"></a>为什么要使用 webpack？</h3><p>随着功能点的增加，浏览器本身又不提供模块管理的机制，为了简化开发的复杂度，提升开发效率，模块化、CSS 预处理器、各种框架层出不穷，并且还有 JS 的一些还没被浏览器支持的新特性，所以一整个项目里会包含着一大堆的 JS 代码和依赖包，前端项目越来越臃肿，越来越难以维护，而这个时候 webpack 出现了。</p>
 <h3 id="什么是-webpack"><a href="#什么是-webpack" class="headerlink" title="什么是 webpack"></a>什么是 webpack</h3><p>webpack 可以看做是一个模块打包机，它会分析你的项目结构，将一堆文件中的每个文件都作为一个模块，找出他们的依赖关系，将 js 模块以及其他一些浏览器不能直接运行的拓展语言（typescript、sass等）打包为合适的格式供浏览器来使用。</p>
@@ -229,9 +229,9 @@ ga('send', 'pageview');
 <li>Entry：入口，作为 webpack 构建的第一步来找出依次的依赖关系</li>
 <li>Module：模块，在 webpack 中一切皆模块，一个模块对应着一个文件，webpack 会通过 Entry 开始递归找出所有依赖的模块</li>
 <li>Chunk：代码块，一个 Chunk 由多个模块组合而成，用于代码合并及分割</li>
-<li>Loader：模块转换器，将模块原内容按需转换成新内容</li>
+<li>Loader：模块转换器，将模块原内容按需转换成新内容，它能让 webpack 能够去处理那些非 js 文件</li>
 <li>Plugin：扩展插件，在构建流程中的特定时机注入扩展逻辑来改变构建结果</li>
-<li>Output：输出结果，在经过一系列处理并得到最终想要的代码后输出结果</li>
+<li>Output：输出结果，在经过一系列处理并得到最终想要的代码后输出结果，该属性告诉 webpack 在哪里输出结果并且如何命名这些模块</li>
 </ul>
 <p>Webpack 启动后会从 Entry 里配置的 Module 开始递归解析 Entry 依赖的所有 Module，每找到一个 Module，就会根据配置的 Loader 去找对应的转换规则，对 Module 进行转换后，再解析出当前 Module 依赖的 Module。这些模块会以 Entry 为单位进行分组，一个 Entry 和其所有依赖的 Module 会被分到一个 Chunk。最后 webpack 会将所有 Chunk 转换成文件输出，在整个流程中 webpack 会在恰当的时机执行 Plugin 里定义的逻辑。</p>
 <h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h3><ol>
@@ -243,7 +243,8 @@ ga('send', 'pageview');
 <li>通过配置 package.json 中的 script: { “build”: “webpack”}</li>
 </ul>
 </li>
-<li></li>
+<li><p>相关配置</p>
+</li>
 </ol>
 <ul>
 <li><p>mode: 模式，有两种（production development），默认是 production，它会告知 webpack 使用什么模式的内置优化</p>
@@ -256,15 +257,16 @@ ga('send', 'pageview');
 <p>多入口打包成一个文件：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">entry: [<span class="string">'./src/index.js'</span>, <span class="string">'jquery'</span>] <span class="comment">// 相当于 entry: &#123; main: ['./src/index.js', 'jquery']&#125;</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>output: 出口配置<br>filename 中的 name 是 entry 中对象的属性名，若 entry 是字符串或者是数组，则默认会是 main。<br>在这里需要讲一下 hash、chunkhash、contenthash 的区别：</p>
+<li><p>output: 输出配置<br>filename 中的 name 是 entry 中对象的属性名，若 entry 是字符串或者是数组，则默认会是 main。</p>
+<p>在这里需要讲一下 hash、chunkhash、contenthash 的区别：</p>
 <ul>
-<li>hash： 根据打包后的文件内容计算出来的 hash 值，它跟整个项目相关，所以所有的文件被打包出来都用的同一个 hash 值，这也就意味着项目中任何一个文件的改动都会导致 hash 值改变，导致缓存失效。</li>
+<li>hash： 根据打包后的文件内容计算出来的 hash 值，它跟整个项目相关，所以所有的文件被打包出来都用的同一个 hash 值，这也就意味着项目中任何一个文件的改动都会导致 hash 值改变，导致缓存失效。由于打包出来的 runtime 运行时文件会改变，所以会导致 hash 值也因此改变。</li>
 <li>chunkhash：根据不同的入口进行依赖解析，构建对应的 chunk，生成对应的 hash 值。我们往往会把公共库和业务代码分开，单独打包，这样业务代码的改动就不会影响到公共库的 hash 值受影响。</li>
 <li>contenthash：由文件内容产生的 hash 值。我们的入口文件中往往依赖了 css 文件，若按 chunkhash 来打包，那么 css 和 js 其实用的是同一个 hash 值，这就导致 css 没有改动的情况下也会跟着受影响，这个时候就可以将 css 抽离出来并使用按 css 文件内容的计算产生的 hash 值。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">    filename: <span class="string">'[name].[hash].js'</span>,</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'build'</span>) <span class="comment">// 打包后的文件的输出目录</span></span><br><span class="line">    publicPath: <span class="string">''</span> <span class="comment">// 当资源托管到 CDN 时可使用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>module: 在 module 中可以配置 loader，loader 的执行顺序是从右向左，从下向上的;也可以配置 noParse，让 Webpack 忽略对部分没采用模块化文件的递归解析和处理，比如 jqeury、chartJS 等没有采用模块化标准的库。</p>
+<li><p>module: 在 module 中可以配置 loader，loader 的执行顺序是从右向左，从下向上的；也可以配置 noParse，让 Webpack 忽略对部分没采用模块化文件的递归解析和处理，比如 jqeury、chartJS 等没有采用模块化标准的库。</p>
 </li>
 <li><p>devServer：开发服务器的配置</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">    port: <span class="number">8080</span>, <span class="comment">// 端口号</span></span><br><span class="line">    progress: <span class="literal">true</span>, <span class="comment">// 是否显示进度条</span></span><br><span class="line">    contentBase: <span class="string">'./build'</span>, </span><br><span class="line">    compress: <span class="literal">true</span>, <span class="comment">// 启动服务器的 gzip 压缩</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -291,13 +293,13 @@ ga('send', 'pageview');
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">watch: <span class="literal">true</span>,</span><br><span class="line">watchOptions: &#123;</span><br><span class="line">    aggregateTimeout: <span class="number">300</span>, <span class="comment">// 当第一个文件更改，会在重新构建前增加延迟，它允许 webpack 将这段时间内进行的任何其他更改都聚合到一次重新构建里</span></span><br><span class="line">    poll: <span class="number">1000</span> <span class="comment">// 每秒检查一次变动</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="常用的-loader"><a href="#常用的-loader" class="headerlink" title="常用的 loader"></a>常用的 loader</h3><p>loader 一般都是单个 loader 负责单一的功能</p>
+<h3 id="常用的-loader"><a href="#常用的-loader" class="headerlink" title="常用的 loader"></a>常用的 loader</h3><p>loader 一般都是单个 loader 负责单一的功能。</p>
 <ul>
 <li><p>expose-loader：把一个模块暴露为一个全局变量 <code>expose-loader?$!jquery</code></p>
 </li>
 <li><p>file-loader：解析图片地址，会将图片从原位置拷贝到目标位置并且修改原引用位置</p>
 </li>
-<li><p>url-loader：可以在文件较小的时候，直接变成 base64 字符串内嵌到页面中（体积会比源文件大1/3，但是可以减少 http请求）。当文件大于阈值时，会使用 file-loader 进行处理。</p>
+<li><p>url-loader：可以在文件较小的时候，直接变成 base64 字符串内嵌到页面中（体积会比源文件大 1/3，但是可以减少 http 请求）。当文件大于阈值时，会使用 file-loader 进行处理。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: <span class="regexp">/\.(png|jpg|gif|bmp|svg)$/</span>,</span><br><span class="line">    use: &#123;</span><br><span class="line">        loader: <span class="string">'url-loader'</span>,</span><br><span class="line">        options: &#123;</span><br><span class="line">            limit: <span class="number">9</span> * <span class="number">1024</span>,</span><br><span class="line">            outputPath: <span class="string">'images/'</span><span class="comment">// 输出目录</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>html-withimg-loader：将 html 中引用的图片地址替换为实际的路径</p>
@@ -307,7 +309,7 @@ ga('send', 'pageview');
 </li>
 <li><p>sass-loader：把 sass 解析为 css</p>
 </li>
-<li><p>style-loader：将 css 插入到 html 的 head 中</p>
+<li><p>style-loader：将 css 内容用 js 里的字符串存储起来，网页执行 js 时通过 dom 操作动态的将 css 插入到 html 的 head 中</p>
 </li>
 <li><p>postcss-loader：使用 PostCSS 加载和转译 CSS 文件，可以用来添加浏览器前缀（当然不止这个功能）</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">    use: [</span><br><span class="line">        <span class="string">'css-loader'</span>,</span><br><span class="line">        &#123;</span><br><span class="line">            loader: <span class="string">'postcss-loader'</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">                plugins: [</span><br><span class="line">                    <span class="built_in">require</span>(<span class="string">'autoprefixer'</span>)</span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -316,7 +318,7 @@ ga('send', 'pageview');
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">    exclude: <span class="regexp">/node_modules/</span>, <span class="comment">// 排除不需要转译的目录</span></span><br><span class="line">    use: &#123;</span><br><span class="line">        loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">        options: &#123;</span><br><span class="line">            presets: [<span class="string">'@babel/preset-env'</span>],</span><br><span class="line">            plugins: [<span class="string">'@babel/plugin-transform-runtime'</span>] <span class="comment">// 引入 babel runtime 作为一个独立模块，来避免重复引入（若不使用，babel 会自动对每个文件 runtime 注入）</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>plugins：</p>
+<p>babel 中的plugins：</p>
 <pre><code>-   @babel/core: 核心 api
 -   @babel/preset-flow: 删除静态类型注释
 -   @babel/cli: 允许你从终端使用 babel
@@ -417,8 +419,6 @@ ga('send', 'pageview');
 <li><p>exports is not defined 去查了下看到说是因为在 .babelrc 中的 modules: false 阻止了 babel 进行模块转化，于是去掉之后发现还是报错，没法把 commonjs 解析成功，也试过 babel-plugin-transform-commonjs 插件，但是会报新的错误：Duplicate export ‘default’，好像是因为我项目里也用了 ES6 Module，所以导致重复编译？最后决定将那几个使用了 commonjs 的代码都变成 ES6 的，问题就解决了</p>
 </li>
 <li><p>使用 DllPlugin + DllReferencePlugin 时碰到一个问题：最后打包时还是将依赖打包了进去，之后发现我在项目中用的是 vue.common.js，但是第三方库中 vendor 引用 vue 会自动引入 vue 中的 vue.runtime.esm.js，所以导致第三方还是被一起打包在了里面，所以要在配置文件中添加上 vue/dist/vue.common.js</p>
-</li>
-<li><p>clean-webpack-plugin：建议可以自己写一个删除某个目录下的文件，这个的匹配规则实在是，试了好几种，都没办法把某个目录下的文件都保留，得把文件放到 dist 打包根目录下，再排除，不知道正确的匹配规则是什么，呼~</p>
 </li>
 </ol>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>webpack 4 中改动还是挺大的，也导致了挺多插件不能用了，所以在插件的使用上可能会碰到很多问题，需要花上挺多的时间，若之后发现新的好用的插件再补充。</p>
@@ -690,35 +690,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">node</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">打包</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">koa</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -738,7 +710,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">移动端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -750,19 +734,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">chrome</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -774,7 +746,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
+                <a href="javascript:void(0)" class="js-tag color2">chrome</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -783,6 +763,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">打包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">koa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
               </li>
             
             <div class="clearfix"></div>

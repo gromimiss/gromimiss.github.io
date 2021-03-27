@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Gromimiss&#39;s Blog">
 <meta property="og:description" content="在做电商项目中会涉及到很多的支付方式，每个支付方式的对接都有些许不同，这里记录下各大支付方式的对接流程。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2021-03-14T02:53:22.415Z">
+<meta property="og:updated_time" content="2021-03-19T15:03:53.145Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="支付">
 <meta name="twitter:description" content="在做电商项目中会涉及到很多的支付方式，每个支付方式的对接都有些许不同，这里记录下各大支付方式的对接流程。">
@@ -187,7 +187,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o icon-acfun" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.5k字</span>
+        <span class="post-count">2.1k字</span>
       </span>
     </span>
 
@@ -196,7 +196,7 @@ ga('send', 'pageview');
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half icon-clock" style="font-size: 12px;"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">5分</span>
+        <span class="post-count">8分</span>
       </span>
     </span>
 
@@ -255,20 +255,42 @@ ga('send', 'pageview');
 <li>跳转 stripe checkout 页</li>
 <li>用户支付成功后跳转至配置的 successUrl</li>
 </ol>
-<h4 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h4><p>点击支付从接口中获取到 publicKey 和 sessionId，重定向到 stripe checkout 页，用户支付成功后跳转到配置的 success_url 页，success_url 和 cancel_url 前后端都可以控制。</p>
+<h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h3><p>点击支付从接口中获取到 publicKey 和 sessionId，重定向到 stripe checkout 页，用户支付成功后跳转到配置的 success_url 页，success_url 和 cancel_url 前后端都可以控制。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; publicKey, sessionId &#125; = res.extendMap; <span class="comment">// 从接口中获取</span></span><br><span class="line"><span class="keyword">const</span> stripe = <span class="built_in">window</span>.Stripe(publicKey);</span><br><span class="line">stripe.redirectToCheckout(&#123;</span><br><span class="line">    sessionId</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="paypal-支付"><a href="#paypal-支付" class="headerlink" title="paypal 支付"></a>paypal 支付</h2><h3 id="流程-3"><a href="#流程-3" class="headerlink" title="流程"></a>流程</h3><ol>
 <li>用户点击 paypal 生成的按钮在 h5 下单</li>
 <li>弹出 paypal 弹窗</li>
 <li>支付成功后由前端这边做一个支付成功的跳转</li>
 </ol>
-<h4 id="实现-3"><a href="#实现-3" class="headerlink" title="实现"></a>实现</h4><p>通过嵌入 paypal 的按钮，点击按钮时会呼起 paypal 支付弹窗进行支付，通过 approve 验证是否成功，并且做一个成功的跳转。</p>
+<h3 id="实现-3"><a href="#实现-3" class="headerlink" title="实现"></a>实现</h3><p>通过嵌入 paypal 的按钮，点击按钮时会呼起 paypal 支付弹窗进行支付，通过 approve 验证是否成功，并且做一个成功的跳转。</p>
 <ul>
 <li>安卓: 由 approve 验证函数控制（即前端传入）</li>
 <li>ios: 同上</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">paypal.Button.render(&#123;</span><br><span class="line">    env: <span class="string">'production'</span>,</span><br><span class="line">    style: &#123;</span><br><span class="line">        label: <span class="string">'paypal'</span>,</span><br><span class="line">        size: <span class="string">'large'</span>,</span><br><span class="line">        shape: <span class="string">'rect'</span>,</span><br><span class="line">        color: <span class="string">'gold'</span>,</span><br><span class="line">        tagline: <span class="literal">false</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    payment: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; getPaymentId, paymentId &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        <span class="keyword">if</span> (paymentId) &#123;</span><br><span class="line">            <span class="keyword">return</span> paymentId;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> getPaymentId().then(<span class="function">(<span class="params">res</span>) =&gt;</span> res)</span><br><span class="line">    &#125;,</span><br><span class="line">    onAuthorize: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; approve &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">        approve(&#123;</span><br><span class="line">            paymentId: res.paymentId,</span><br><span class="line">            payerId: res.payerId</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, <span class="string">'#paypal_button'</span>);</span><br></pre></td></tr></table></figure>
-<h2 id="paytm-支付"><a href="#paytm-支付" class="headerlink" title="paytm 支付"></a>paytm 支付</h2><p>待补充。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li>stripe 若要接入 apple pay 需要将 checkout 页在 safari 中打开或者 app 提供 SFSafariViewController 加载能力打开 checkout 页。最好是可以在 app 中打开，跳出到 safari 涉及到 APP 呼起。(apple pay 支付测试需要用海外的信用卡)</li>
+<li>stripe 接入 google pay 需要将 checkout 页在 chrome 中打开并登录 google 账号绑定有效的卡片并且下载了 google pay 才会显示。这里会有一个问题，app 打开浏览器只会让用户选择一次浏览器，若用户选择的不是 chrome 浏览器将无法显示。</li>
+</ul>
+<h2 id="paytm-支付"><a href="#paytm-支付" class="headerlink" title="paytm 支付"></a>paytm 支付</h2><h3 id="流程-4"><a href="#流程-4" class="headerlink" title="流程"></a>流程</h3><ol>
+<li>用户 h5 下单</li>
+<li>若要呼起 Paytm APP 需要 app 提供插件支持</li>
+<li>检测是否支持呼起 app，若不能呼起则走 h5 支付</li>
+<li>h5 跳转 paytm checkout 页</li>
+<li>用户支付完成后跳转至配置的 callbackUrl</li>
+</ol>
+<h3 id="实现-4"><a href="#实现-4" class="headerlink" title="实现"></a>实现</h3><p>点击支付从接口中获取到 mid、txnToken 和 orderId，重定向到 paytm checkout 页，用户支付完成后三方平台会跳转到我们配置的 callback_url，将支付状态返回给这个 url。paytm 和别的支付方式流程不太一样，它会通过 form 表单提交的方式请求我们的 callback_url。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> PaytmForm = <span class="function">(<span class="params">props</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;</span><br><span class="line">        mid,</span><br><span class="line">        txnToken,</span><br><span class="line">        payApiAddress,</span><br><span class="line">        orderId,</span><br><span class="line">    &#125; = props.payInfo;</span><br><span class="line">    <span class="keyword">const</span> actionUrl = <span class="string">`<span class="subst">$&#123;payApiAddress&#125;</span>?mid=<span class="subst">$&#123;mid&#125;</span>&amp;orderId=<span class="subst">$&#123;orderId&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;form</span><br><span class="line">            id=<span class="string">"pay_form"</span></span><br><span class="line">            name=<span class="string">"pay_form"</span></span><br><span class="line">            method=<span class="string">"POST"</span></span><br><span class="line">            action=&#123;actionUrl&#125;</span><br><span class="line">        &gt;</span><br><span class="line">            &lt;input type=<span class="string">"hidden"</span> name=<span class="string">"mid"</span> value=&#123;mid&#125; /&gt;</span><br><span class="line">            &lt;input type=<span class="string">"hidden"</span> name=<span class="string">"txnToken"</span> value=&#123;txnToken&#125; /&gt;</span><br><span class="line">            &lt;input type=<span class="string">"hidden"</span> name=<span class="string">"mid"</span> value=&#123;mid&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/form&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const paytmPay = (values) =&gt; &#123;</span></span><br><span class="line"><span class="regexp">    if (!values) &#123;</span></span><br><span class="line"><span class="regexp">        return;</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">    const payDiv = document.createElement('div');</span></span><br><span class="line"><span class="regexp">    ReactDom.render(</span></span><br><span class="line"><span class="regexp">        &lt;PaytmForm</span></span><br><span class="line"><span class="regexp">            payInfo=&#123;values&#125;</span></span><br><span class="line"><span class="regexp">        /</span>&gt;,</span><br><span class="line">        payDiv</span><br><span class="line">    );</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(payDiv);</span><br><span class="line">    <span class="built_in">document</span>.forms.pay_form.submit();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>paytm 需要注意的是:</p>
+<ul>
+<li>paytm 支付完成之后会通过 form 表单提交 post 请求，跳转到配置的 callback_url，一般情况下我们都会跳转到支付结果页，但是只是提供 get 请求的方式，所以这里需要加一个 post 请求，通过这个 url 转发到我们的页面。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctx.redirect(<span class="string">`/orderPay?<span class="subst">$&#123;ctx.queryString&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>paytm 中需要传入的 orderId 是 paytm 中的交易流水号，不是自己订单系统中的 orderId。</li>
+<li>paytm 联调时需要 vpn，否则无法访问。</li>
+<li>paytm h5 页在安卓 app 中需要安装 Paytm APP 才可以使用 paytm 钱包支付，ios 中可以直接显示。</li>
+</ul>
 <h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>由于 app 内 h5 支付会打开第三方支付页面，所以会破坏导航历史堆栈，支付完成后跳到的支付结果页直接返回会返回到第三方支付页，再次调起支付，并且支付失败，体验极差，所以要在回调地址页手动控制历史堆栈。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pushHistory = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">window</span>.history.pushState(</span><br><span class="line">        &#123;</span><br><span class="line">            title: <span class="string">'title'</span>,</span><br><span class="line">            url: <span class="string">'#'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">'title'</span>,</span><br><span class="line">        <span class="string">'#'</span></span><br><span class="line">    );</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> fixHistoryBack = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    pushState(); <span class="comment">// 为了触发 popstate 事件</span></span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">'popstate'</span>, () =&gt; &#123;</span><br><span class="line">        <span class="comment">// 首页 -&gt; 详情页 -&gt; 下单页 -&gt; 第三方支付页 -&gt; 支付成功页 -&gt; history push</span></span><br><span class="line">        <span class="keyword">const</span> len = history.length - <span class="number">2</span>;</span><br><span class="line">        len &gt; <span class="number">1</span> ? history.go(-l) : history.back();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>各大支付方式的支付成功消息都是异步的，所以用户虽然支付完了，但是可能有一些特殊情况，导致并没有真正支付成功，这种情况下若不进行轮询，支付状态就会显示异常。而倘若在回调页执行轮询，微信和支付宝取消订单和支付成功的回调地址都是同一个，导致无法区分，所以统一流程应该使用微信官方提供的那一套：当用户支付完之后，无论是否完成支付，回到 h5 页时都可以弹出一个确认框，让用户选择是否已完成支付，若用户选择完成支付，则进行轮询，否则直接跳转到订单详情页。</p>
@@ -403,7 +425,7 @@ ga('send', 'pageview');
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#微信支付"><span class="toc-number">1.</span> <span class="toc-text">微信支付</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#流程"><span class="toc-number">1.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现"><span class="toc-number">1.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#支付宝支付"><span class="toc-number">2.</span> <span class="toc-text">支付宝支付</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#流程-1"><span class="toc-number">2.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现-1"><span class="toc-number">2.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stripe-支付"><span class="toc-number">3.</span> <span class="toc-text">stripe 支付</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#流程-2"><span class="toc-number">3.1.</span> <span class="toc-text">流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实现-2"><span class="toc-number">3.1.1.</span> <span class="toc-text">实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#paypal-支付"><span class="toc-number">4.</span> <span class="toc-text">paypal 支付</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#流程-3"><span class="toc-number">4.1.</span> <span class="toc-text">流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实现-3"><span class="toc-number">4.1.1.</span> <span class="toc-text">实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#paytm-支付"><span class="toc-number">5.</span> <span class="toc-text">paytm 支付</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意事项"><span class="toc-number">6.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关文档"><span class="toc-number">8.</span> <span class="toc-text">相关文档</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#微信支付"><span class="toc-number">1.</span> <span class="toc-text">微信支付</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#流程"><span class="toc-number">1.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现"><span class="toc-number">1.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#支付宝支付"><span class="toc-number">2.</span> <span class="toc-text">支付宝支付</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#流程-1"><span class="toc-number">2.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现-1"><span class="toc-number">2.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stripe-支付"><span class="toc-number">3.</span> <span class="toc-text">stripe 支付</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#流程-2"><span class="toc-number">3.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现-2"><span class="toc-number">3.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#paypal-支付"><span class="toc-number">4.</span> <span class="toc-text">paypal 支付</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#流程-3"><span class="toc-number">4.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现-3"><span class="toc-number">4.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">4.3.</span> <span class="toc-text">其他</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#paytm-支付"><span class="toc-number">5.</span> <span class="toc-text">paytm 支付</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#流程-4"><span class="toc-number">5.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现-4"><span class="toc-number">5.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意事项"><span class="toc-number">6.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关文档"><span class="toc-number">8.</span> <span class="toc-text">相关文档</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -539,35 +561,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">node</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">打包</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">koa</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,7 +581,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">移动端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,19 +605,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">chrome</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">hybird</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -623,7 +617,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">组件库</a>
+                <a href="javascript:void(0)" class="js-tag color2">chrome</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异步</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -632,6 +634,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">打包</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">koa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">高并发</a>
               </li>
             
             <div class="clearfix"></div>
